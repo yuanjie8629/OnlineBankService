@@ -1,0 +1,59 @@
+.home-carousel .carousel-item, .home-carousel .carousel-item img{
+    height: 400px;
+}
+
+.carousel-item img{
+    object-fit: cover;
+    width: 100%;
+}
+
+.home-carousel .carousel-item h4.carousel-desc {
+	margin: 15px 0;
+}
+
+.home-carousel .carousel-custom-caption {
+	text-align: left;
+	width: 80%;
+}
+
+@media (min-width: 992px) { 
+	.home-carousel .carousel-custom-caption {
+	text-align: left;
+	width: 40%;
+}
+}
+
+.img-btn {
+	max-width: 70px;
+	max-height: 70px;
+}
+
+.card-btn {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.card-btn:hover {
+    transform: scale(1.025);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+}
+
+#calculator-body,.remote-widget-body {
+	background-color: black !important;
+}
+
+.currency-card {
+	transition: 0.5s;
+}
+.currency-card:hover {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.useful-link {
+	color: white;
+	text-decoration: none;
+}

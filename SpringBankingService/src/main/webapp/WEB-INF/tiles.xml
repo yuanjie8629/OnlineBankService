@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition" template="/WEB-INF/view/basePortal/layout/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/view/basePortal/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/basePortal/layout/footer.jsp" />
+	</definition>
+	
+	<definition name="base" extends="base.definition">
+		<put-attribute name="title" value="OBS Bank" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/index.jsp" />
+	</definition>
+	
+	<definition name="aboutUs" extends="base.definition">
+		<put-attribute name="title" value="About OSB Bank" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/aboutUs.jsp" />
+	</definition>
+	
+	<definition name="contactUs" extends="base.definition">
+		<put-attribute name="title" value="Contact Us" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/contactUs.jsp" />
+	</definition>
+</tiles-definitions>
