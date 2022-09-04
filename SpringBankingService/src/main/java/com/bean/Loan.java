@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,4 +35,7 @@ public class Loan {
 	
 	@OneToMany(mappedBy="loan", cascade=CascadeType.ALL)
 	private List<LoanTransaction> transactions;
+	
+	@ManyToOne
+	private LoanType type;
 }

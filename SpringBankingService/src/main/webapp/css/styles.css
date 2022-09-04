@@ -1,17 +1,11 @@
 :root {
 	--bs-navbar-hover-color: var(--bs-danger);
 	--bs-link-hover-color: var(--bs-danger);
-}
-
-body { 
-	padding-top: 82.5px;
+	--button-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+;
 }
 
 /* Navbar */
-
-.navbar { 
-	padding: 15px 0 15px 0 !important;
-}
 
 .navbar .navbar-brand {
 	padding-right: 20px;
@@ -25,9 +19,19 @@ body {
 	padding: 0 10px;
 }
 
-.navbar-nav .nav-item.active .nav-link,
-.navbar-nav .nav-item:hover .nav-link {
+.navbar-nav .nav-item.active .nav-link {
+	font-weight: bold;
+}
+
+.navbar .nav-item.active .nav-link,
+.navbar .nav-item:hover .nav-link {
     color: var(--bs-danger);
+}
+
+.navbar-dark .nav-item.active .nav-link,
+.navbar-dark .nav-item:hover .nav-link {
+    color: white;
+    font-weight: bold;
 }
 
 /* Inline Dropdown */
@@ -78,8 +82,52 @@ body {
 
 
 /* Carousel */
+.carousel-caption-left {
+	text-align: left;
+	width: 80%;
+}
+
+@media (min-width: 992px) { 
+	.carousel-caption-left {
+		text-align: left;
+		width: 40%;
+	}
+}
+
 .carousel-caption-middle {
 	bottom: initial;
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+
+/* Form */
+.form-control:focus, .form-select:focus {
+  border: 2px solid black;
+  box-shadow: none;
+}
+
+.form-check-input:focus {
+	box-shadow: none;
+}
+
+/* Navs and Tab */
+.nav-tab-category {
+	color: var(--bs-navbar-color);
+}
+
+.nav-pills .nav-link {
+	color: black;
+	box-shadow: var(--button-shadow);
+	
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	background-color: var(--bs-danger);
+}
+
+/* Card */
+.card-shadow {
+    box-shadow: var(--button-shadow);
+    border-radius: 12px;
 }

@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 mb-5">
 	<!-- Carousel -->
 	<div class="row m-0">
 		<div id="baseCarousel" class="carousel home-carousel slide p-0" data-bs-ride="carousel">
@@ -10,7 +10,7 @@
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<div class="container">
-						<div class="carousel-caption carousel-custom-caption carousel-caption-middle">
+						<div class="carousel-caption carousel-caption-left carousel-caption-middle">
 							<h1>Welcome to OBS Bank</h1>
 						</div>
 					</div>
@@ -18,10 +18,10 @@
 				</div>
 				<div class="carousel-item">
 					<div class="container">
-						<div class="carousel-caption carousel-custom-caption">
+						<div class="carousel-caption carousel-caption-left">
 							<h1>OBS Home Loan</h1>
 							<h4 class="carousel-desc">Enjoy an interest rate of 4.05% p.a on your home loan with OBS</h4>
-							<a class="btn btn-md btn-danger" href="/" role="button"> <strong>Learn More</strong>
+							<a class="btn btn-md btn-danger" href="loan" role="button"> <strong>Learn More</strong>
 							</a>
 						</div>
 					</div>
@@ -29,10 +29,10 @@
 				</div>
 				<div class="carousel-item">
 					<div class="container">
-						<div class="carousel-caption carousel-custom-caption">
+						<div class="carousel-caption carousel-caption-left">
 							<h1>OBS Credit Card</h1>
 							<h4 class="carousel-desc">Apply your credit card now to enjoy S$100 Cashback</h4>
-							<a class="btn btn-md btn-danger" href="/" role="button"> <strong>Learn More</strong>
+							<a class="btn btn-md btn-danger" href="credit-card" role="button"> <strong>Learn More</strong>
 							</a>
 						</div>
 					</div>
@@ -41,6 +41,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- Button Navigation -->
 	<div class="row mx-0 my-4">
 		<div class="row g-4 m-auto text-center" style="width: 80%;">
@@ -50,7 +51,9 @@
 						<div class="text-center p-2">
 							<img src="resources/images/basePortal/TrackApplication.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
-						<div class="fw-bold my-2">Track Application</div>
+						<div class="my-2">
+							<a href="track-application" class="stretched-link text-dark text-decoration-none fw-bold">Track Application</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -60,7 +63,9 @@
 						<div class="text-center p-2">
 							<img src="resources/images/basePortal/ApplyAccount.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
-						<div class="fw-bold my-2">Open a New Account</div>
+						<div class="my-2">
+							<a href="account" class="stretched-link text-dark text-decoration-none fw-bold">Open a New Account</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -70,7 +75,9 @@
 						<div class="text-center p-2">
 							<img src="resources/images/basePortal/ApplyCreditCard.png" alt="applyCreditCard" class="img-fluid rounded img-btn" />
 						</div>
-						<div class="fw-bold my-2">Get a Credit Card</div>
+						<div class="my-2">
+							<a href="credit-card" class="stretched-link text-dark text-decoration-none fw-bold">Get a Credit Card</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -80,7 +87,9 @@
 						<div class="text-center p-2">
 							<img src="resources/images/basePortal/ApplyLoan.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
-						<div class="fw-bold my-2">Get a Personal Loan</div>
+						<div class="my-2">
+							<a href="loan" class="stretched-link text-dark text-decoration-none fw-bold">Get a Personal Loan</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -104,7 +113,7 @@
 			<h3>OBS Currency Converter Tool</h3>
 		</div>
 		<div class="col-12">
-			<div class="card currency-card">
+			<div class="card card-hover">
 				<div class="card-body">
 					<div class="d-flex justify-content-center">
 						<div class="flex-grow-1" id="currency-converter-642143">

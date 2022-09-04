@@ -24,7 +24,7 @@ public class LoginController {
 	@RequestMapping("/login")
 	public String login(@ModelAttribute String msg, Model m) {
 		m.addAttribute("msg",msg);
-		return "loginForm";
+		return "login";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -33,7 +33,7 @@ public class LoginController {
 		if (user != null) {
 			user.setPassword("");
 			ra.addFlashAttribute("user", user);
-			return "redirect:/homepage";
+			return "redirect:/home";
 		} else {
 			ra.addFlashAttribute("msg", "Login Failed. Invalid Username or Password...");
 			return "redirect:/login";

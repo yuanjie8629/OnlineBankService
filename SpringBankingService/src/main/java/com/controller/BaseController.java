@@ -23,14 +23,34 @@ public class BaseController {
 		return "base";
 	}
 	
-	@RequestMapping(value="aboutUs")
+	@RequestMapping(value="/about-us")
 	public String aboutUs() {
-		return "aboutUs";
+		return "about-us";
 	}
 	
-	@RequestMapping(value="contactUs")
+	@RequestMapping(value="/account")
+	public String account() {
+		return "account";
+	}
+	
+	@RequestMapping(value="/credit-card")
+	public String creditCard() {
+		return "credit-card";
+	}
+	
+	@RequestMapping(value="/loan")
+	public String loan() {
+		return "loan";
+	}
+	
+	@RequestMapping(value="/track-application")
+	public String trackApplication() {
+		return "track-application";
+	}
+	
+	@RequestMapping(value="/contact-us")
 	public String contactUs() {
-		return "contactUs";
+		return "contact-us";
 	}
 	
 //	@ResponseBody

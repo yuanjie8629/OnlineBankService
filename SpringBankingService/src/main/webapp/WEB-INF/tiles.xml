@@ -15,13 +15,45 @@
 		<put-attribute name="body" value="/WEB-INF/view/basePortal/index.jsp" />
 	</definition>
 	
-	<definition name="aboutUs" extends="base.definition">
+	<definition name="about-us" extends="base.definition">
 		<put-attribute name="title" value="About OSB Bank" />
 		<put-attribute name="body" value="/WEB-INF/view/basePortal/aboutUs.jsp" />
 	</definition>
 	
-	<definition name="contactUs" extends="base.definition">
+	<definition name="account" extends="base.definition">
+		<put-attribute name="title" value="OBS Account" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/account.jsp" />
+	</definition>
+	
+	<definition name="credit-card" extends="base.definition">
+		<put-attribute name="title" value="OBS Credit Card" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/creditCard.jsp" />
+	</definition>
+	
+	<definition name="loan" extends="base.definition">
+		<put-attribute name="title" value="OBS Loan" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/loan.jsp" />
+	</definition>
+	
+	<definition name="track-application" extends="base.definition">
+		<put-attribute name="title" value="Track My Application" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/trackApplication.jsp" />
+	</definition>
+	
+	<definition name="contact-us" extends="base.definition">
 		<put-attribute name="title" value="Contact Us" />
 		<put-attribute name="body" value="/WEB-INF/view/basePortal/contactUs.jsp" />
+	</definition>
+	
+	<definition name="admin.definition" template="/WEB-INF/view/adminPortal/layout/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/view/adminPortal/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/adminPortal/layout/footer.jsp" />
+	</definition>
+	
+	<definition name="admin-home" extends="admin.definition">
+		<put-attribute name="title" value="OBS Admin Portal" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/index.jsp" />
 	</definition>
 </tiles-definitions>

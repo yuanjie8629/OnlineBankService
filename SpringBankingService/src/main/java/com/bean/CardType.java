@@ -9,18 +9,24 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="loan")
-public class LoanType {
+@Table(name="card_type")
+public class CardType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	private String type;
 	
+	private String description;
+	
+	@Column(name="annual_fee")
+	private double annualFee;
+	
 	@Column(name="interest_rate")
 	private double interestRate;
-	
-	private double downpayment;
+
+	@Column(name="min_income")
+	private double minIncome;
 	
 	@Lob
 	@Column(name = "image", columnDefinition="BLOB")

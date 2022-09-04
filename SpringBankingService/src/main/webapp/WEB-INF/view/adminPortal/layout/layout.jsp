@@ -6,12 +6,12 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-		<link href="<c:url value="/resources/css/styles.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/basePortal.css" />" rel="stylesheet">
+		<link href="<c:url value="../resources/css/styles.css" />" rel="stylesheet">
+		<link href="<c:url value="../resources/css/adminPortal.css" />" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/4715c71a30.js" crossorigin="anonymous"></script>
 		<title><tiles:insertAttribute name="title" ignore="true" /></title>
 	</head>
-	<body class="d-flex flex-column min-vh-100" style="padding-top: 82.5px;">
+	<body class="d-flex flex-column min-vh-100" style="padding-top: 150px;">
 		<div>
 			<tiles:insertAttribute name="header" />
 		</div>

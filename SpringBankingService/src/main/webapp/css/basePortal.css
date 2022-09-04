@@ -1,3 +1,8 @@
+.navbar { 
+	padding: 15px 0 15px 0 !important;
+	opacity: 0.9;
+}
+
 .home-carousel .carousel-item, .home-carousel .carousel-item img{
     height: 400px;
 }
@@ -11,16 +16,9 @@
 	margin: 15px 0;
 }
 
-.home-carousel .carousel-custom-caption {
-	text-align: left;
-	width: 80%;
-}
-
-@media (min-width: 992px) { 
-	.home-carousel .carousel-custom-caption {
-	text-align: left;
-	width: 40%;
-}
+#loginCarousel .carousel-control-next,
+#loginCarousel .carousel-control-prev {
+    filter: invert(100%);
 }
 
 .img-btn {
@@ -29,7 +27,7 @@
 }
 
 .card-btn {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: var(--button-shadow);
     transition: all 0.5s ease;
     cursor: pointer;
     user-select: none;
@@ -42,18 +40,26 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
 }
 
-#calculator-body,.remote-widget-body {
-	background-color: black !important;
-}
-
-.currency-card {
+.card-hover {
 	transition: 0.5s;
 }
-.currency-card:hover {
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.card-hover:hover {
+	box-shadow: var(--button-shadow);
 }
 
 .useful-link {
 	color: white;
 	text-decoration: none;
+}
+
+.track-app-bg {
+	background-image: url("../images/basePortal/trackApplication/TrackAppBackground.jpg");
+	background-size: cover;
+	border-radius: 0 12px 12px 0;
+}
+
+.login-bg {
+	background-image: url("../images/basePortal/login/ScamAlert.png");
+	background-size: cover;
+	border-radius: 0 12px 12px 0;
 }

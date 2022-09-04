@@ -1,4 +1,4 @@
-<footer class="bg-dark text-lg-start text-muted mt-5">
+<footer class="bg-dark text-lg-start text-muted">
 	<div class="container p-2">
 		<div class="row my-4">
 			<!-- Logo -->
@@ -13,11 +13,11 @@
 				<h5 class="text-uppercase mb-4">Useful Links</h5>
 
 				<ul class="list-unstyled">
-					<li class="mb-2"><a href="aboutUs" class="useful-link">About Us</a></li>
-					<li class="mb-2"><a href="#!" class="useful-link">Apply Account</a></li>
-					<li class="mb-2"><a href="#!" class="useful-link">Apply Credit Card</a></li>
-					<li class="mb-2"><a href="#!" class="useful-link">Apply Loan</a></li>
-					<li class="mb-2"><a href="#!" class="useful-link">Track Application</a></li>
+					<li class="mb-2"><a href="about-us" class="useful-link">About Us</a></li>
+					<li class="mb-2"><a href="account" class="useful-link">Apply Account</a></li>
+					<li class="mb-2"><a href="credit-card" class="useful-link">Apply Credit Card</a></li>
+					<li class="mb-2"><a href="loan" class="useful-link">Apply Loan</a></li>
+					<li class="mb-2"><a href="track-application" class="useful-link">Track Application</a></li>
 				</ul>
 			</div>
 			<!-- Useful Links -->
@@ -114,5 +114,5 @@
 			</div>
 		</div>
 	</section>
-	<!-- Bottom Sectio -->
+	<!-- Bottom Section -->
 </footer>

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +21,12 @@ public class AccountType {
 	
 	private String type;
 	
+	private String description;
+	
+	@Lob
+	@Column(name = "image", columnDefinition="BLOB")
+	private byte[] image;
+	
 	@Column(name="interest_rate")
 	private double interestRate;
 	
@@ -28,4 +35,7 @@ public class AccountType {
 
 	@OneToMany(mappedBy="type", cascade = CascadeType.ALL)
 	private List<Account> account;
+	
+	@Column(name="is_deleted", nullable = false, columnDefinition = "TINYINT(1) default 0")
+	private boolean isDeleted;
 }

@@ -66,7 +66,7 @@
 </div>
 
 <!-- Licenses and Accreditations -->
-<div class="container">
+<div class="container mb-5">
 	<h2>Our Licenses and Accreditations</h2>
 	<div class="row g-4 m-auto">
 		<div class="col">

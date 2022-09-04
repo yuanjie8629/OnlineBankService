@@ -16,9 +16,7 @@ public class Card {
 	@GeneratedValue(generator="cardNumGenerator")
 	@Column(name="card_num")
 	private String cardNum;
-	
-	private String type;
-	
+		
 	private String brand;
 	
 	private String cvv;
@@ -33,4 +31,7 @@ public class Card {
 	private String pin;
 	
 	private String status;
+	
+	@ManyToOne
+	private CardType type;
 }
