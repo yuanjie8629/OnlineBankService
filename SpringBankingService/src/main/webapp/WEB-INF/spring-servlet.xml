@@ -34,7 +34,12 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
 		<property name="prefix" value="/WEB-INF/view/basePortal/"></property>    
 		<property name="suffix" value=".jsp"></property>    
-	</bean>    
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
+		<property name="prefix" value="/WEB-INF/view/adminPortal/"></property>    
+		<property name="suffix" value=".jsp"></property>    
+	</bean>
     
     <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
     	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>

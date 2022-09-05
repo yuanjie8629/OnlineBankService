@@ -1,3 +1,17 @@
+/* Dropdown menu pointing arrow */
+.dropdown-menu-arrow::before {
+	content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid var(--bs-danger);
+    transform: translateX(-50%);
+}
+
+/* Navbar */
 .navbar { 
 	padding: 15px 0 15px 0 !important;
 	opacity: 0.9;

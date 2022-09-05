@@ -17,6 +17,8 @@ public class CardType {
 	
 	private String type;
 	
+	private String title;
+	
 	private String description;
 	
 	@Column(name="annual_fee")
@@ -29,8 +31,8 @@ public class CardType {
 	private double minIncome;
 	
 	@Lob
-	@Column(name = "image", columnDefinition="BLOB")
-	private byte[] image;
+	@Column(name = "thumbnail", columnDefinition="BLOB")
+	private byte[] thumbnail;
 	
 	@Column(name="is_deleted", nullable = false, columnDefinition = "TINYINT(1) default 0")
 	private boolean isDeleted;

@@ -2,8 +2,9 @@
 	--bs-navbar-hover-color: var(--bs-danger);
 	--bs-link-hover-color: var(--bs-danger);
 	--button-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-;
+	--bs-dropdown-link-active-bg: var(--bs-danger);
 }
+
 
 /* Navbar */
 
@@ -67,20 +68,6 @@
 	font-weight: bold;
 }
 
-/* Dropdown menu pointing arrow */
-.dropdown-menu-arrow::before {
-	content: "";
-    display: block;
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid var(--bs-danger);
-    transform: translateX(-50%);
-}
-
-
 /* Carousel */
 .carousel-caption-left {
 	text-align: left;
@@ -130,4 +117,41 @@
 .card-shadow {
     box-shadow: var(--button-shadow);
     border-radius: 12px;
+}
+
+
+/* Modal Confirm */
+.modal-confirm .modal-header {
+	border: none;
+}
+
+.modal-confirm .modal-footer {
+	border: none;
+}
+
+/* Button */
+.btn-close:focus {
+	box-shadow: none;
+}
+
+/* Pagination */
+.pagination {
+	--bs-pagination-bg:
+	--bs-pagination-border-color: #e6dede;
+	--bs-pagination-color: var(--bs-danger);
+	--bs-pagination-active-bg: var(--bs-danger);
+	--bs-pagination-active-border-color: var(--bs-danger);
+	--bs-pagination-hover-bg: #efe9e9;
+	--bs-pagination-hover-border-color: #e6dede;
+	--bs-pagination-focus-bg: #efe9e9;
+	--bs-pagination-disabled-border-color: #e6dede;
+	--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%);
+}
+
+/* Circle Dot */
+.dot {
+height: 10px;
+width: 10px;
+border-radius: 50%;
+display: inline-block;
 }

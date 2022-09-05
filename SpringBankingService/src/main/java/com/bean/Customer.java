@@ -17,7 +17,8 @@ import javax.persistence.Table;
 public class Customer extends User{
 	private String salutation;
 	
-	private String identity;
+	@Column(name="identity_number")
+	private String identityNumber;
 	
 	private String nationality;
 	

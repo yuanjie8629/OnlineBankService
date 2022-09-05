@@ -54,6 +54,77 @@
 	
 	<definition name="admin-home" extends="admin.definition">
 		<put-attribute name="title" value="OBS Admin Portal" />
+		<put-attribute name="header" value="/WEB-INF/view/adminPortal/layout/headerTop.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/index.jsp" />
+	</definition>
+	
+	<definition name="admin-acc-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Account Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/accountManagement/index.jsp" />
+	</definition>
+	
+	<definition name="admin-acc-mgmt-add" extends="admin.definition">
+		<put-attribute name="title" value="OBS Account Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/accountManagement/addAccount.jsp" />
+	</definition>
+	
+	<definition name="admin-acc-mgmt-update" extends="admin.definition">
+		<put-attribute name="title" value="OBS Account Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/accountManagement/updateAccount.jsp" />
+	</definition>
+	
+	<definition name="admin-card-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/cardManagement/index.jsp" />
+	</definition>
+	
+	<definition name="admin-card-mgmt-add" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/cardManagement/addCard.jsp" />
+	</definition>
+	
+	<definition name="admin-card-mgmt-update" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/cardManagement/updateCard.jsp" />
+	</definition>
+	
+	<definition name="admin-loan-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Loan Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/loanManagement/index.jsp" />
+	</definition>
+	
+	<definition name="admin-loan-mgmt-add" extends="admin.definition">
+		<put-attribute name="title" value="OBS Loan Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/loanManagement/addLoan.jsp" />
+	</definition>
+	
+	<definition name="admin-loan-mgmt-update" extends="admin.definition">
+		<put-attribute name="title" value="OBS Loan Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/loanManagement/updateLoan.jsp" />
+	</definition>
+	
+	<definition name="admin-cust-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/index.jsp" />
+	</definition>
+	
+	<definition name="admin-cust-mgmt-view" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/viewCustomer.jsp" />
+	</definition>
+	
+	<definition name="admin-cust-mgmt-update" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/updateCustomer.jsp" />
+	</definition>
+	
+	<definition name="admin-app-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Application Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/index.jsp" />
+	</definition>
+	
+	<definition name="admin-profile-mgmt" extends="admin.definition">
+		<put-attribute name="title" value="OBS Profile Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/profileManagement/index.jsp" />
 	</definition>
 </tiles-definitions>

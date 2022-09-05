@@ -19,13 +19,15 @@ public class AccountType {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	private String title;
+	
 	private String type;
 	
 	private String description;
 	
 	@Lob
-	@Column(name = "image", columnDefinition="BLOB")
-	private byte[] image;
+	@Column(name = "thumbnail", columnDefinition="BLOB")
+	private byte[] thumbnail;
 	
 	@Column(name="interest_rate")
 	private double interestRate;
