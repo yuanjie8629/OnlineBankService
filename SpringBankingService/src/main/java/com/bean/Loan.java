@@ -34,7 +34,7 @@ public class Loan {
 	private double totalAmount;
 	
 	@OneToMany(mappedBy="loan", cascade=CascadeType.ALL)
-	private List<LoanTransaction> transactions;
+	private List<LoanPayment> transactions;
 	
 	@ManyToOne
 	private LoanType type;

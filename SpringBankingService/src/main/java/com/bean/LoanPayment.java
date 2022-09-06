@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="loan_transaction")
-public class LoanTransaction {
+@Table(name="loan_payment")
+public class LoanPayment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -28,6 +28,8 @@ public class LoanTransaction {
 	private double amount_paid;
 	
 	private double balance;
+	
+	private String status;
 	
 	@ManyToOne(targetEntity=Loan.class)
 	@JoinColumn(name="loan_id")

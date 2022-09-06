@@ -1,25 +1,33 @@
 package com.controller;
 
-import javax.servlet.ServletContext;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bean.User;
 
 @Controller
 @RequestMapping("/admin/")
 public class AdminController {
 	@Autowired
-    ServletContext servletContext;
+	HttpSession session;
 	
 	@RequestMapping(value={"/", "/home", "/index.jsp"})
-	public String home() {
-		return "admin-home";
-	}
-	
-	@RequestMapping(value="/account-management")
-	public String accountManagement() {
-		return "admin-acc-mgmt";
+	public String home(Model m) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			m.addAttribute("user",user);
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			m.addAttribute("loginTime", dtf.format(LocalDateTime.now()));  
+			return "admin-home";
+		}
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/card-management")

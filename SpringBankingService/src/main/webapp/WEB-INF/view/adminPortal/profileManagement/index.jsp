@@ -1,4 +1,3 @@
-<%@ page import="com.utils.URLUtils"%>
 <div class="container my-4">
 	<div class="my-auto">
 		<h3>Manage Profile</h3>

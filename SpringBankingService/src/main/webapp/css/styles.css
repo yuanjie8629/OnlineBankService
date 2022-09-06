@@ -119,6 +119,27 @@
     border-radius: 12px;
 }
 
+.card-btn {
+    box-shadow: var(--button-shadow);
+    transition: all 0.5s ease;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.card-btn:hover {
+    transform: scale(1.025);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+}
+
+.card-hover {
+	transition: 0.5s;
+}
+
+.card-hover:hover {
+	box-shadow: var(--button-shadow);
+}
 
 /* Modal Confirm */
 .modal-confirm .modal-header {
@@ -154,4 +175,8 @@ height: 10px;
 width: 10px;
 border-radius: 50%;
 display: inline-block;
+}
+
+.error {
+	color: var(--bs-danger);
 }

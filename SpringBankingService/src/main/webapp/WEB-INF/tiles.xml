@@ -3,6 +3,7 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
+	<!-- Base Portal -->
 	<definition name="base.definition" template="/WEB-INF/view/basePortal/layout/layout.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/view/basePortal/layout/header.jsp" />
@@ -44,7 +45,9 @@
 		<put-attribute name="title" value="Contact Us" />
 		<put-attribute name="body" value="/WEB-INF/view/basePortal/contactUs.jsp" />
 	</definition>
+	<!-- Base Portal -->
 	
+	<!-- Admin Portal -->
 	<definition name="admin.definition" template="/WEB-INF/view/adminPortal/layout/layout.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/view/adminPortal/layout/header.jsp" />
@@ -127,4 +130,62 @@
 		<put-attribute name="title" value="OBS Profile Management" />
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/profileManagement/index.jsp" />
 	</definition>
+	<!-- Admin Portal -->
+	
+	<!-- Customer Portal -->
+	<definition name="customer.definition" template="/WEB-INF/view/customerPortal/layout/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/customerPortal/layout/footer.jsp" />
+	</definition>
+	
+	<definition name="cust-home" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/headerTop.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/index.jsp" />
+	</definition>
+	
+	<definition name="cust-account" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/account/index.jsp" />
+	</definition>
+	
+	<definition name="cust-account-summary" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/account/viewAccSummary.jsp" />
+	</definition>
+	
+	<definition name="cust-fund-transfer-own" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/fundTransfer/ownAccTransfer.jsp" />
+	</definition>
+	
+	<definition name="cust-fund-transfer-others" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/fundTransfer/transferToOthers.jsp" />
+	</definition>
+	
+	<definition name="cust-payment-credit-card" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/payment/creditCard.jsp" />
+	</definition>
+	
+	<definition name="cust-payment-loan" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/payment/loan.jsp" />
+	</definition>
+	
+	<definition name="cust-profile-mgmt" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/profileManagement/index.jsp" />
+	</definition>
+	<!-- Customer Portal -->
 </tiles-definitions>

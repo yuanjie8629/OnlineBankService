@@ -1,5 +1,6 @@
 package com.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bean.Admin;
+import com.bean.Customer;
 import com.bean.User;
 import com.dao.UserDao;
 
@@ -19,25 +23,46 @@ import com.dao.UserDao;
 @RequestMapping("/")
 public class LoginController {
 	@Autowired
-	UserDao dao;
+	UserDao userDao;
+	
+	@Autowired
+	HttpSession session;
 	
 	@RequestMapping("/login")
-	public String login(@ModelAttribute String msg, Model m) {
-		m.addAttribute("msg",msg);
+	public String login(Model m) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			if(user instanceof Customer)
+				return "redirect:/customer/home";
+			else if (user instanceof Admin)
+				return "redirect:/admin/home";
+		}
 		return "login";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model m, RedirectAttributes ra) {
-		User user = dao.login(username, password);
+		User user = userDao.login(username, password);
 		if (user != null) {
 			user.setPassword("");
+			session.setAttribute("user", user);
 			ra.addFlashAttribute("user", user);
-			return "redirect:/home";
+			if (user instanceof Admin)
+				return "redirect:/admin/home";
+			else
+				return "redirect:/customer/home";
 		} else {
 			ra.addFlashAttribute("msg", "Login Failed. Invalid Username or Password...");
 			return "redirect:/login";
 		}
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(SessionStatus status) {
+		System.out.println("User logged out...");
+		status.setComplete();
+		session.invalidate();
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
@@ -48,9 +73,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String register(@Valid @ModelAttribute("user") User user, BindingResult br, RedirectAttributes ra) {
+	public String register(@Valid @ModelAttribute("user") Customer user, BindingResult br, RedirectAttributes ra) {
 		if (!br.hasErrors()) {
-			dao.register(user);
+			userDao.register(user);
 			ra.addFlashAttribute("msg","You have successfully registered.");
 			return "redirect:/";
 		} else {

@@ -1,12 +1,12 @@
-<%@ page import="com.utils.URLUtils" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div style="padding-top: 150px;"></div>
 <header class="fixed-top">
 	<nav class="navbar navbar-expand-lg bg-light">
 		<div class="container">
-			<a class="navbar-brand" href="home"> <img src="${URLUtils.getBasePath()}/resources/images/logo.png" alt="logo" width="100">
+			<a class="navbar-brand" href="home"> <img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="100">
 			</a>
 			<div class="nav-item">
-				<a class="nav-link" href="${URLUtils.getBasePath()}/home">Logout</a>
+				<a class="nav-link" href="<c:url value="/logout" />" >Logout</a>
 			</div>
 		</div>
 	</nav>
@@ -17,34 +17,34 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul id="header-nav" class="navbar-nav text-center">
-					<li id="${URLUtils.getBasePath()}/admin/home" class="nav-item active"><a class="nav-link" aria-current="page" href="/SpringBankingService/admin/home">Home</a></li>
+					<li id="home" class="nav-item active"><a class="nav-link" aria-current="page" href="<c:url value="/admin/home" />" >Home</a></li>
 					<li id="account-management" class="nav-item dropdown"><a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account Management</a>
 						<div class="dropdown-menu w-100">
 							<span class="dropdown-menu-arrow d-none d-lg-block"></span>
 							<ul class="list-unstyled">
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/account-management">View Accounts</a></li>
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/account-management/add">Add Account</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/account-management" />" >View Accounts</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/account-management/add" />" >Add Account</a></li>
 							</ul>
 						</div></li>
 					<li id="card-management" class="nav-item dropdown"><a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Card Management</a>
 						<div class="dropdown-menu w-100">
 							<span class="dropdown-menu-arrow d-none d-lg-block"></span>
 							<ul class="list-unstyled">
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/card-management">View Cards</a></li>
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/card-management/add">Add Card</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/card-management" />">View Cards</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/card-management/add" />">Add Card</a></li>
 							</ul>
 						</div></li>
 					<li id="loan-management" class="nav-item dropdown"><a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Loan Management</a>
 						<div class="dropdown-menu w-100">
 							<span class="dropdown-menu-arrow d-none d-lg-block "></span>
 							<ul class="list-unstyled">
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/loan-management">View Loans</a></li>
-								<li><a class="dropdown-item" href="${URLUtils.getBasePath()}/admin/loan-management/add">Add Loan</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/loan-management" />">View Loans</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/loan-management/add" />">Add Loan</a></li>
 							</ul>
 						</div></li>
-					<li id="customer-management" class="nav-item"><a class="nav-link" href="${URLUtils.getBasePath()}/admin/customer-management">Customer Management</a></li>
-					<li id="application-management" class="nav-item"><a class="nav-link" href="${URLUtils.getBasePath()}/admin/application-management">Application Management</a></li>
-					<li id="profile-management" class="nav-item"><a class="nav-link" href="${URLUtils.getBasePath()}/admin/profile-management">Profile Management</a></li>
+					<li id="customer-management" class="nav-item"><a class="nav-link" href="<c:url value="/admin/customer-management" />" >Customer Management</a></li>
+					<li id="application-management" class="nav-item"><a class="nav-link" href="<c:url value="/admin/application-management" />" >Application Management</a></li>
+					<li id="profile-management" class="nav-item"><a class="nav-link" href="<c:url value="/admin/profile-management" />" >Profile Management</a></li>
 				</ul>
 			</div>
 		</div>

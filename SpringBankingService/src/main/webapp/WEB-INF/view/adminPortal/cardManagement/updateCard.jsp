@@ -1,4 +1,3 @@
-<%@ page import="com.utils.URLUtils"%>
 <div class="container my-4">
 	<h3 class="mb-4">Update Card</h3>
 	<div class="container">
@@ -61,7 +60,7 @@
 				<div class="row g-4 justify-content-center align-items-center h-100">
 					<div class="col-10 col-lg-6">
 						<div class="card card-hover">
-							<img id="thumbnail" src="${URLUtils.getBasePath()}/resources/images/PreviewImage.png" class="card-img-top"
+							<img id="thumbnail" src="<c:url value="/resources/images/PreviewImage.png" />" class="card-img-top"
 								alt="savingAcc">
 							<div class="card-body">
 								<h5 id="title" class="card-title">Card Title</h5>

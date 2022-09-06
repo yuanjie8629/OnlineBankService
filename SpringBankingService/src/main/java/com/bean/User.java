@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
   
 @Entity
 @Table(name="users")
@@ -16,7 +17,8 @@ public class User {
 	
 	private String username;
 	
-	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message="Password does not matches all rules.")
+//	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message="Password does not matches all rules.")
+	@Size(min=8, message="Password must be at least 8 characters.")
 	private String password;
 	
 	@NotBlank(message="Please enter name.")
@@ -106,5 +108,11 @@ public class User {
 		this.email = email;
 		this.contactNo = contactNo;
 		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", email="
+				+ email + ", contactNo=" + contactNo + ", gender=" + gender + "]";
 	}
 }

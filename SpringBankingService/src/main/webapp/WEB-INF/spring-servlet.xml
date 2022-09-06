@@ -40,6 +40,8 @@
 		<property name="prefix" value="/WEB-INF/view/adminPortal/"></property>    
 		<property name="suffix" value=".jsp"></property>    
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
     
     <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
     	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
@@ -71,7 +73,11 @@
     <property name="sessionFactory" ref="sessionFactory"></property>  
     </bean>
     
-	<bean id="dao" class="com.daoimpl.UserDaoImpl">
+	<bean id="userDao" class="com.daoimpl.UserDaoImpl">
+		<property name="template" ref="template"></property>    
+	</bean>
+	
+	<bean id="accTypeDao" class="com.daoimpl.AccountTypeDaoImpl">
 		<property name="template" ref="template"></property>    
 	</bean>
 	

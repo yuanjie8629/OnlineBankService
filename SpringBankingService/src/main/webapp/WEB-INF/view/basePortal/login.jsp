@@ -47,8 +47,13 @@
 									<div class="d-flex align-items-center mb-5 pb-1">
 										<img src="resources/images/logo.png" alt="logo" width="150">
 									</div>
+									<c:if test="${not empty msg}">
+										<div class="alert alert-danger" role="alert">
+											<c:out value="${msg}" />
+										</div>
+									</c:if>
 									<!-- Login Form -->
-									<form>
+									<form name="login" action="login" method="post">
 										<div class="form-floating mb-4">
 											<input class="form-control" name="username" placeholder="Username" /> <label for="username">Username</label>
 										</div>
@@ -57,12 +62,11 @@
 											<input type="password" class="form-control" name="password" placeholder="Password" /> <label for="password">Password</label>
 										</div>
 										<div class="pt-1 mb-4">
-											<button class="btn btn-danger btn-lg btn-block w-100" type="button">Login</button>
+											<button class="btn btn-danger btn-lg btn-block w-100" type="submit">Login</button>
 										</div>
 										<div class="pt-1 mb-4">
 											<button class="btn btn-outline-secondary btn-lg btn-block w-100" type="button">Register</button>
 										</div>
-
 										<a class="small text-muted" href="#!">Forgot password?</a>
 									</form>
 								</div>

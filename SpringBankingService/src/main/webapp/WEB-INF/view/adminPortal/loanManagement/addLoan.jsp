@@ -1,4 +1,4 @@
-<%@ page import="com.utils.URLUtils"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="container my-4">
 	<h3 class="mb-4">Add Loan</h3>
 	<div class="container">
@@ -62,7 +62,7 @@
 				<div class="row g-4 justify-content-center align-items-center h-100">
 					<div class="col-10 col-lg-6">
 						<div class="card card-hover">
-							<img id="thumbnail" src="${URLUtils.getBasePath()}/resources/images/PreviewImage.png" class="card-img-top"
+							<img id="thumbnail" src="<c:url value="/resources/images/PreviewImage.png" />" class="card-img-top"
 								alt="savingAcc">
 							<div class="card-body">
 								<h5 id="title" class="card-title">Loan Title</h5>

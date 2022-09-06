@@ -1,11 +1,11 @@
-<%@ page import="com.utils.URLUtils"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
 			<h3>Manage Cards</h3>
 		</div>
 		<div class="col-auto my-auto">
-			<a href="${URLUtils.getBasePath()}/admin/card-management/add" role="button" class="btn btn-danger"
+			<a href="<c:url value="/admin/card-management/add" />" role="button" class="btn btn-danger"
 				style="padding: 12px 36px;"> <strong>Add Card</strong>
 			</a>
 		</div>
@@ -17,9 +17,9 @@
 				<div class="col-auto">
 					<!-- Card Type Tabs -->
 					<nav id="card-type" class="nav nav-pills nav-tab-category fw-bold">
-						<a class="nav-link px-3 py-2 me-4 active" href="${URLUtils.getBasePath()}/admin/card-management">All</a> 
-						<a class="nav-link px-3 py-2 me-4" href="${URLUtils.getBasePath()}/admin/card-management?type=creditCard">Credit Card</a> 
-						<a class="nav-link px-3 py-2" href="${URLUtils.getBasePath()}/admin/card-management?type=debitCard">Debit Card</a>
+						<a class="nav-link px-3 py-2 me-4 active" href="<c:url value="/admin/card-management" />">All</a> <a
+							class="nav-link px-3 py-2 me-4" href="<c:url value="/admin/card-management?type=creditCard" />">Credit Card</a> <a
+							class="nav-link px-3 py-2" href="<c:url value="/admin/card-management?type=debitCard" />">Debit Card</a>
 					</nav>
 				</div>
 				<div class="col-4">
@@ -52,8 +52,7 @@
 					<tr>
 						<th scope="row">1</th>
 						<td style="max-height: 50px;"><img
-							src="${URLUtils.getBasePath()}/resources/images/basePortal/creditCard/OBS_signature.png" alt="test"
-							class="img-fluid" /></td>
+							src="<c:url value="/resources/images/basePortal/creditCard/OBS_signature.png" />" alt="test" class="img-fluid" /></td>
 						<td>OBS Signaure Credit Card</td>
 						<td>Credit Card</td>
 						<td>Up to 5% cashback on online & Visa contactless spend</td>
@@ -63,8 +62,7 @@
 						<td>
 							<div class="row g-3">
 								<div class="col-12">
-									<a href="${URLUtils.getBasePath()}/admin/card-management/update/1" role="button"
-										class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
+									<a href="<c:url value="/admin/card-management/update/1" />" role="button" class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
 									</a>
 								</div>
 								<div class="col-12">
@@ -100,7 +98,8 @@
 	if (cardType != null) {
 		let cardTypeList = document.getElementById("card-type").children;
 		for (var i = 0; i < cardTypeList.length; i++) {
-			if (cardTypeList[i].innerHTML.toLowerCase().replace(" ", "") == cardType.toLowerCase())
+			if (cardTypeList[i].innerHTML.toLowerCase().replace(" ", "") == cardType
+					.toLowerCase())
 				cardTypeList[i].className += " active";
 			else
 				cardTypeList[i].className = cardTypeList[i].className.replace(

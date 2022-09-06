@@ -1,0 +1,21 @@
+/* Header Navbar */
+#header-nav .dropdown-center .dropdown-menu {
+	left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.dropdown-menu-arrow::before {
+	content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid white;
+    transform: translateX(-50%);
+}
+
+.dropdown-item.active, .dropdown-item:active {
+	background-color: var(--bs-danger);
+}

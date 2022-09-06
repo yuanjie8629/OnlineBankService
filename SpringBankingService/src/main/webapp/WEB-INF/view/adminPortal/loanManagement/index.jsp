@@ -1,11 +1,11 @@
-<%@ page import="com.utils.URLUtils"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
 			<h3>Manage Loans</h3>
 		</div>
 		<div class="col-auto my-auto">
-			<a href="${URLUtils.getBasePath()}/admin/loan-management/add" role="button" class="btn btn-danger"
+			<a href="<c:url value="/admin/loan-management/add" />" role="button" class="btn btn-danger"
 				style="padding: 12px 36px;"> <strong>Add Loan</strong>
 			</a>
 		</div>
@@ -17,11 +17,11 @@
 				<div class="col-auto">
 					<!-- Loan Type Tabs -->
 					<nav id="loan-type" class="nav nav-pills nav-tab-category fw-bold">
-						<a class="nav-link px-3 py-2 me-4 active" href="${URLUtils.getBasePath()}/admin/loan-management"> All </a>
-						<a class="nav-link px-3 py-2 me-4" href="${URLUtils.getBasePath()}/admin/loan-management?type=personal">Personal Loan</a>
-						<a class="nav-link px-3 py-2 me-4" href="${URLUtils.getBasePath()}/admin/loan-management?type=home">Home Loan</a>
-						<a class="nav-link px-3 py-2 me-4" href="${URLUtils.getBasePath()}/admin/loan-management?type=car">Car Loan</a>
-						<a class="nav-link px-3 py-2" href="${URLUtils.getBasePath()}/admin/loan-management?type=education">Education Loan</a>
+						<a class="nav-link px-3 py-2 me-4 active" href="<c:url value="/admin/loan-management" />" > All </a>
+						<a class="nav-link px-3 py-2 me-4" href="<c:url value="/admin/loan-management?type=personal" />">Personal Loan</a>
+						<a class="nav-link px-3 py-2 me-4" href="<c:url value="/admin/loan-management?type=home" />" >Home Loan</a>
+						<a class="nav-link px-3 py-2 me-4" href="<c:url value="/admin/loan-management?type=car" />" >Car Loan</a>
+						<a class="nav-link px-3 py-2" href="<c:url value="/admin/loan-management?type=education" />" >Education Loan</a>
 					</nav>
 				</div>
 				<div class="col-4">
@@ -53,7 +53,7 @@
 					<tr>
 						<th scope="row">1</th>
 						<td style="max-height: 50px;"><img
-							src="${URLUtils.getBasePath()}/resources/images/basePortal/loan/OBS_PersonalLoan.jpg" alt="test"
+							src="<c:url value="/resources/images/basePortal/loan/OBS_PersonalLoan.jpg" />" alt="test"
 							class="img-fluid" /></td>
 						<td>OBS Personal Loan</td>
 						<td>Personal</td>
@@ -63,7 +63,7 @@
 						<td>
 							<div class="row g-3">
 								<div class="col-12">
-									<a href="${URLUtils.getBasePath()}/admin/loan-management/update/1" role="button"
+									<a href="<c:url value="/admin/loan-management/update/1" />" role="button"
 										class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
 									</a>
 								</div>
