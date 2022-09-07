@@ -21,7 +21,7 @@
 						<div class="carousel-caption carousel-caption-left">
 							<h1>OBS Home Loan</h1>
 							<h4 class="carousel-desc">Enjoy an interest rate of 4.05% p.a on your home loan with OBS</h4>
-							<a class="btn btn-md btn-danger" href="loan" role="button"> <strong>Learn More</strong>
+							<a class="btn btn-md btn-danger" href="loan?type=home" role="button"> <strong>Learn More</strong>
 							</a>
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 							<img src="resources/images/basePortal/ApplyAccount.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
 						<div class="my-2">
-							<a href="account" class="stretched-link text-dark text-decoration-none fw-bold">Open a New Account</a>
+							<a href="account?type=saving" class="stretched-link text-dark text-decoration-none fw-bold">Open a New Account</a>
 						</div>
 					</div>
 				</div>
@@ -88,7 +88,7 @@
 							<img src="resources/images/basePortal/ApplyLoan.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
 						<div class="my-2">
-							<a href="loan" class="stretched-link text-dark text-decoration-none fw-bold">Get a Personal Loan</a>
+							<a href="loan?type=personal" class="stretched-link text-dark text-decoration-none fw-bold">Get a Personal Loan</a>
 						</div>
 					</div>
 				</div>

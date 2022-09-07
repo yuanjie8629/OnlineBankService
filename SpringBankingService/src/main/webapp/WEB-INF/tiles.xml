@@ -23,17 +23,32 @@
 	
 	<definition name="account" extends="base.definition">
 		<put-attribute name="title" value="OBS Account" />
-		<put-attribute name="body" value="/WEB-INF/view/basePortal/account.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/account/index.jsp" />
+	</definition>
+	
+	<definition name="account-apply" extends="base.definition">
+		<put-attribute name="title" value="OBS Account" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/account/apply.jsp" />
 	</definition>
 	
 	<definition name="credit-card" extends="base.definition">
 		<put-attribute name="title" value="OBS Credit Card" />
-		<put-attribute name="body" value="/WEB-INF/view/basePortal/creditCard.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/creditCard/index.jsp" />
+	</definition>
+	
+	<definition name="credit-card-apply" extends="base.definition">
+		<put-attribute name="title" value="OBS Account" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/creditCard/apply.jsp" />
 	</definition>
 	
 	<definition name="loan" extends="base.definition">
 		<put-attribute name="title" value="OBS Loan" />
-		<put-attribute name="body" value="/WEB-INF/view/basePortal/loan.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/loan/index.jsp" />
+	</definition>
+	
+	<definition name="loan-apply" extends="base.definition">
+		<put-attribute name="title" value="OBS Loan" />
+		<put-attribute name="body" value="/WEB-INF/view/basePortal/loan/apply.jsp" />
 	</definition>
 	
 	<definition name="track-application" extends="base.definition">

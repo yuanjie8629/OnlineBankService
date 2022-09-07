@@ -44,7 +44,6 @@ public class LoginController {
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model m, RedirectAttributes ra) {
 		User user = userDao.login(username, password);
 		if (user != null) {
-			user.setPassword("");
 			session.setAttribute("user", user);
 			ra.addFlashAttribute("user", user);
 			if (user instanceof Admin)
@@ -64,24 +63,4 @@ public class LoginController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String register(Model model) {
-		User user = new User();
-	    model.addAttribute("user", user);
-		return "registerform";
-	}
-	
-	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String register(@Valid @ModelAttribute("user") Customer user, BindingResult br, RedirectAttributes ra) {
-		if (!br.hasErrors()) {
-			userDao.register(user);
-			ra.addFlashAttribute("msg","You have successfully registered.");
-			return "redirect:/";
-		} else {
-			return "registerform";
-		}
-	}
-	
-	
 }

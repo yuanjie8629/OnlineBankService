@@ -11,7 +11,7 @@
 						<fieldset class="row mb-3">
 							<legend class="col-form-label col-md-3 pt-0">Account Type :</legend>
 							<div class="col-md-9">
-								<div class="form-check form-check-inline is-invalid">
+								<div class="form-check form-check-inline ${status.error ? 'is-invalid' : ''}">
 									<form:radiobutton class="form-check-input " path="type" value="saving" />
 									<label class="form-check-label" for="saving">Saving</label>
 								</div>
@@ -20,7 +20,7 @@
 									<label class="form-check-label" for="current">Current</label>
 								</div>
 								<div class="invalid-feedback">
-									<form:errors path="type"/>
+									<form:errors path="type" />
 								</div>
 							</div>
 						</fieldset>
@@ -89,14 +89,16 @@
 			<div class="col-md-6 p-4">
 				<h4>Preview</h4>
 				<div class="row g-4 justify-content-center align-items-center h-100">
-					<div class="col-10 col-lg-6">
+					<div class="col-10 col-lg-7">
 						<div class="card card-hover">
-							<img id="thumbnailPrev" src="<c:url value="/resources/images/PreviewImage.png" />" class="card-img-top"
-								alt="savingAcc">
-							<div class="card-body">
+							<div class="card-thumbnail-img">
+								<img id="thumbnailPrev" src="<c:url value="/resources/images/PreviewImage.png" />"
+									class="card-img-top img-fluid" alt="prevImg">
+							</div>
+							<div class="card-body pb-0">
 								<h5 id="titlePrev" class="card-title">Account Title</h5>
 								<p id="descriptionPrev" class="card-text text-justify">Account Description</p>
-								<table class=" table text-justify">
+								<table class="table text-justify">
 									<tr>
 										<td>Interest Rate</td>
 										<td><span id="interestRatePrev">0</span>% p.a.</td>
@@ -106,7 +108,9 @@
 										<td><span id="minAmountPrev">0</span> SGD</td>
 									</tr>
 								</table>
-								<button class="btn btn-danger w-100">Apply Now</button>
+								<div class="card-footer">
+									<a class="btn btn-danger stretched-link w-100 mb-2">Apply Now</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -140,7 +144,6 @@ form['minAmount'].onchange = (event) => {
 }
 
 form['thumbnail'].onchange = (event) => {
-	console.log(form['thumbnail'].files);
 	let file = form['thumbnail'].files[0];
 	let thumbnail = document.getElementById("thumbnailPrev");
 	thumbnail.src = URL.createObjectURL(file);

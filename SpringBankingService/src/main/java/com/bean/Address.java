@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="address")
@@ -14,13 +15,19 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@NotBlank(message="Please enter your adderess.")
 	private String addressLine1;
+	
 	private String addressLine2;
+	
 	private String addressLine3;
 	
 	@Column(name="postal_code")
+	@NotBlank(message="Please enter your postalCode.")
 	private String postalCode;
 	
+	@NotBlank(message="Please select your country.")
 	private String country;
 	
 	@OneToOne(targetEntity=Customer.class)

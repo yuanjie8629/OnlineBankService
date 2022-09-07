@@ -8,9 +8,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="card")
+@Table(name="cust_card")
 @Inheritance(strategy=InheritanceType.JOINED)  
-public class Card {
+public class CustCard {
 	@Id
 	@GenericGenerator(name="cardNumGenerator", strategy="com.utils.CardNumGenerator")
 	@GeneratedValue(generator="cardNumGenerator")
@@ -31,7 +31,4 @@ public class Card {
 	private String pin;
 	
 	private String status;
-	
-	@ManyToOne
-	private CardType type;
 }

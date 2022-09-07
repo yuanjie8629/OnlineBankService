@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteLoanModal" tabindex="-1" aria-labelledby="deleteLoanModal" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-confirm">
@@ -14,8 +15,20 @@
 			</div>
 			<div class="modal-footer justify-content-center">
 				<button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-danger mx-2">Delete</button>
+				<a id="deleteBtn" role="button" class="btn btn-danger mx-2">Delete</a>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+let deleteModal = document.getElementById('deleteLoanModal')
+deleteModal.addEventListener('show.bs.modal', event => {
+  // Button that triggered the modal
+  let button = event.relatedTarget
+  // Extract info from data-bs-id attributes
+  let id = button.getAttribute('data-bs-id');
+  // update input id value
+  let deleteBtn = document.getElementById("deleteBtn");
+  deleteBtn.href = "<c:url value="/admin/loan-management/delete/" />" + id;
+})
+</script>

@@ -1,9 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <footer class="bg-dark text-lg-start text-muted">
 	<div class="container p-2">
 		<div class="row my-4">
 			<!-- Logo -->
 			<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-				<a class="navbar-brand" href="home"> <img src="resources/images/logo.png" alt="logo" width="150">
+				<a class="navbar-brand" href="home"> <img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="150">
 				</a>
 			</div>
 			<!-- Logo -->
@@ -13,11 +14,11 @@
 				<h5 class="text-uppercase mb-4">Useful Links</h5>
 
 				<ul class="list-unstyled">
-					<li class="mb-2"><a href="about-us" class="useful-link">About Us</a></li>
-					<li class="mb-2"><a href="account" class="useful-link">Apply Account</a></li>
-					<li class="mb-2"><a href="credit-card" class="useful-link">Apply Credit Card</a></li>
-					<li class="mb-2"><a href="loan" class="useful-link">Apply Loan</a></li>
-					<li class="mb-2"><a href="track-application" class="useful-link">Track Application</a></li>
+					<li class="mb-2"><a href="<c:url value="/about-us" />" class="useful-link">About Us</a></li>
+					<li class="mb-2"><a href="<c:url value="/account?type=saving" />" class="useful-link">Apply Account</a></li>
+					<li class="mb-2"><a href="<c:url value="/credit-card" />" class="useful-link">Apply Credit Card</a></li>
+					<li class="mb-2"><a href="<c:url value="/loan?type=personal" />" class="useful-link">Apply Loan</a></li>
+					<li class="mb-2"><a href="<c:url value="/track-application" />" class="useful-link">Track Application</a></li>
 				</ul>
 			</div>
 			<!-- Useful Links -->

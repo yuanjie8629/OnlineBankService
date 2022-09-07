@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin/customer-management")
 public class AdminCustMgmtController {
+	
 	@RequestMapping(value="/view/{id}")
 	public String viewCust(@PathVariable int id, Model m) {
 		return "admin-cust-mgmt-view";

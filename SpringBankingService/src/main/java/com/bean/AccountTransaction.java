@@ -27,7 +27,7 @@ public class AccountTransaction {
 	
 	private double balance;
 	
-	@ManyToOne(targetEntity=Account.class)
+	@ManyToOne(targetEntity=CustAccount.class)
 	@JoinColumn(name="acc_num")
-	private Account account;
+	private CustAccount account;
 }

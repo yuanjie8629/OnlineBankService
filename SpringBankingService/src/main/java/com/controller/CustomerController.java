@@ -21,13 +21,10 @@ public class CustomerController {
 	@RequestMapping(value={"/", "/home", "/index.jsp"})
 	public String home(Model m) {
 		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			m.addAttribute("user",user);
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-			m.addAttribute("loginTime", dtf.format(LocalDateTime.now()));  
-			return "cust-home";
-		}
-		return "redirect:/";
+		m.addAttribute("user",user);
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		m.addAttribute("loginTime", dtf.format(LocalDateTime.now()));  
+		return "cust-home";
 	}
 	
 	@RequestMapping(value="/account")

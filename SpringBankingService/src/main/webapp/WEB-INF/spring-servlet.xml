@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
-    xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:mvc="http://www.springframework.org/schema/mvc"  
-    xmlns:tx="http://www.springframework.org/schema/tx"
-    xsi:schemaLocation="  
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="  
         http://www.springframework.org/schema/beans  
         http://www.springframework.org/schema/beans/spring-beans.xsd  
         http://www.springframework.org/schema/context  
@@ -13,78 +13,113 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
-  
-    <!-- Provide support for component scanning -->
-    <context:component-scan base-package="com" />  
-  
-    <!--Provide support for conversion, formatting and validation -->  
-    <mvc:annotation-driven/>
-    
-    <mvc:resources mapping="/resources/**" location="/" />
-    
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>  
-	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">  
+
+	<!-- Provide support for component scanning -->
+	<context:component-scan base-package="com" />
+
+	<!--Provide support for conversion, formatting and validation -->
+	<mvc:annotation-driven />
+
+	<mvc:resources mapping="/resources/**" location="/" />
+
+	<!-- Configures Interceptors -->
+	<mvc:interceptors>
+		<!-- This XML will intercept all URIs -->
+		<bean class="com.interceptor.AuthorizationInterceptor"></bean>
+	</mvc:interceptors>
+
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
-			<list>  
-				<value>/WEB-INF/tiles.xml</value>  
-			</list>  
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
 		</property>
 	</bean>
-	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
-		<property name="prefix" value="/WEB-INF/view/basePortal/"></property>    
-		<property name="suffix" value=".jsp"></property>    
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/basePortal/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/adminPortal/"></property>
+		<property name="suffix" value=".jsp"></property>
 	</bean>
 	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
-		<property name="prefix" value="/WEB-INF/view/adminPortal/"></property>    
-		<property name="suffix" value=".jsp"></property>    
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/customerPortal/"></property>
+		<property name="suffix" value=".jsp"></property>
 	</bean>
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
-    
-    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
-    	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/bankingservice"></property>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/bankingservice"></property>
 		<property name="username" value="springproject"></property>
 		<property name="password" value="springproject"></property>
-    </bean>
-    
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="ds" />
-        <property name="packagesToScan" value="com.bean" />
-        <!--
-        <property name="annotatedClasses">
-            <list>
-                <value>com.bean.User</value>
-            </list>
-        </property>
-        -->
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-    </bean>
-    
-    <bean id="template" class="org.springframework.orm.hibernate5.HibernateTemplate">  
-    <property name="sessionFactory" ref="sessionFactory"></property>  
-    </bean>
-    
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<property name="packagesToScan" value="com.bean" />
+		<!-- <property name="annotatedClasses"> <list> <value>com.bean.User</value> 
+			</list> </property> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="template"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
 	<bean id="userDao" class="com.daoimpl.UserDaoImpl">
-		<property name="template" ref="template"></property>    
+		<property name="template" ref="template"></property>
 	</bean>
 	
-	<bean id="accTypeDao" class="com.daoimpl.AccountTypeDaoImpl">
-		<property name="template" ref="template"></property>    
+	<bean id="custDao" class="com.daoimpl.CustomerDaoImpl">
+		<property name="template" ref="template"></property>
 	</bean>
 	
-	<tx:annotation-driven transaction-manager="transactionManager" />
-   
-     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"> 
-     <property name="sessionFactory" ref="sessionFactory" /> 
+	<bean id="adminDao" class="com.daoimpl.AdminDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+
+	<bean id="accDao" class="com.daoimpl.AccountDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+
+	<bean id="creditCardDao" class="com.daoimpl.CreditCardDaoImpl">
+		<property name="template" ref="template"></property>
 	</bean>
 	
+	<bean id="loanTypeDao" class="com.daoimpl.LoanDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 </beans>

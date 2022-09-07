@@ -1,12 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container my-4">
 	<h3 class="mb-4">Update Account</h3>
 	<div class="container">
 		<div class="row card-shadow border">
 			<div class="col-md-6 p-4 border-end">
-				<form:form name="updateAccount" modelAttribute="account" action="save" method="post" enctype="multipart/form-data" onsubmit="submitForm(this)">
+				<form:form name="updateAccount" modelAttribute="account" action="save" method="post" enctype="multipart/form-data"
+					onsubmit="submitForm(this)">
 					<form:hidden path="id" />
 					<spring:bind path="type">
 						<fieldset class="row mb-3">
@@ -90,28 +92,39 @@
 			<div class="col-md-6 p-4">
 				<h4>Preview</h4>
 				<div class="row g-4 justify-content-center align-items-center h-100">
-					<div class="col-10 col-lg-6">
-						<div class="card card-hover">
-							<img id="thumbnail" src="data:image/png;base64,${account.getBase64Thumbnail()}" class="card-img-top"
-								alt="savingAcc">
-							<div class="card-body">
-								<h5 id="title" class="card-title">
+					<div class="col-10 col-lg-7">
+						<div class="card card-hover h-100">
+							<div class="card-thumbnail-img">
+								<img id="thumbnailPrev" src="data:image/png;base64,${account.getBase64Thumbnail()}" alt="${account.getTitle()}"
+									class="card-img-top img-fluid">
+							</div>
+							<div class="card-body pb-0">
+								<h5 id="titlePrev" class="card-title">
 									<c:out value="${account.getTitle()}" />
 								</h5>
-								<p id="description" class="card-text text-justify">
+								<p id="descriptionPrev" class="card-text text-justify">
 									<c:out value="${account.getDescription()}" />
 								</p>
-								<table class=" table text-justify">
+								<table class="table text-justify">
 									<tr>
 										<td>Interest Rate</td>
-										<td><span id="interestRate"><c:out value="${account.getInterestRate()}" /></span>% p.a.</td>
+										<td>
+											<span id="interestRatePrev">
+												<fmt:formatNumber value="${account.getInterestRate() / 100}" type="percent" minFractionDigits="2" />
+											</span> p.a.</td>
 									</tr>
 									<tr>
 										<td>Min Deposit Amount</td>
-										<td><span id="minAmount"><c:out value="${account.getMinAmount()}" /></span> SGD</td>
+										<td>
+											<span id="minAmountPrev"> 
+												<fmt:formatNumber value="${account.getMinAmount()}" type="currency" currencyCode="SGD" />
+											</span>
+										</td>
 									</tr>
 								</table>
-								<button class="btn btn-danger w-100">Apply Now</button>
+							</div>
+							<div class="card-footer">
+								<a class="btn btn-danger stretched-link w-100 mb-2">Apply Now</a>
 							</div>
 						</div>
 					</div>
@@ -124,33 +137,28 @@
 <script>
 let form = document.forms['updateAccount'];
 form['title'].onchange = (event) => {
-	let title = document.getElementById("title");
+	let title = document.getElementById("titlePrev");
 	title.innerHTML = event.target.value;
 }
 
 form['description'].onchange = (event) => {
-	let description = document.getElementById("description");
+	let description = document.getElementById("descriptionPrev");
 	description.innerHTML = event.target.value;
 }
 
 form['interestRate'].onchange = (event) => {
-	let interestRate = document.getElementById("interestRate");
+	let interestRate = document.getElementById("interestRatePrev");
 	interestRate.innerHTML = event.target.value;
 }
 
 form['minAmount'].onchange = (event) => {
-	let minAmount = document.getElementById("minAmount");
+	let minAmount = document.getElementById("minAmountPrev");
 	minAmount.innerHTML = event.target.value;
 }
 
 form['thumbnail'].onchange = (event) => {
-	console.log(form['thumbnail'].files);
 	let file = form['thumbnail'].files[0];
-	let thumbnail = document.getElementById("thumbnail");
+	let thumbnail = document.getElementById("thumbnailPrev");
 	thumbnail.src = URL.createObjectURL(file);
-}
-
-function submitForm(form) {
-	form['thumbnail'].
 }
 </script>

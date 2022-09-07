@@ -47,10 +47,4 @@ public class UserDaoImpl implements UserDao{
 //			return null;	
 //		return userList.get(0);
 	}
-
-	@Override
-	@Transactional
-	public void register(Customer user) {
-		template.save(user);
-	}
 }

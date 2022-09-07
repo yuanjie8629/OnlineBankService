@@ -27,7 +27,7 @@ public class CreditCardTransaction {
 	
 	private double balance;
 	
-	@ManyToOne(targetEntity=CreditCard.class)
+	@ManyToOne(targetEntity=CustCreditCard.class)
 	@JoinColumn(name="card_num")
-	private CreditCard creditCard;
+	private CustCreditCard custCreditCard;
 }

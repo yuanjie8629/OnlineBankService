@@ -31,7 +31,7 @@ public class LoanPayment {
 	
 	private String status;
 	
-	@ManyToOne(targetEntity=Loan.class)
+	@ManyToOne(targetEntity=CustLoan.class)
 	@JoinColumn(name="loan_id")
-	private Loan loan;
+	private CustLoan loan;
 }

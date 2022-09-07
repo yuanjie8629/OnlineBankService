@@ -141,6 +141,21 @@
 	box-shadow: var(--button-shadow);
 }
 
+.card .card-footer {
+	background-color: transparent;
+	border: none;
+}
+
+.card .card-thumbnail-img {
+	height: 220px;
+}
+
+.card .card-thumbnail-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 /* Modal Confirm */
 .modal-confirm .modal-header {
 	border: none;
@@ -179,4 +194,9 @@ display: inline-block;
 
 .error {
 	color: var(--bs-danger);
+}
+
+/* Toast */
+.toast {
+	--bs-toast-max-width: 400px;
 }

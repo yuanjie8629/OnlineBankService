@@ -24,4 +24,9 @@ public class Admin extends User{
 		super();
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }
