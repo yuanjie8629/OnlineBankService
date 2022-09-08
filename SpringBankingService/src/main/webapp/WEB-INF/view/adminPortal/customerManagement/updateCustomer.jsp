@@ -34,7 +34,7 @@
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="nationality">Nationality</label> <select class="form-select">
-									<jsp:include page="../../nationalitySelection.jsp" />
+									<jsp:include page="../../selection/nationalitySelection.jsp" />
 								</select>
 							</div>
 							<div class="col-12 col-md-6">
@@ -45,10 +45,7 @@
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="maritalStatus">Marital Status</label><br> <select class="form-select">
-									<option value="Single">Single</option>
-									<option value="Married">Married</option>
-									<option value="Divorced">Divorced</option>
-									<option value="Widowed">Widowed</option>
+									<jsp:include page="../../selection/maritalStatusSelection.jsp" />
 								</select>
 							</div>
 							<div class="col-12 col-md-6">
@@ -56,34 +53,12 @@
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="race">Race</label><br> <select class="form-select">
-									<option value="Chinese">Chinese</option>
-									<option value="Malay">Malay</option>
-									<option value="Indian">Indian</option>
-									<option value="Others">Others</option>
+									<jsp:include page="../../selection/raceSelection.jsp" />
 								</select>
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="industry">Industry</label><br> <select class="form-select">
-									<option value="Administrative and Support Service">Administrative and Support Service</option>
-									<option value="Agriculture, Forestry and Fishing">Agriculture, Forestry and Fishing</option>
-									<option value="Art, Entertainment and Recreation">Art, Entertainment and Recreation</option>
-									<option value="Construction">Construction</option>
-									<option value="Education">Education</option>
-									<option value="Electricity, Gas, Steam, and Air Conditioning Supply">Electricity, Gas, Steam, and Air
-										Conditioning Supply</option>
-									<option value="Banking and Finance">Banking and Finance</option>
-									<option value="Human Health and Social Work Activities">Human Health and Social Work Activities</option>
-									<option value="Information and Communication">Information and Communication</option>
-									<option value="Manufacturing">Manufacturing</option>
-									<option value="Mining and Quarrying">Mining and Quarrying</option>
-									<option value="Professional, Scientific and Technical Activities">Professional, Scientific and
-										Technical Activities</option>
-									<option value="Public Administration and Defence">Public Administration and Defence</option>
-									<option value="Real Estate Activities">Real Estate Activities</option>
-									<option value="Transportation and Storage">Transportation and Storage</option>
-									<option value="Water Supply, Sewerage, Waste Management">Water Supply, Sewerage, Waste Management</option>
-									<option value="Wholesale and Retail Trade">Wholesale and Retail Trade</option>
-									<option value="Others">Others</option>
+									<jsp:include page="../../selection/industrySelection.jsp" />
 								</select>
 							</div>
 							<div class="col-12 col-md-6">
@@ -108,7 +83,7 @@
 							</div>
 							<div class="col-12">
 								<label for="country">Country</label> <select class="form-select">
-									<jsp:include page="../../countrySelection.jsp" />
+									<jsp:include page="../../selection/countrySelection.jsp" />
 								</select>
 							</div>
 						</div>

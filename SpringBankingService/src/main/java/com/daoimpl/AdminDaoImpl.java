@@ -17,7 +17,6 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	@Transactional
 	public void update(Admin admin) {
-		System.out.println(admin);
 		template.update(admin);
 	}
 

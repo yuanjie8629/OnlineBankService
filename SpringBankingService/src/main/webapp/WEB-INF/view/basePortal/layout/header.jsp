@@ -2,7 +2,8 @@
 <header>
 	<nav class="navbar navbar-expand-lg fixed-top bg-light py-3">
 		<div class="container">
-			<a class="navbar-brand" href="home"> <img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="100">
+			<a class="navbar-brand" href="<c:url value="/home" />">
+				<img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="100">
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -28,7 +29,7 @@
 					<li id="contact-us" class="nav-item"><a class="nav-link" href="<c:url value="/contact-us" />">Contact Us</a></li>
 				</ul>
 			</div>
-			<a href="login" role="button" class="login-btn btn btn-outline-danger" style="padding: 12px 36px;"> <strong>Login</strong>
+			<a href="<c:url value="/login" />" role="button" class="login-btn btn btn-outline-danger" style="padding: 12px 36px;"> <strong>Login</strong>
 			</a>
 		</div>
 	</nav>

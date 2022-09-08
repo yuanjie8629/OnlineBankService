@@ -105,12 +105,24 @@
 	<bean id="accDao" class="com.daoimpl.AccountDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
+	
+	<bean id="accAppDao" class="com.daoimpl.AccountAppDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
 
 	<bean id="creditCardDao" class="com.daoimpl.CreditCardDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
 	
-	<bean id="loanTypeDao" class="com.daoimpl.LoanDaoImpl">
+	<bean id="creditCardAppDao" class="com.daoimpl.CreditCardAppDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="loanDao" class="com.daoimpl.LoanDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="loanAppDao" class="com.daoimpl.LoanAppDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
 

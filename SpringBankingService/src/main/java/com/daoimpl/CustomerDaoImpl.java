@@ -51,9 +51,22 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Customer getCustomerByIdentityNum(String identityNum) {
+	public Customer getCustomerByIdentityNum(String identityNumber) {
 		DetachedCriteria query = DetachedCriteria.forClass(Customer.class);
-		query.add(Property.forName("identityNum").eq(identityNum).ignoreCase());
+		query.add(Property.forName("identityNumber").eq(identityNumber).ignoreCase());
+		List<Customer> custList = (List<Customer>) template.findByCriteria(query,0, 1);
+		if (!custList.isEmpty()) {
+			return custList.get(0);
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Customer getCustomerByCredentials(String username, String password) {
+		DetachedCriteria query = DetachedCriteria.forClass(Customer.class);
+		query.add(Property.forName("username").eq(username));
+		query.add(Property.forName("password").eq(password));
 		List<Customer> custList = (List<Customer>) template.findByCriteria(query,0, 1);
 		if (!custList.isEmpty()) {
 			return custList.get(0);

@@ -1,4 +1,4 @@
-package com.utils;
+package com.generator;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -9,27 +9,25 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
-public class LoanIdGenerator implements IdentifierGenerator{
+public class CardNumGenerator implements IdentifierGenerator {
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 		int count = 0;
-		String loanID = null;
+		String cardNum = null;
 		do {
-			loanID = this.generateID();
-			Query query = session.createQuery("select count(*) from Loan l where l.id = :loanID");
-			query.setParameter("loanID", loanID);
-			count = (int) query.getSingleResult();
+			cardNum = this.generateID();
+			Query query = session.createQuery("select count(*) from CustCard c where c.cardNum = :cardNum");
+			query.setParameter("cardNum", cardNum);
+			count = ((Long) query.getSingleResult()).intValue();
 		} while(count > 0);
-		return loanID;
+		return cardNum;
 	}
 	
 	public String generateID() {
 		Random rand = new Random();
 		
 		// Generate random 16 digits
-		long drand = (long)(rand.nextDouble() * 10000000L);
-		return "l" + Long.toString(drand);
+		long drand = (long)(rand.nextDouble() * 10000000000000000L);
+		return Long.toString(drand);
 	}
-	
-	
 }

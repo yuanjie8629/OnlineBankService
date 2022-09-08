@@ -112,7 +112,9 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	<%}%>
-
+	
+	let queryParams = new URLSearchParams(window.location.search);
+	let filterCardForm = document.forms["filterCard"];
 	/* Script to tick the showDeleted checkbox according to url query*/
 	let showDeleted = queryParams.get("showDeleted");
 	if (showDeleted != null) {

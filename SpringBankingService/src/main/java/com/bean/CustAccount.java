@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="cust_account")
 public class CustAccount {
 	@Id
-	@GenericGenerator(name="accNumGenerator", strategy="com.utils.AccountNumGenerator")
+	@GenericGenerator(name="accNumGenerator", strategy="com.generator.AccountNumGenerator")
 	@GeneratedValue(generator="accNumGenerator")
 	@Column(name="acc_num")
 	private String accNum;
@@ -34,8 +34,9 @@ public class CustAccount {
 	@Column(name="hold_amt")
 	private double holdAmt;
 	
-	@CreationTimestamp
+	
 	@Column(name="open_date")
+	@CreationTimestamp
 	private LocalDateTime openDate;
 	
 	@Column(name="close_date")

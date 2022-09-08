@@ -44,11 +44,6 @@ public class AdminController {
 		return "admin-cust-mgmt";
 	}
 
-	@RequestMapping(value = "/application-management")
-	public String applicationManagement() {
-		return "admin-app-mgmt";
-	}
-
 	@RequestMapping(value = "/profile-management")
 	public String profileManagement(Model m) {
 		m.addAttribute("user", (User) session.getAttribute("user"));

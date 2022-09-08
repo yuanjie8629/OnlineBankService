@@ -1,6 +1,6 @@
 package com.bean;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,9 +54,12 @@ public class Loan {
 	@Column(name="is_deleted", nullable = false, columnDefinition = "TINYINT(1) default 0")
 	private boolean isDeleted;
 	
-	@OneToMany(mappedBy="loan", cascade = CascadeType.ALL)
-	private List<CustLoan> custLoans;
-
+	@OneToMany(mappedBy="loan", cascade = { CascadeType.MERGE })
+	private Set<CustLoan> custLoans;
+	
+	@OneToMany(mappedBy="loan", cascade = { CascadeType.MERGE })
+	private Set<LoanApplication> loanApplications;
+	
 	public int getId() {
 		return id;
 	}
@@ -125,12 +128,20 @@ public class Loan {
 		this.isDeleted = isDeleted;
 	}
 	
-	public List<CustLoan> getCustLoans() {
+	public Set<CustLoan> getCustLoans() {
 		return custLoans;
 	}
 
-	public void setCustLoans(List<CustLoan> custLoans) {
+	public void setCustLoans(Set<CustLoan> custLoans) {
 		this.custLoans = custLoans;
+	}
+
+	public Set<LoanApplication> getLoanApplications() {
+		return loanApplications;
+	}
+
+	public void setLoanApplications(Set<LoanApplication> loanApplications) {
+		this.loanApplications = loanApplications;
 	}
 
 	public Loan() {
@@ -143,8 +154,7 @@ public class Loan {
 			@NotNull(message = "Please enter interest rate for the loan.") @Min(value = 0, message = "Interest rate must be positive number.") @Max(value = 100, message = "Interest rate must be less than 100.") double interestRate,
 			@Min(value = 0, message = "Down Payment must be positive number.") @NotNull(message = "Please enter the required down payment in percentage for the loan.") double downpayment,
 			@NotNull(message = "Please upload thumbnail image for the loan.") @Size(min = 1, max = 5242880, message = "Please upload thumbnail image for the card.(Max 5MB)") byte[] thumbnail,
-			boolean isDeleted, List<CustLoan> custLoans) {
-		super();
+			boolean isDeleted, Set<CustLoan> custLoans) {
 		this.id = id;
 		this.type = type;
 		this.title = title;

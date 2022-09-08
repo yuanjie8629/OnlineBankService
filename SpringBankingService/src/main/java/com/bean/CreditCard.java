@@ -1,6 +1,6 @@
 package com.bean;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,8 +57,11 @@ public class CreditCard {
 	@Column(name="is_deleted", nullable = false, columnDefinition = "TINYINT(1) default 0")
 	private boolean isDeleted;
 	
-	@OneToMany(mappedBy="creditCard", cascade = CascadeType.ALL)
-	private List<CustCreditCard> custCreditCards;
+	@OneToMany(mappedBy="creditCard", cascade = {CascadeType.MERGE})
+	private Set<CustCreditCard> custCreditCards;
+	
+	@OneToMany(cascade= {CascadeType.MERGE}, mappedBy="creditCard")
+	private Set<CreditCardApplication> creditCardApplication;
 
 	public int getId() {
 		return id;
@@ -128,12 +131,20 @@ public class CreditCard {
 		this.isDeleted = isDeleted;
 	}
 	
-	public List<CustCreditCard> getCustCreditCards() {
+	public Set<CustCreditCard> getCustCreditCards() {
 		return custCreditCards;
 	}
 
-	public void setCustCreditCards(List<CustCreditCard> custCreditCards) {
+	public void setCustCreditCards(Set<CustCreditCard> custCreditCards) {
 		this.custCreditCards = custCreditCards;
+	}
+
+	public Set<CreditCardApplication> getCreditCardApplication() {
+		return creditCardApplication;
+	}
+
+	public void setCreditCardApplication(Set<CreditCardApplication> creditCardApplication) {
+		this.creditCardApplication = creditCardApplication;
 	}
 
 	public CreditCard() {
@@ -146,7 +157,7 @@ public class CreditCard {
 			@NotNull(message = "Please enter interest rate for the card.") @Min(value = 0, message = "Interest rate must be positive number.") @Max(value = 100, message = "Interest rate must be less than 100.") double interestRate,
 			@Min(value = 0, message = "Minimum income amount must be positive number.") @NotNull(message = "Please enter minimum required income amount for the card.") double minIncome,
 			@NotNull(message = "Please upload thumbnail image for the card.") @Size(min = 1, max = 5242880, message = "Please upload thumbnail image for the card.(Max 5MB)") byte[] thumbnail,
-			boolean isDeleted, List<CustCreditCard> custCreditCards) {
+			boolean isDeleted, Set<CustCreditCard> custCreditCards) {
 		super();
 		this.id = id;
 		this.title = title;

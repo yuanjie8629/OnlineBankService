@@ -55,7 +55,7 @@
 									</table>
 								</div>
 								<div class="card-footer">
-								<a class="btn btn-danger stretched-link w-100 mb-2">Apply Now</a>
+								<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${card.getId()}">Apply Now</button>
 							</div>
 							</div>
 						</c:forEach>
@@ -70,3 +70,29 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+<jsp:include page="applyModal.jsp" />
+<jsp:include page="../applySuccessModal.jsp" />
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex align-items-center p-2">
+			<div class="toast-body">
+				<c:out value="${msg}" />
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	/* Message Toast */
+	<%if (request.getAttribute("msg") != null) {%>
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	<%}%>
+	
+	/* Success Modal */
+	<%if (request.getAttribute("refNum") != null) {%>
+	let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
+	applySuccessModal.show();
+	<%}%>
+	
+</script>

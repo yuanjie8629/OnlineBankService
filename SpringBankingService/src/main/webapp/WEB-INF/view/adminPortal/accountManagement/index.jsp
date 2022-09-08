@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.utils.StringUtils"%>
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
@@ -53,7 +52,7 @@
 								<td style="max-height: 50px;"><img src="data:image/png;base64,${acc.getBase64Thumbnail()}"
 									alt="accthumbnail-${acc.getId()}" class="img-fluid" /></td>
 								<td><c:out value="${acc.getTitle()}" /></td>
-								<td><c:out value="${StringUtils.capitalize(acc.getType())}" /></td>
+								<td class="text-capitalize"><c:out value="${acc.getType()}" /></td>
 								<td><c:out value="${acc.getDescription()}" /></td>
 								<td><fmt:formatNumber value="${acc.getInterestRate()}" type="percent" minFractionDigits="2" /> p.a.</td>
 								<td><fmt:formatNumber value="${acc.getMinAmount()}" type="currency" currencyCode="SGD" /></td>

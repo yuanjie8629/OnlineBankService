@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Inheritance(strategy=InheritanceType.JOINED)  
 public class CustCard {
 	@Id
-	@GenericGenerator(name="cardNumGenerator", strategy="com.utils.CardNumGenerator")
+	@GenericGenerator(name="cardNumGenerator", strategy="com.generator.CardNumGenerator")
 	@GeneratedValue(generator="cardNumGenerator")
 	@Column(name="card_num")
 	private String cardNum;

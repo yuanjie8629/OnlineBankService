@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container w-75 p-2">
-	<h3 class="mt-3">Credit Card Application</h3>
+	<h3 class="mt-3">Loan Application</h3>
 	<div class="bs-stepper py-3">
 		<div class="bs-stepper-header m-auto mb-3" role="tablist">
 			<!-- Steps -->
@@ -19,9 +19,9 @@
 				</button>
 			</div>
 			<div class="line"></div>
-			<div class="step" data-target="#creditCardDetails">
-				<button type="button" class="step-trigger" role="tab" aria-controls="address" id="creditCardDetailsTrigger">
-					<span class="bs-stepper-circle">3</span><span class="bs-stepper-label">Credit Card Details</span>
+			<div class="step" data-target="#loanDetails">
+				<button type="button" class="step-trigger" role="tab" aria-controls="address" id="loanDetailsTrigger">
+					<span class="bs-stepper-circle">3</span><span class="bs-stepper-label">Loan Details</span>
 				</button>
 			</div>
 			<div class="line"></div>
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="bs-stepper-content p-0">
-			<form:form name="applyCard" modelAttribute="application" action="" method="post" enctype="multipart/form-data">
+			<form:form name="applyLoan" modelAttribute="application" action="" method="post" enctype="multipart/form-data">
 				<div class="card card-shadow">
 					<div class="card-body p-4">
 						<!-- Contents -->
@@ -237,14 +237,15 @@
 								</div>
 							</div>
 						</div>
-						<div id="creditCardDetails" class="content" role="tabpanel" aria-labelledby="creditCardDetailsTrigger">
-							<h4 class="mb-4">Credit Card Details</h4>
+						<div id="loanDetails" class="content" role="tabpanel" aria-labelledby="loanDetailsTrigger">
+							<h4 class="mb-4">Loan Details</h4>
 							<div class="row g-4">
 								<spring:bind path="income">
 									<div class="col-12 col-lg-6">
 										<label class="form-label" for="income">Monthly Income</label>
 										<div class="input-group">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="income" type="number" min="0" step="0.01" placeholder="Enter your monthly income"/>
+											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="income" type="number" min="0"
+												step="0.01" placeholder="Enter your monthly income" />
 											<span class="input-group-text">SGD</span>
 										</div>
 										<div class="invalid-feedback">
@@ -252,34 +253,70 @@
 										</div>
 									</div>
 								</spring:bind>
-								<spring:bind path="cardDisplayName">
+								
+								<spring:bind path="loanAmount">
 									<div class="col-12 col-lg-6">
-										<label class="form-label" for="cardDisplayName">How would you like to display your name on card?</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="cardDisplayName" />
-										<div class="invalid-feedback">
-											<form:errors path="cardDisplayName" />
-										</div>
-									</div>
-								</spring:bind>
-								<spring:bind path="creditLimit">
-									<div class="col-12">
-										<div class="row mb-2">
-											<div class="col-auto">
-												<label class="form-check-label" for="creditLimit">Do you have any preferred credit limit?</label>
-											</div>
-											<div class="col-auto">
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox" name="creditLimitTrigger"
-														onchange="triggerCreditLimit(this)"> <label class="form-check-label" for="creditLimitTrigger">Yes</label>
-												</div>
-											</div>
-										</div>
-										<div id="creditLimitInput" class="input-group d-none">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="creditLimit" type="number" min="0" step="0.01" placeholder="Enter your preffered credit limit"/>
+										<label class="form-label" for="loanAmount">Desired Loan Amount</label>
+										<div class="input-group">
+											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="loanAmount" type="number" min="0"
+												step="0.01" placeholder="Enter your desired loan amount" />
 											<span class="input-group-text">SGD</span>
 										</div>
 										<div class="invalid-feedback">
-											<form:errors path="creditLimit" />
+											<form:errors path="loanAmount" />
+										</div>
+									</div>
+								</spring:bind>
+								<spring:bind path="repaymentPeriod">
+									<div class="col-12 col-lg-6">
+										<label class="form-label" for="repaymentPeriod">Repayment Period</label>
+										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="repaymentPeriod">
+											<option value="24">24 months</option>
+											<option value="36">36 months</option>
+											<option value="48">48 months</option>
+											<option value="60">60 months</option>
+										</form:select>
+										<div class="invalid-feedback">
+											<form:errors path="repaymentPeriod" />
+										</div>
+									</div>
+								</spring:bind>
+								<spring:bind path="disbursementBank">
+									<div class="col-12 col-lg-6">
+										<label class="form-label" for="disbursementBank">Disbursement Bank</label>
+										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="disbursementBank">
+											<option value="DBS">DBS</option>
+											<option value="UOB">UOB</option>
+											<option value="OCBC">OCBC</option>
+											<option value="HSBC">HSBC</option>
+											<option value="Citybank">Citybank</option>
+											<option value="Maybank">Maybank</option>
+											<option value="Standard Chartered">Standard Chartered</option>
+											<option value="CIMB">CIMB</option>
+										</form:select>
+										<div class="invalid-feedback">
+											<form:errors path="disbursementBank" />
+										</div>
+									</div>
+								</spring:bind>
+								<spring:bind path="disbursementAccType">
+									<div class="col-12 col-lg-6">
+										<label class="form-label" for="disbursementAccType">Disbursement Bank</label>
+										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="disbursementAccType">
+											<option value="saving">Saving Account</option>
+											<option value="current">Current Account</option>
+										</form:select>
+										<div class="invalid-feedback">
+											<form:errors path="disbursementAccType" />
+										</div>
+									</div>
+								</spring:bind>
+								<spring:bind path="disbursementAccNum">
+									<div class="col-12 col-lg-6">
+										<label class="form-label" for="disbursementAccNum">Disbursement Account Number</label>
+										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="disbursementAccNum" />
+										<div class="invalid-feedback">
+											<form:errors path="disbursementAccNum" />
 										</div>
 									</div>
 								</spring:bind>
@@ -287,17 +324,20 @@
 									<div class="col-12">
 										<div class="row mb-2">
 											<div class="col-auto">
-												<label class="form-check-label" for="totalInstallment">Do you have any financial commitments (e.g. private money lenders)?</label>
+												<label class="form-check-label" for="totalInstallment">Do you have any financial commitments (e.g.
+													private money lenders)?</label>
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
 													<input class="form-check-input" type="checkbox" name="totalInstallmentTrigger"
-														onchange="triggerTotalInstallment(this)"> <label class="form-check-label" for="totalInstallmentTrigger">Yes</label>
+														onchange="triggerTotalInstallment(this)"> <label class="form-check-label"
+														for="totalInstallmentTrigger">Yes</label>
 												</div>
 											</div>
 										</div>
 										<div id="totalInstallmentInput" class="input-group d-none">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="totalInstallment" type="number" min="0" step="0.01" placeholder="Enter your total monthly installment"/>
+											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="totalInstallment" type="number"
+												min="0" step="0.01" placeholder="Enter your preffered credit limit" />
 											<span class="input-group-text">SGD</span>
 										</div>
 										<div class="invalid-feedback">
@@ -322,9 +362,10 @@
 							<div class="row g-4">
 								<spring:bind path="identityDoc">
 									<div class="col-12">
-										<label class="form-label" for="identityDoc">Please upload your Identity Card / Passport (Front and Back) in pdf format</label>
+										<label class="form-label" for="identityDoc">Please upload your Identity Card / Passport (Front and
+											Back) in pdf format</label>
 										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="identityDoc"
-											accept="application/pdf" onchange="getIdentityDocLink(this)"/>
+											accept="application/pdf" onchange="getIdentityDocLink(this)" />
 										<a id="identityDocLink" target="_blank"></a>
 										<div class="invalid-feedback">
 											<form:errors path="identityDoc" />
@@ -334,11 +375,21 @@
 								<spring:bind path="payslipDoc">
 									<div class="col-12">
 										<label class="form-label" for="payslipDoc">Please upload your latest payslip within 3 months (in pdf format)</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="payslipDoc"
-											accept="application/pdf" onchange="getPayslipDocLink(this)"/>
+										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="payslipDoc" accept="application/pdf" onchange="getPayslipDocLink(this)" />
 										<a id="payslipDocLink" target="_blank"></a>
 										<div class="invalid-feedback">
 											<form:errors path="payslipDoc" />
+										</div>
+									</div>
+								</spring:bind>
+								<spring:bind path="supportDoc">
+									<div class="col-12">
+										<label class="form-label" for="supportDoc">Please upload any other support documents (in pdf format)</label>
+										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="supportDoc"
+											accept="application/pdf" onchange="getSupportDocLink(this)" />
+										<a id="supportDocLink" target="_blank"></a>
+										<div class="invalid-feedback">
+											<form:errors path="supportDoc" />
 										</div>
 									</div>
 								</spring:bind>
@@ -357,38 +408,32 @@
 						<div id="submit" class="content" role="tabpanel" aria-labelledby="submitTrigger">
 							<h4 class="mb-4">Preview</h4>
 							<div class="row g-4 justify-content-center">
-								<span class="fs-6">Please confirm if you are applying the following Credit Card:</span>
+								<span class="fs-6">Please confirm if you are applying the following Loan:</span>
 								<div class="col-6 col-xl-4">
 									<div class="card card-hover h-100">
-										<div class="card-thumbnail-img p-1">
-											<img id="thumbnailPrev" src="data:image/png;base64,${card.getBase64Thumbnail()}"
-												class="card-img-top img-fluid" style="object-fit: contain;" alt="${card.getTitle()}">
+										<div class="card-thumbnail-img">
+											<img src="data:image/png;base64,${loan.getBase64Thumbnail()}" class="card-img-top img-fluid"
+												alt="${loan.getTitle()}">
 										</div>
 										<div class="card-body pb-0">
-											<h5 id="titlePrev" class="card-title">
-												<c:out value="${card.getTitle()}" />
+											<h5 class="card-title">
+												<c:out value="${loan.getTitle()}" />
 											</h5>
-											<p id="descriptionPrev" class="card-text text-justify">
-												<c:out value="${card.getDescription()}" />
+											<p class="card-text text-justify">
+												<c:out value="${loan.getDescription()}" />
 											</p>
 											<table class="table text-justify">
 												<tr>
-													<td>Min Income</td>
-													<td><span id="minIncomePrev"> <fmt:formatNumber value="${card.getMinIncome()}" type="currency"
-																currencyCode="SGD" />
-													</span></td>
-												</tr>
-												<tr>
 													<td>Interest Rate</td>
-													<td><span id="interestRatePrev"> <fmt:formatNumber value="${card.getInterestRate() / 100}"
-																type="percent" minFractionDigits="2" />
+													<td><span> <fmt:formatNumber value="${loan.getInterestRate()}" type="percent"
+																minFractionDigits="2" />
 													</span> p.a.</td>
 												</tr>
 												<tr>
-													<td>Annual Fee</td>
-													<td><span id="annualFeePrev"> <fmt:formatNumber value="${card.getAnnualFee()}" type="currency"
-																currencyCode="SGD" />
-													</span></td>
+													<td>Down Payment</td>
+													<td><span> <fmt:formatNumber value="${loan.getDownpayment()}" type="percent"
+																minFractionDigits="2" />
+													</span> from total</td>
 												</tr>
 											</table>
 										</div>
@@ -436,26 +481,17 @@
 		})
 	})
 
-	// Script to trigger credit limit input
-	function triggerCreditLimit(checkbox) {
-		let creditLimitInput = document.getElementById("creditLimitInput");
-		if (checkbox.checked) {
-			creditLimitInput.classList.remove("d-none");
-		} else {
-			creditLimitInput.classList.add("d-none")
-		}
-	}
-	
 	// Script to trigger total installment input
 	function triggerTotalInstallment(checkbox) {
-		let totalInstallmentInput = document.getElementById("totalInstallmentInput");
+		let totalInstallmentInput = document
+				.getElementById("totalInstallmentInput");
 		if (checkbox.checked) {
 			totalInstallmentInput.classList.remove("d-none");
 		} else {
 			totalInstallmentInput.classList.add("d-none")
 		}
 	}
-	
+
 	// Script to display link for uploaded identity doc
 	function getIdentityDocLink(fileInput) {
 		let file = fileInput.files[0];
@@ -464,7 +500,7 @@
 		identityDocLink.href = objectURL;
 		identityDocLink.innerHTML = file.name;
 	}
-	
+
 	// Script to display link for uploaded payslip doc
 	function getPayslipDocLink(fileInput) {
 		let file = fileInput.files[0];
@@ -472,5 +508,14 @@
 		let payslipDocLink = document.getElementById("payslipDocLink");
 		payslipDocLink.href = objectURL;
 		payslipDocLink.innerHTML = file.name;
+	}
+	
+	// Script to display link for uploaded support doc
+	function getSupportDocLink(fileInput) {
+		let file = fileInput.files[0];
+		let objectURL = URL.createObjectURL(file);
+		let supportDocLink = document.getElementById("supportDocLink");
+		supportDocLink.href = objectURL;
+		supportDocLink.innerHTML = file.name;
 	}
 </script>

@@ -50,7 +50,7 @@
 									</table>
 								</div>
 								<div class="card-footer">
-									<button type="button" class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#existCustModal" data-bs-id="${acc.getId()}">Apply Now</button>
+									<button type="button" class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${acc.getId()}">Apply Now</button>
 								</div>
 							</div>
 						</div>
@@ -65,9 +65,32 @@
 		</c:otherwise>
 	</c:choose>
 </div>
-<jsp:include page="existCustModal.jsp" />
-<!-- Script to make tab active based on url params -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex align-items-center p-2">
+			<div class="toast-body">
+				<c:out value="${msg}" />
+			</div>
+		</div>
+	</div>
+</div>
+<jsp:include page="applyModal.jsp" />
+<jsp:include page="../applySuccessModal.jsp" />
 <script>
+	/* Message Toast */
+	<%if (request.getAttribute("msg") != null) {%>
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	<%}%>
+	
+	/* Success Modal */
+	<%if (request.getAttribute("refNum") != null) {%>
+		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
+		applySuccessModal.show();
+	<%}%>
+	
+	// Script to make tab active based on url params
 	let searchParams = new URLSearchParams(window.location.search);
 	let accType = searchParams.get("type");
 	if (accType != null) {

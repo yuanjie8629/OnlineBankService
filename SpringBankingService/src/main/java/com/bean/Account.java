@@ -1,6 +1,6 @@
 package com.bean;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,8 +52,11 @@ public class Account {
 	@NotNull(message="Please enter minimum deposit amount for the account.")
 	private double minAmount;
 
-	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
-	private List<CustAccount> custAccounts;
+	@OneToMany(cascade = {CascadeType.MERGE}, mappedBy="account")
+	private Set<CustAccount> custAccounts;
+	
+	@OneToMany(cascade= {CascadeType.MERGE}, mappedBy="account")
+	private Set<AccountApplication> accApplications;
 	
 	@Column(name="is_deleted", nullable = false, columnDefinition = "TINYINT(1) default 0")
 	private boolean isDeleted;
@@ -118,11 +121,23 @@ public class Account {
 		this.minAmount = minAmount;
 	}
 
-	public List<CustAccount> getAccount() {
+	public void setAccount(Set<CustAccount> custAccounts) {
+		this.custAccounts = custAccounts;
+	}
+
+	public Set<CustAccount> getCustAccounts() {
 		return custAccounts;
 	}
 
-	public void setAccount(List<CustAccount> custAccounts) {
+	public Set<AccountApplication> getAccApplications() {
+		return accApplications;
+	}
+
+	public void setAccApplications(Set<AccountApplication> accApplications) {
+		this.accApplications = accApplications;
+	}
+
+	public void setCustAccounts(Set<CustAccount> custAccounts) {
 		this.custAccounts = custAccounts;
 	}
 
@@ -144,7 +159,7 @@ public class Account {
 			@NotNull(message = "Please upload thumbnail image for the account.") @Size(min = 1, max = 5242880, message = "Please upload thumbnail image for the account.(Max 5MB)") byte[] thumbnail,
 			@NotNull(message = "Please enter interest rate for the account.") @Min(value = 0, message = "Interest rate must be positive number.") @Max(value = 100, message = "Interest rate must be less than 100.") double interestRate,
 			@Min(value = 0, message = "Minimum deposit amount must be positive number.") @NotNull(message = "Please enter minimum deposit amount for the account.") double minAmount,
-			List<CustAccount> custAccounts, boolean isDeleted) {
+			Set<CustAccount> custAccounts, boolean isDeleted) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -159,10 +174,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		final int maxLen = 10;
 		return "AccountType [id=" + id + ", title=" + title + ", type=" + type + ", description=" + description
-				+ ", interestRate=" + interestRate + ", minAmount=" + minAmount + ", account="
-				+ (custAccounts != null ? custAccounts.subList(0, Math.min(custAccounts.size(), maxLen)) : null) + ", isDeleted="
-				+ isDeleted + "]";
+				+ ", interestRate=" + interestRate + ", minAmount=" + minAmount + ", account=" + ", isDeleted="+ isDeleted + "]";
 	}
 }

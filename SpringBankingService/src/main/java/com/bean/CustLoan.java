@@ -18,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="cust_loan")
 public class CustLoan {
 	@Id
-	@GenericGenerator(name="loadIdGenerator", strategy="com.utils.LoanIdGenerator")
+	@GenericGenerator(name="loadIdGenerator", strategy="com.generator.LoanIdGenerator")
 	@GeneratedValue(generator="loadIdGenerator")
 	private int id;
 	

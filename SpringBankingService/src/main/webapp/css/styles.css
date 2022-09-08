@@ -200,3 +200,29 @@ display: inline-block;
 .toast {
 	--bs-toast-max-width: 400px;
 }
+
+/* Stepper */
+.active .bs-stepper-circle {
+	background-color: var(--bs-danger);
+}
+
+.active .bs-stepper-label {
+	color: var(--bs-danger);
+}
+
+.bs-stepper .step-trigger:focus {
+  color: var(--bs-danger);
+  outline: none;
+}
+
+/* Table */
+table.table-fit {
+    width: auto !important;
+    table-layout: auto !important;
+}
+table.table-fit thead th, table.table-fit tfoot th {
+    width: auto !important;
+}
+table.table-fit tbody td, table.table-fit tfoot td {
+    width: auto !important;
+}

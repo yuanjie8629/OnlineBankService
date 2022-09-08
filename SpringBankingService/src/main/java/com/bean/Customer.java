@@ -11,6 +11,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.annotation.IdentityNum;
 
 @Entity
 @Table(name="customer")
@@ -21,6 +26,8 @@ public class Customer extends User{
 	private String salutation;
 	
 	@Column(name="identity_number", unique=true)
+	@IdentityNum
+	@NotBlank(message="Please enter your identity number.")
 	private String identityNumber;
 	
 	@NotBlank(message="Please select your nationality.")
@@ -35,7 +42,8 @@ public class Customer extends User{
 	@NotBlank(message="Please enter your occupation.")
 	private String occupation;
 	
-	@NotBlank(message="Please enter your birthdate.")
+	@NotNull(message="Please enter your birthdate.")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthdate;
 	
 	@OneToOne(targetEntity=Address.class,cascade=CascadeType.ALL)
@@ -45,7 +53,7 @@ public class Customer extends User{
 	@NotBlank(message="Please select your marital status.")
 	private String maritalStatus;
 	
-	@Column(columnDefinition="default 'active'")
+	@Column(columnDefinition="varchar(30) default 'active'")
 	private String status;
 	
 	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL)

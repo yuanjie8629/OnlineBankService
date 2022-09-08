@@ -10,6 +10,7 @@ public interface CustomerDao {
 	void deactivate(int id);
 	void activate(int id);
 	Customer getCustomerById(int id);
-	Customer getCustomerByIdentityNum(String identityNum);
+	Customer getCustomerByIdentityNum(String identityNumber);
+	Customer getCustomerByCredentials(String username, String password);
 	List<Customer> getCustomers();
 }
