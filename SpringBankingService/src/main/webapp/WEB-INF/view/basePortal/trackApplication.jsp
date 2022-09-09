@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="container my-5">
 	<div class="row card-shadow">
 		<div class="col-md-6 p-5">
@@ -52,13 +53,13 @@
 			</div>
 			<div class="modal-header flex-column">
 				<c:choose>
-					<c:when test="${application.getStatus() == 'approved'}">
+					<c:when test="${fn:toLowerCase(application.status) == 'approved'}">
 						<i class="fa-solid fa-circle-check fa-7x text-success"></i>
 					</c:when>
-					<c:when test="${application.getStatus() == 'rejected'}">
+					<c:when test="${fn:toLowerCase(application.status) == 'rejected'}">
 						<i class="fa-solid fa-circle-xmark fa-7x text-danger"></i>
 					</c:when>
-					<c:when test="${application.getStatus() == 'furtherAction'}">
+					<c:when test="${fn:toLowerCase(application.status) == 'further action'}">
 						<i class="fa-solid fa-circle-exclamation fa-7x text-warning"></i>
 					</c:when>
 					<c:otherwise>
@@ -74,7 +75,7 @@
 					<td>Reference Number</td>
 					<td>
 						<strong>
-							<c:out value="${application.getId()}" />
+							<c:out value="${application.id}" />
 						</strong>
 					</td>
 				<tr>
@@ -90,16 +91,16 @@
 					<td>Status</td>
 					<td>
 						<strong class="text-capitalize">
-							<c:out value="${application.getStatus()}" />
+							<c:out value="${application.status}" />
 						</strong>
 					</td>
 				</tr>
-				<c:if test="${not empty application.getComments()}">
+				<c:if test="${not empty application.comments}">
 					<tr>
 						<td>Comments</td>
 						<td>
 							<strong>
-								<c:out value="${application.getComments()}" />
+								<c:out value="${application.comments}" />
 							</strong>
 						</td>
 					</tr>
@@ -121,6 +122,21 @@
 		</div>
 	</div>
 </div>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+</c:if>
+<c:if test="${not empty application}">
+	<script>
+		// Success Modal
+		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
+		applySuccessModal.show();
+	</script>
+</c:if>
 <script>
 (() => {
 	  'use strict'
@@ -135,22 +151,8 @@
 	        event.preventDefault()
 	        event.stopPropagation()
 	      }
-
 	      form.classList.add('was-validated')
 	    }, false)
 	  })
 	})()
-
-	/* Message Toast */
-<%if (request.getAttribute("msg") != null) {%>
-	let msgToast = document.getElementById("msgToast");
-	let msgBsToast = new bootstrap.Toast(msgToast);
-	msgBsToast.show();
-<%}%>
-	/* Success Modal */
-<%if (request.getAttribute("application") != null) {%>
-	let trackingModal = new bootstrap.Modal('#trackingModal');
-	trackingModal.show();
-<%}%>
-	
 </script>

@@ -1,12 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
 			<h3>Manage Account Applications</h3>
 		</div>
 	</div>
-	<form name="filterAccApp" method="get" action="<c:url value="/admin/application-management/account" />" onsubmit="validateForm(this)">
+	<form name="filterAccApp" method="get" action="<c:url value="/admin/application-management/account" />"
+		onsubmit="validateForm(this)">
 		<input type="hidden" name="status">
 		<div class="card card-shadow my-4">
 			<div class="card-body p-4">
@@ -15,11 +17,11 @@
 					<div class="col-auto">
 						<!-- Application Status Tabs -->
 						<nav id="app-status" class="nav nav-pills nav-tab-category fw-bold">
-							<a id="all" class="nav-link px-3 py-2 me-4 active" href="javascript:showAppStatus('all');">All</a>
-							<a id="pending" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('pending');">Pending</a>
-							<a id="accepted" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('accepted');">Accepted</a>
-							<a id="rejected" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('rejected');">Rejected</a>
-							<a id="furtherAction" class="nav-link px-3 py-2" href="javascript:showAppStatus('furtherAction');">Further Action</a>
+							<a id="All" class="nav-link px-3 py-2 me-4 active" href="javascript:showAppStatus('All');">All</a>
+							<a id="Pending" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Pending');">Pending</a>
+							<a id="Approved" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Approved');">Approved</a>
+							<a id="Rejected" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Rejected');">Rejected</a>
+							<a id="Further Action" class="nav-link px-3 py-2" href="javascript:showAppStatus('Further Action');">Further Action</a>
 						</nav>
 					</div>
 				</div>
@@ -34,11 +36,25 @@
 							<th scope="col">Contact Number</th>
 							<th scope="col">Account</th>
 							<th scope="col">Status</th>
-							<th scope="col"></th>
+							<th scope="col" style="width: 10%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="accApp" items="${accAppList}">
+							<c:choose>
+								<c:when test="${fn:toLowerCase(accApp.status) == 'approved'}">
+									<c:set var="status" value="success" />
+								</c:when>
+								<c:when test="${fn:toLowerCase(accApp.status) == 'rejected'}">
+									<c:set var="status" value="danger" />
+								</c:when>
+								<c:when test="${fn:toLowerCase(accApp.status) == 'further action'}">
+									<c:set var="status" value="warning" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="status" value="secondary" />
+								</c:otherwise>
+							</c:choose>
 							<tr>
 								<th scope="row"><c:out value="${accApp.getId()}" /></th>
 								<td><c:out value="${accApp.getIdentityNumber()}" /></td>
@@ -46,20 +62,13 @@
 								<td><c:out value="${accApp.getEmail()}" /></td>
 								<td><c:out value="${accApp.getContactNo()}" /></td>
 								<td><c:out value="${accApp.getAccount().getTitle()}" /></td>
-								<td class="text-capitalize"><c:out value="${accApp.getStatus()}" /></td>
-								<td class="text-center">
-									<div class="dropdown-center">
-										<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
-										<ul class="dropdown-menu">
-											<li><a href="<c:url value="/admin/application-management/account/view/${accApp.getId()}" />" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a></li>
-											<c:if test="${accApp.getStatus() != 'approved'}">
-												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-up fa-fw me-2"></i>Approve</a></li>
-											</c:if>
-											<c:if test="${accApp.getStatus() != 'rejected'}">
-												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-down fa-fw me-2"></i>Reject</a></li>
-											</c:if>
-											<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-circle-exclamation fa-fw me-2"></i>Further Action</a></li>
-										</ul>
+								<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${accApp.status}" /></span></td>
+								<td>
+									<div class="row g-3">
+										<div class="col-12">
+											<a href="<c:url value="/admin/application-management/account/${accApp.getId()}" />"
+												class="btn btn-outline-secondary"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a>
+										</div>
 									</div>
 								</td>
 							</tr>
@@ -70,6 +79,9 @@
 		</div>
 	</form>
 </div>
+<jsp:include page="approveModal.jsp" />
+<jsp:include page="rejectModal.jsp" />
+<jsp:include page="furtherActionModal.jsp" />
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
 	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
 		<div class="d-flex align-items-center p-2">
@@ -110,7 +122,7 @@
 	/* Function to append accStatus to search query */
 	function showAppStatus(status) {
 		let filterAccAppForm = document.forms["filterAccApp"];
-		if (status != "all") {
+		if (status != "All") {
 			filterAccAppForm['status'].value = status;
 		} else {
 			filterAccAppForm['status'].disabled = true;

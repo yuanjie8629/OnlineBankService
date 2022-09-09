@@ -27,8 +27,8 @@ public class LoanIdGenerator implements IdentifierGenerator{
 		Random rand = new Random();
 		
 		// Generate random 16 digits
-		long drand = (long)(rand.nextDouble() * 10000000L);
-		return "l" + Long.toString(drand);
+		long drand = (long)(rand.nextDouble() * 100000000L);
+		return Long.toString(drand);
 	}
 	
 	

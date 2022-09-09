@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.utils.StringUtils"%>
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
@@ -48,18 +47,18 @@
 						<tbody>
 							<c:forEach var="card" items="${cardList}">
 								<tr>
-									<th scope="row"><c:out value="${card.getId()}" /></th>
+									<th scope="row"><c:out value="${card.id}" /></th>
 									<td style="max-height: 50px;"><img src="data:image/png;base64,${card.getBase64Thumbnail()}"
-										alt="cardthumbnail-${card.getId()}" class="img-fluid" /></td>
-									<td><c:out value="${card.getTitle()}" /></td>
-									<td><c:out value="${card.getDescription()}" /></td>
-									<td><fmt:formatNumber value="${card.getMinIncome()}" type="currency" currencyCode="SGD" /></td>
-									<td><fmt:formatNumber value="${card.getInterestRate()}" type="percent" minFractionDigits="2" /> p.a.</td>
-									<td><fmt:formatNumber value="${card.getAnnualFee()}" type="currency" currencyCode="SGD" /></td>
+										alt="cardthumbnail-${card.id}" class="img-fluid" /></td>
+									<td><c:out value="${card.title}" /></td>
+									<td><c:out value="${card.description}" /></td>
+									<td><fmt:formatNumber value="${card.minIncome}" type="currency" currencyCode="SGD" /></td>
+									<td><fmt:formatNumber value="${card.interestRate}" type="percent" minFractionDigits="2" /> p.a.</td>
+									<td><fmt:formatNumber value="${card.annualFee}" type="currency" currencyCode="SGD" /></td>
 									<td>
 										<div class="row g-3">
 											<div class="col-12">
-												<a href="<c:url value="/admin/card-management/update/${card.getId()}" />" role="button"
+												<a href="<c:url value="/admin/card-management/update/${card.id}" />" role="button"
 													class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
 												</a>
 											</div>
@@ -67,13 +66,13 @@
 												<c:choose>
 													<c:when test="${!card.isDeleted()}">
 														<button type="button" class="btn btn-outline-danger btn-sm w-100" data-bs-toggle="modal"
-															data-bs-target="#deleteCardModal" data-bs-id="${card.getId()}">
+															data-bs-target="#deleteCardModal" data-bs-id="${card.id}">
 															<i class="fa-solid fa-trash me-2"></i>Delete
 														</button>
 													</c:when>
 													<c:otherwise>
 														<button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal"
-															data-bs-target="#restoreCardModal" data-bs-id="${card.getId()}">
+															data-bs-target="#restoreCardModal" data-bs-id="${card.id}">
 															<i class="fa-solid fa-trash-can-arrow-up me-2"></i>Restore
 														</button>
 													</c:otherwise>
@@ -101,17 +100,18 @@
 </div>
 <jsp:include page="./deleteCard.jsp" />
 <jsp:include page="./restoreCard.jsp" />
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+</c:if>
 <script>
 	$(document).ready(function() {
 		$('#cardTable').DataTable();
 	});
-	
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
-		let msgToast = document.getElementById("msgToast");
-		let msgBsToast = new bootstrap.Toast(msgToast);
-		msgBsToast.show();
-	<%}%>
 	
 	let queryParams = new URLSearchParams(window.location.search);
 	let filterCardForm = document.forms["filterCard"];

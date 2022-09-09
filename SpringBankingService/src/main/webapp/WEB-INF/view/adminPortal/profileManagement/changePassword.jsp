@@ -10,7 +10,7 @@
 			</div>
 			<c:url var="url" value="/admin/profile-management/changePass" />
 			<form name="changePass" class="needs-validation" action="${url}" method="post" novalidate>
-				<input type="hidden" name="id" value="${user.getId()}">
+				<input type="hidden" name="id" value="${user.id}">
 				<div class="modal-body">
 					<c:if test="${not empty changePassMsg}">
 						<div class="alert alert-danger" role="alert">
@@ -18,7 +18,7 @@
 						</div>
 					</c:if>
 					<c:url var="url" value="/admin/profile-management/changePass" />
-					<input type="hidden" value="${user.getId()}">
+					<input type="hidden" value="${user.id}">
 					<div class="mb-3">
 						<label for="oldPass">Old Password</label> <input name="oldPass" type="password" class="form-control" required>
 						<div class="invalid-feedback">Please enter old password.</div>

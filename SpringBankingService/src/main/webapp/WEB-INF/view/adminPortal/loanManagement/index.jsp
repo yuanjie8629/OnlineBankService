@@ -50,18 +50,18 @@
 					<tbody>
 						<c:forEach var="loan" items="${loanList}">
 							<tr>
-								<th scope="row"><c:out value="${loan.getId()}" /></th>
+								<th scope="row"><c:out value="${loan.id}" /></th>
 								<td style="max-height: 50px;"><img src="data:image/png;base64,${loan.getBase64Thumbnail()}"
-									alt="loanthumbnail-${loan.getId()}" class="img-fluid" /></td>
-								<td><c:out value="${loan.getTitle()}" /></td>
-								<td class="text-capitalize"><c:out value="${loan.getType()}" /></td>
-								<td><c:out value="${loan.getDescription()}" /></td>
-								<td><fmt:formatNumber value="${loan.getInterestRate()}" type="percent" minFractionDigits="2" /> p.a.</td>
-								<td><fmt:formatNumber value="${loan.getDownpayment()}" type="percent" minFractionDigits="2" /></td>
+									alt="loanthumbnail-${loan.id}" class="img-fluid" /></td>
+								<td><c:out value="${loan.title}" /></td>
+								<td class="text-capitalize"><c:out value="${loan.type}" /></td>
+								<td><c:out value="${loan.description}" /></td>
+								<td><fmt:formatNumber value="${loan.interestRate}" type="percent" minFractionDigits="2" /> p.a.</td>
+								<td><fmt:formatNumber value="${loan.downpayment}" type="percent" minFractionDigits="2" /></td>
 								<td>
 									<div class="row g-3">
 										<div class="col-12">
-											<a href="<c:url value="/admin/loan-management/update/${loan.getId()}" />" role="button"
+											<a href="<c:url value="/admin/loan-management/update/${loan.id}" />" role="button"
 												class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
 											</a>
 										</div>
@@ -69,13 +69,13 @@
 											<c:choose>
 												<c:when test="${!loan.isDeleted()}">
 													<button type="button" class="btn btn-outline-danger btn-sm w-100" data-bs-toggle="modal"
-														data-bs-target="#deleteLoanModal" data-bs-id="${loan.getId()}">
+														data-bs-target="#deleteLoanModal" data-bs-id="${loan.id}">
 														<i class="fa-solid fa-trash me-2"></i>Delete
 													</button>
 												</c:when>
 												<c:otherwise>
 													<button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal"
-														data-bs-target="#restoreLoanModal" data-bs-id="${loan.getId()}">
+														data-bs-target="#restoreLoanModal" data-bs-id="${loan.id}">
 														<i class="fa-solid fa-trash-can-arrow-up me-2"></i>Restore
 													</button>
 												</c:otherwise>
@@ -102,17 +102,18 @@
 </div>
 <jsp:include page="./deleteLoan.jsp" />
 <jsp:include page="./restoreLoan.jsp" />
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+</c:if>
 <script>
 	$(document).ready(function() {
 		$('#loanTable').DataTable();
 	});
-	
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
-		let msgToast = document.getElementById("msgToast");
-		let msgBsToast = new bootstrap.Toast(msgToast);
-		msgBsToast.show();
-	<%}%>
 	
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);

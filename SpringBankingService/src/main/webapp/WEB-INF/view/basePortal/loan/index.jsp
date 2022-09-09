@@ -30,33 +30,32 @@
 						<div class="col-3">
 							<div class="card card-hover h-100">
 								<div class="card-thumbnail-img">
-									<img src="data:image/png;base64,${loan.getBase64Thumbnail()}" class="card-img-top img-fluid"
-										alt="${loan.getTitle()}">
+									<img src="data:image/png;base64,${loan.getBase64Thumbnail()}" class="card-img-top img-fluid" alt="${loan.title}">
 								</div>
 								<div class="card-body pb-0">
 									<h5 class="card-title">
-										<c:out value="${loan.getTitle()}" />
+										<c:out value="${loan.title}" />
 									</h5>
 									<p class="card-text text-justify">
-										<c:out value="${loan.getDescription()}" />
+										<c:out value="${loan.description}" />
 									</p>
 									<table class="table text-justify">
 										<tr>
 											<td>Interest Rate</td>
-											<td><span> <fmt:formatNumber value="${loan.getInterestRate()}" type="percent"
+											<td><span> <fmt:formatNumber value="${loan.interestRate}" type="percent"
 														minFractionDigits="2" />
 											</span> p.a.</td>
 										</tr>
 										<tr>
 											<td>Down Payment</td>
-											<td><span> <fmt:formatNumber value="${loan.getDownpayment()}" type="percent"
+											<td><span> <fmt:formatNumber value="${loan.downpayment}" type="percent"
 														minFractionDigits="2" />
 											</span> from total</td>
 										</tr>
 									</table>
 								</div>
 								<div class="card-footer">
-									<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${loan.getId()}">Apply Now</button>
+									<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${loan.id}">Apply Now</button>
 								</div>
 							</div>
 						</div>
@@ -82,20 +81,22 @@
 		</div>
 	</div>
 </div>
-<script>
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
 		let msgToast = document.getElementById("msgToast");
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
-	<%}%>
-	
-	/* Success Modal */
-	<%if (request.getAttribute("refNum") != null) {%>
+	</script>
+</c:if>
+<c:if test="${not empty refNum}">
+	<script>
+		// Success Modal
 		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
 		applySuccessModal.show();
-	<%}%>
-	
+	</script>
+</c:if>
+<script>
 	// Script to make tab active based on url params
 	let searchParams = new URLSearchParams(window.location.search);
 	let loanType = searchParams.get("type");

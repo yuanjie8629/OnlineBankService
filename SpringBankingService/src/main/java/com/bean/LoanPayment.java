@@ -2,6 +2,7 @@ package com.bean;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,8 @@ public class LoanPayment {
 	
 	private double interest;
 	
-	private double amount_paid;
+	@Column(name="amount_paid")
+	private double amountPaid;
 	
 	private double balance;
 	

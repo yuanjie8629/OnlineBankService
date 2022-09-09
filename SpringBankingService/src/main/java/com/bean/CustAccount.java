@@ -48,10 +48,110 @@ public class CustAccount {
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	@OneToMany(mappedBy="account", cascade=CascadeType.ALL)
-	private List<AccountTransaction> transactions;
-	
 	@ManyToOne
 	@JoinColumn(name="account_id")
 	private Account account;
+	
+	@OneToMany(mappedBy="account")
+	private List<AccountTransaction> transactions;
+
+	public String getAccNum() {
+		return accNum;
+	}
+
+	public void setAccNum(String accNum) {
+		this.accNum = accNum;
+	}
+
+	public double getCurBal() {
+		return curBal;
+	}
+
+	public void setCurBal(double curBal) {
+		this.curBal = curBal;
+	}
+
+	public double getAvailBal() {
+		return availBal;
+	}
+
+	public void setAvailBal(double availBal) {
+		this.availBal = availBal;
+	}
+
+	public double getHoldAmt() {
+		return holdAmt;
+	}
+
+	public void setHoldAmt(double holdAmt) {
+		this.holdAmt = holdAmt;
+	}
+
+	public LocalDateTime getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(LocalDateTime openDate) {
+		this.openDate = openDate;
+	}
+
+	public LocalDateTime getCloseDate() {
+		return closeDate;
+	}
+
+	public void setCloseDate(LocalDateTime closeDate) {
+		this.closeDate = closeDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public List<AccountTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<AccountTransaction> transactions) {
+		this.transactions = transactions;
+	}
+	
+	public CustAccount() {
+		
+	}
+
+	public CustAccount(String accNum, double curBal, double availBal, double holdAmt, LocalDateTime openDate,
+			LocalDateTime closeDate, String status, Customer customer, Account account,
+			List<AccountTransaction> transactions) {
+		super();
+		this.accNum = accNum;
+		this.curBal = curBal;
+		this.availBal = availBal;
+		this.holdAmt = holdAmt;
+		this.openDate = openDate;
+		this.closeDate = closeDate;
+		this.status = status;
+		this.customer = customer;
+		this.account = account;
+		this.transactions = transactions;
+	}
 }

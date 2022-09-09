@@ -1,6 +1,7 @@
 package com.bean;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,8 +16,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.annotation.IdentityNum;
-
 @Entity
 @Table(name="customer")
 @PrimaryKeyJoinColumn(name="id")
@@ -26,7 +25,6 @@ public class Customer extends User{
 	private String salutation;
 	
 	@Column(name="identity_number", unique=true)
-	@IdentityNum
 	@NotBlank(message="Please enter your identity number.")
 	private String identityNumber;
 	
@@ -46,7 +44,7 @@ public class Customer extends User{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthdate;
 	
-	@OneToOne(targetEntity=Address.class,cascade=CascadeType.ALL)
+	@OneToOne(targetEntity=Address.class, cascade = {CascadeType.ALL})
 	private Address address;
 	
 	@Column(name="marital_status")
@@ -56,13 +54,13 @@ public class Customer extends User{
 	@Column(columnDefinition="varchar(30) default 'active'")
 	private String status;
 	
-	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
 	private List<CustAccount> accounts;
 	
-	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
 	private List<CustCreditCard> creditCards;
 	
-	@OneToMany(mappedBy="customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
 	private List<CustLoan> loans;
 
 	public String getSalutation() {
@@ -170,9 +168,11 @@ public class Customer extends User{
 	}
 	
 	public Customer() {
-		
+		this.accounts = new ArrayList<CustAccount>();
+		this.creditCards = new ArrayList<CustCreditCard>();
+		this.loans = new ArrayList<CustLoan>();
 	}
-
+	
 	public Customer(@NotBlank(message = "Please select your salutation.") String salutation, String identityNumber,
 			@NotBlank(message = "Please select your nationality.") String nationality,
 			@NotBlank(message = "Please select your race.") String race,
@@ -195,5 +195,17 @@ public class Customer extends User{
 		this.accounts = accounts;
 		this.creditCards = creditCards;
 		this.loans = loans;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		return "Customer [" + super.toString() + ", salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
+				+ nationality + ", race=" + race + ", industry=" + industry + ", occupation=" + occupation
+				+ ", birthdate=" + birthdate + ", address=" + address + ", maritalStatus=" + maritalStatus + ", status="
+				+ status + ", accounts="
+				+ (accounts != null ? accounts.subList(0, Math.min(accounts.size(), maxLen)) : null) + ", creditCards="
+				+ (creditCards != null ? creditCards.subList(0, Math.min(creditCards.size(), maxLen)) : null)
+				+ ", loans=" + (loans != null ? loans.subList(0, Math.min(loans.size(), maxLen)) : null) + "]";
 	}
 }

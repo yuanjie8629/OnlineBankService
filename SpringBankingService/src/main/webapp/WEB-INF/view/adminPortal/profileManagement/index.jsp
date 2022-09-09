@@ -124,15 +124,16 @@
 	</div>
 </div>
 <jsp:include page="./changePassword.jsp" />
-<script>
-/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
 		let msgToast = document.getElementById("msgToast");
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
-	<%}%>
-	<%if (request.getAttribute("changePassMsg") != null) {%>
-		let changePassModal = new bootstrap.Modal('#changePassModal');
-		changePassModal.show();
-	<%}%>
-</script>
+	</script>
+</c:if>
+
+<c:if test="${not empty changePassMsg}">
+	let changePassModal = new bootstrap.Modal('#changePassModal');
+	changePassModal.show();
+</c:if>

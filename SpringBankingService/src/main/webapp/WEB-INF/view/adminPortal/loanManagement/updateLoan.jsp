@@ -106,14 +106,14 @@
 									class="card-img-top img-fluid" alt="prevImg">
 							</div>
 							<div class="card-body pb-0">
-								<h5 id="titlePrev" class="card-title"><c:out value="${loan.getTitle()}" /></h5>
-								<p id="descriptionPrev" class="card-text text-justify"><c:out value="${loan.getDescription()}" /></p>
+								<h5 id="titlePrev" class="card-title"><c:out value="${loan.title}" /></h5>
+								<p id="descriptionPrev" class="card-text text-justify"><c:out value="${loan.description}" /></p>
 								<table class="table text-justify">
 									<tr>
 										<td>Interest Rate</td>
 										<td>
 											<span id="interestRatePrev">
-												<fmt:formatNumber value="${loan.getInterestRate() / 100}" type="percent" minFractionDigits="2" />
+												<fmt:formatNumber value="${loan.interestRate / 100}" type="percent" minFractionDigits="2" />
 											</span>% p.a.
 										</td>
 									</tr>
@@ -121,7 +121,7 @@
 										<td>Down Payment</td>
 										<td>
 											<span id="downpaymentPrev">
-											<fmt:formatNumber value="${loan.getDownpayment() / 100}" type="percent" minFractionDigits="2" />
+											<fmt:formatNumber value="${loan.downpayment / 100}" type="percent" minFractionDigits="2" />
 											</span>% from total
 										</td>
 									</tr>

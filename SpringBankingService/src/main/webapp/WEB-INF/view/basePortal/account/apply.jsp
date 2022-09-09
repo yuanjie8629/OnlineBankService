@@ -26,7 +26,7 @@
 			</div>
 			<div class="line"></div>
 			<div class="step" data-target="#submit">
-				<button type="button" class="step-trigger" role="tab" aria-controls="uploadDocs" id="submitTrigger">
+				<button type="button" class="step-trigger" role="tab" aria-controls="submit" id="submitTrigger">
 					<span class="bs-stepper-circle">4</span><span class="bs-stepper-label">Submit</span>
 				</button>
 			</div>
@@ -94,7 +94,7 @@
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="nationality">Nationality</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="nationality">
-											<jsp:include page="../../selection/nationalitySelection.jsp" />
+											<jsp:include page="/WEB-INF/view/selection/nationalitySelection.jsp" />
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="nationality" />
@@ -117,7 +117,7 @@
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="maritalStatus">Marital Status</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="maritalStatus">
-											<jsp:include page="../../selection/maritalStatusSelection.jsp" />
+											<jsp:include page="/WEB-INF/view/selection/maritalStatusSelection.jsp" />
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="maritalStatus" />
@@ -137,7 +137,7 @@
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="race">Race</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="race">
-											<jsp:include page="../../selection/raceSelection.jsp" />
+											<jsp:include page="/WEB-INF/view/selection/raceSelection.jsp" />
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="race" />
@@ -148,7 +148,7 @@
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="industry">Industry</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="industry">
-											<jsp:include page="../../selection/industrySelection.jsp" />
+											<jsp:include page="/WEB-INF/view/selection/industrySelection.jsp" />
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="industry" />
@@ -212,7 +212,7 @@
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="country">Country</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="country">
-											<jsp:include page="../../selection/countrySelection.jsp" />
+											<jsp:include page="/WEB-INF/view/selection/countrySelection.jsp" />
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="country" />
@@ -270,20 +270,20 @@
 										</div>
 										<div class="card-body pb-0">
 											<h5 class="card-title">
-												<c:out value="${account.getTitle()}" />
+												<c:out value="${account.title}" />
 											</h5>
 											<p class="card-text text-justify">
-												<c:out value="${account.getDescription()}" />
+												<c:out value="${account.description}" />
 											</p>
 											<table class=" table text-justify">
 												<tr>
 													<td>Interest Rate</td>
-													<td><fmt:formatNumber value="${account.getInterestRate()}" type="percent" minFractionDigits="2" />
+													<td><fmt:formatNumber value="${account.interestRate}" type="percent" minFractionDigits="2" />
 														p.a.</td>
 												</tr>
 												<tr>
 													<td>Min Deposit Amount</td>
-													<td><fmt:formatNumber value="${account.getMinAmount()}" type="currency" currencyCode="SGD" /></td>
+													<td><fmt:formatNumber value="${account.minAmount}" type="currency" currencyCode="SGD" /></td>
 												</tr>
 											</table>
 										</div>
@@ -316,13 +316,15 @@
 		</div>
 	</div>
 </div>
-<script>
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
 		let msgToast = document.getElementById("msgToast");
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
-	<%}%>
+	</script>
+</c:if>
+<script>
 	// Script to initialize the stepper
 	var stepper;
 	document.addEventListener('DOMContentLoaded', function() {

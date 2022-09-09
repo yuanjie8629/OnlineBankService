@@ -1,5 +1,6 @@
 package com.bean;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Address {
 	@NotBlank(message="Please select your country.")
 	private String country;
 	
-	@OneToOne(targetEntity=Customer.class)
+	@OneToOne(mappedBy = "address")
 	private Customer customer;
 
 	public String getAddressLine1() {
@@ -83,5 +84,12 @@ public class Address {
 		this.addressLine3 = addressLine3;
 		this.postalCode = postalCode;
 		this.country = country;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2
+				+ ", addressLine3=" + addressLine3 + ", postalCode=" + postalCode + ", country=" + country
+				+ ", customer=" + customer + "]";
 	}
 }

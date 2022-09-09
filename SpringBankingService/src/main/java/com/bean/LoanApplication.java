@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -122,11 +123,15 @@ public class LoanApplication {
 	@Size(max=5242880, message="Please upload your support document in pdf format. (Max 5MB)")
 	private byte[] supportDoc;
 	
-	@Column(name="apply_date",columnDefinition="timestamp")
+	@Column(name="apply_date")
 	@CreationTimestamp
 	private LocalDateTime applyDate;
 	
-	@Column(columnDefinition="varchar(30) default 'pending'")
+	@Column(name="last_update")
+	@UpdateTimestamp
+	private LocalDateTime lastUpdate;
+	
+	@Column(columnDefinition="varchar(30) default 'Pending'")
 	private String status;
 	
 	private String comments;
@@ -364,6 +369,14 @@ public class LoanApplication {
 
 	public void setApplyDate(LocalDateTime applyDate) {
 		this.applyDate = applyDate;
+	}
+	
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	public String getStatus() {

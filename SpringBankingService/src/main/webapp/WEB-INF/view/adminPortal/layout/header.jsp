@@ -3,7 +3,7 @@
 <header class="fixed-top">
 	<nav class="navbar navbar-expand-lg bg-light">
 		<div class="container">
-			<a class="navbar-brand" href="home"> <img src="<c:url value="/resources/images/logo.png" />" alt="logo"
+			<a class="navbar-brand" href="<c:url value="/home" />"> <img src="<c:url value="/resources/images/logo.png" />" alt="logo"
 				width="100">
 			</a>
 			<div class="nav-item">

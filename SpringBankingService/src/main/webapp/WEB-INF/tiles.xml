@@ -146,14 +146,29 @@
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/account/index.jsp" />
 	</definition>
 	
+	<definition name="admin-app-mgmt-acc-view" extends="admin.definition">
+		<put-attribute name="title" value="OBS Application Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/account/view.jsp" />
+	</definition>
+	
 	<definition name="admin-app-mgmt-card" extends="admin.definition">
 		<put-attribute name="title" value="OBS Application Management" />
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/card/index.jsp" />
 	</definition>
 	
+	<definition name="admin-app-mgmt-card-view" extends="admin.definition">
+		<put-attribute name="title" value="OBS Application Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/card/view.jsp" />
+	</definition>
+	
 	<definition name="admin-app-mgmt-loan" extends="admin.definition">
 		<put-attribute name="title" value="OBS Application Management" />
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/loan/index.jsp" />
+	</definition>
+	
+	<definition name="admin-app-mgmt-loan-view" extends="admin.definition">
+		<put-attribute name="title" value="OBS Application Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/loan/view.jsp" />
 	</definition>
 	
 	<definition name="admin-profile-mgmt" extends="admin.definition">

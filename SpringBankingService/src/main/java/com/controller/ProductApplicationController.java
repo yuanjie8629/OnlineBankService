@@ -97,7 +97,7 @@ public class ProductApplicationController {
 		Account acc = accDao.getAccountById(id);
 		if (!br.hasErrors()) {
 			application.setAccount(acc);
-			application.setStatus("pending");
+			application.setStatus("Pending");
 			Serializable refNum = accAppDao.save(application);
 			ra.addFlashAttribute("appType", "Account");
 			ra.addFlashAttribute("title", acc.getTitle());
@@ -140,7 +140,7 @@ public class ProductApplicationController {
 		CreditCard creditCard = creditCardDao.getCreditCardById(id);
 		if (!br.hasErrors()) {
 			application.setCreditCard(creditCard);
-			application.setStatus("pending");
+			application.setStatus("Pending");
 			Serializable refNum = creditCardAppDao.save(application);
 			ra.addFlashAttribute("appType", "Credit Card");
 			ra.addFlashAttribute("title", creditCard.getTitle());
@@ -184,7 +184,7 @@ public class ProductApplicationController {
 		if (!br.hasErrors()) {
 			System.out.println(application.getPayslipDoc().length);
 			application.setLoan(loan);
-			application.setStatus("pending");
+			application.setStatus("Pending");
 			Serializable refNum = loanAppDao.save(application);
 			ra.addFlashAttribute("appType", "Loan");
 			ra.addFlashAttribute("title", loan.getTitle());

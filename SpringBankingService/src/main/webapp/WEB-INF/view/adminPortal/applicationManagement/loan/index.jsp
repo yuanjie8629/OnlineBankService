@@ -17,7 +17,7 @@
 						<nav id="app-status" class="nav nav-pills nav-tab-category fw-bold">
 							<a id="all" class="nav-link px-3 py-2 me-4 active" href="javascript:showAppStatus('all');">All</a>
 							<a id="pending" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('pending');">Pending</a>
-							<a id="accepted" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('accepted');">Accepted</a>
+							<a id="approved" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('approved');">Approved</a>
 							<a id="rejected" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('rejected');">Rejected</a>
 							<a id="furtherAction" class="nav-link px-3 py-2" href="javascript:showAppStatus('furtherAction');">Further Action</a>
 						</nav>
@@ -52,13 +52,11 @@
 										<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
 										<ul class="dropdown-menu">
 											<li><a href="<c:url value="/admin/application-management/account/view/${accApp.getId()}" />" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a></li>
-											<c:if test="${accApp.getStatus() != 'approved'}">
+											<c:if test="${accApp.status != 'approved' and accApp.status != 'rejected'}">
 												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-up fa-fw me-2"></i>Approve</a></li>
-											</c:if>
-											<c:if test="${accApp.getStatus() != 'rejected'}">
 												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-down fa-fw me-2"></i>Reject</a></li>
+												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-circle-exclamation fa-fw me-2"></i>Further Action</a></li>
 											</c:if>
-											<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-circle-exclamation fa-fw me-2"></i>Further Action</a></li>
 										</ul>
 									</div>
 								</td>

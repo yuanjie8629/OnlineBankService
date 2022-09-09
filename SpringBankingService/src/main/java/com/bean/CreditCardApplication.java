@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -88,7 +89,7 @@ public class CreditCardApplication {
 	private String country;
 	
 	@Column(name="credit_limit")
-	private String creditLimit;
+	private double creditLimit;
 	
 	@Column(name="card_display_name")
 	@NotBlank(message="Please enter your display name on the card.")
@@ -109,11 +110,15 @@ public class CreditCardApplication {
 	@Size(min=1, max=5242880, message="Please upload payslip in pdf format. (Max 5MB)")
 	private byte[] payslipDoc;
 	
-	@Column(name="apply_date",columnDefinition="timestamp")
+	@Column(name="apply_date")
 	@CreationTimestamp
 	private LocalDateTime applyDate;
 	
-	@Column(columnDefinition="varchar(30) default 'pending'")
+	@Column(name="last_update")
+	@UpdateTimestamp
+	private LocalDateTime lastUpdate;
+	
+	@Column(columnDefinition="varchar(30) default 'Pending'")
 	private String status;
 	
 	private String comments;
@@ -275,11 +280,11 @@ public class CreditCardApplication {
 		this.country = country;
 	}
 
-	public String getCreditLimit() {
+	public double getCreditLimit() {
 		return creditLimit;
 	}
 
-	public void setCreditLimit(String creditLimit) {
+	public void setCreditLimit( double creditLimit) {
 		this.creditLimit = creditLimit;
 	}
 
@@ -321,6 +326,14 @@ public class CreditCardApplication {
 
 	public void setApplyDate(LocalDateTime applyDate) {
 		this.applyDate = applyDate;
+	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	public String getStatus() {
@@ -388,7 +401,7 @@ public class CreditCardApplication {
 			@NotBlank(message = "Please select your marital status.") String maritalStatus,
 			@NotBlank(message = "Please enter your adderess.") String addressLine1, String addressLine2,
 			String addressLine3, @NotBlank(message = "Please enter your postalCode.") String postalCode,
-			@NotBlank(message = "Please select your country.") String country, String creditLimit,
+			@NotBlank(message = "Please select your country.") String country, double creditLimit,
 			@NotBlank(message = "Please enter your display name on the card.") String cardDisplayName,
 			double totalInstallment,
 			@NotNull(message = "Please upload your identity card or passport (front and back) in pdf format. (Max 5MB)") @Size(min = 1, max = 5242880, message = "Please upload your identity card or passport (front and back) in pdf format. (Max 5MB)") byte[] identityDoc,

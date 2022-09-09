@@ -95,29 +95,29 @@
 					<div class="col-10 col-lg-7">
 						<div class="card card-hover h-100">
 							<div class="card-thumbnail-img">
-								<img id="thumbnailPrev" src="data:image/png;base64,${account.getBase64Thumbnail()}" alt="${account.getTitle()}"
+								<img id="thumbnailPrev" src="data:image/png;base64,${account.getBase64Thumbnail()}" alt="${account.title}"
 									class="card-img-top img-fluid">
 							</div>
 							<div class="card-body pb-0">
 								<h5 id="titlePrev" class="card-title">
-									<c:out value="${account.getTitle()}" />
+									<c:out value="${account.title}" />
 								</h5>
 								<p id="descriptionPrev" class="card-text text-justify">
-									<c:out value="${account.getDescription()}" />
+									<c:out value="${account.description}" />
 								</p>
 								<table class="table text-justify">
 									<tr>
 										<td>Interest Rate</td>
 										<td>
 											<span id="interestRatePrev">
-												<fmt:formatNumber value="${account.getInterestRate() / 100}" type="percent" minFractionDigits="2" />
+												<fmt:formatNumber value="${account.interestRate / 100}" type="percent" minFractionDigits="2" />
 											</span> p.a.</td>
 									</tr>
 									<tr>
 										<td>Min Deposit Amount</td>
 										<td>
 											<span id="minAmountPrev"> 
-												<fmt:formatNumber value="${account.getMinAmount()}" type="currency" currencyCode="SGD" />
+												<fmt:formatNumber value="${account.minAmount}" type="currency" currencyCode="SGD" />
 											</span>
 										</td>
 									</tr>

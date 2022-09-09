@@ -24,38 +24,38 @@
 							<div class="card card-hover h-100">
 								<div class="card-thumbnail-img p-1">
 									<img id="thumbnailPrev" src="data:image/png;base64,${card.getBase64Thumbnail()}" class="card-img-top img-fluid"
-										style="object-fit: contain;" alt="${card.getTitle()}">
+										style="object-fit: contain;" alt="${card.title}">
 								</div>
 								<div class="card-body pb-0">
 									<h5 id="titlePrev" class="card-title">
-										<c:out value="${card.getTitle()}" />
+										<c:out value="${card.title}" />
 									</h5>
 									<p id="descriptionPrev" class="card-text text-justify">
-										<c:out value="${card.getDescription()}" />
+										<c:out value="${card.description}" />
 									</p>
 									<table class="table text-justify">
 										<tr>
 											<td>Min Income</td>
-											<td><span id="minIncomePrev"> <fmt:formatNumber value="${card.getMinIncome()}" type="currency"
+											<td><span id="minIncomePrev"> <fmt:formatNumber value="${card.minIncome}" type="currency"
 														currencyCode="SGD" />
 											</span></td>
 										</tr>
 										<tr>
 											<td>Interest Rate</td>
-											<td><span id="interestRatePrev"> <fmt:formatNumber value="${card.getInterestRate() / 100}"
+											<td><span id="interestRatePrev"> <fmt:formatNumber value="${card.interestRate / 100}"
 														type="percent" minFractionDigits="2" />
 											</span> p.a.</td>
 										</tr>
 										<tr>
 											<td>Annual Fee</td>
-											<td><span id="annualFeePrev"> <fmt:formatNumber value="${card.getAnnualFee()}" type="currency"
+											<td><span id="annualFeePrev"> <fmt:formatNumber value="${card.annualFee}" type="currency"
 														currencyCode="SGD" />
 											</span></td>
 										</tr>
 									</table>
 								</div>
 								<div class="card-footer">
-								<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${card.getId()}">Apply Now</button>
+								<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${card.id}">Apply Now</button>
 							</div>
 							</div>
 						</c:forEach>
@@ -81,18 +81,18 @@
 		</div>
 	</div>
 </div>
-<script>
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
 		let msgToast = document.getElementById("msgToast");
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
-	<%}%>
-	
-	/* Success Modal */
-	<%if (request.getAttribute("refNum") != null) {%>
-	let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
-	applySuccessModal.show();
-	<%}%>
-	
-</script>
+	</script>
+</c:if>
+<c:if test="${not empty refNum}">
+	<script>
+		// Success Modal
+		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
+		applySuccessModal.show();
+	</script>
+</c:if>

@@ -14,25 +14,30 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
+	<context:annotation-config />
+	
 	<!-- Provide support for component scanning -->
 	<context:component-scan base-package="com" />
 
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+	    <property name="validator" ref="validator"/>
+	</bean>
+	
 	<!--Provide support for conversion, formatting and validation -->
-	<mvc:annotation-driven />
+	
+	<mvc:annotation-driven validator="validator"/>
 
 	<mvc:resources mapping="/resources/**" location="/" />
 
 	<!-- Configures Interceptors -->
-	<mvc:interceptors>
-		<!-- This XML will intercept all URIs -->
+	<!-- <mvc:interceptors>
+		This XML will intercept all URIs
 		<bean class="com.interceptor.AuthorizationInterceptor"></bean>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 
-
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
-	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles.xml</value>
@@ -58,8 +63,7 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
@@ -85,8 +89,7 @@
 		</property>
 	</bean>
 
-	<bean id="template"
-		class="org.springframework.orm.hibernate5.HibernateTemplate">
+	<bean id="template" class="org.springframework.orm.hibernate5.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
@@ -109,12 +112,24 @@
 	<bean id="accAppDao" class="com.daoimpl.AccountAppDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
+	
+	<bean id="custAccDao" class="com.daoimpl.CustAccDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="custCardDao" class="com.daoimpl.CustCardDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
 
 	<bean id="creditCardDao" class="com.daoimpl.CreditCardDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
 	
 	<bean id="creditCardAppDao" class="com.daoimpl.CreditCardAppDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="custCreditCardDao" class="com.daoimpl.CustCreditCardDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
 	

@@ -93,14 +93,14 @@
 									class="card-img-top img-fluid" style="object-fit:contain;" alt="prevImg">
 							</div>
 							<div class="card-body pb-0">
-								<h5 id="titlePrev" class="card-title"><c:out value="${card.getTitle()}" /></h5>
-								<p id="descriptionPrev" class="card-text text-justify"><c:out value="${card.getDescription()}" /></p>
+								<h5 id="titlePrev" class="card-title"><c:out value="${card.title}" /></h5>
+								<p id="descriptionPrev" class="card-text text-justify"><c:out value="${card.description}" /></p>
 								<table class="table text-justify">
 									<tr>
 										<td>Min Income</td>
 										<td>
 										<span id="minIncomePrev">
-											<fmt:formatNumber value="${card.getMinIncome()}" type="currency" currencyCode="SGD" />
+											<fmt:formatNumber value="${card.minIncome}" type="currency" currencyCode="SGD" />
 										</span>
 										</td>
 									</tr>
@@ -108,7 +108,7 @@
 										<td>Interest Rate</td>
 										<td>
 											<span id="interestRatePrev">
-												<fmt:formatNumber value="${card.getInterestRate() / 100}" type="percent" minFractionDigits="2" />
+												<fmt:formatNumber value="${card.interestRate / 100}" type="percent" minFractionDigits="2" />
 											</span> p.a.
 										</td>
 									</tr>
@@ -116,7 +116,7 @@
 										<td>Annual Fee</td>
 										<td>
 											<span id="annualFeePrev">
-												<fmt:formatNumber value="${card.getAnnualFee()}" type="currency" currencyCode="SGD" />
+												<fmt:formatNumber value="${card.annualFee}" type="currency" currencyCode="SGD" />
 											</span>
 										</td>
 									</tr>

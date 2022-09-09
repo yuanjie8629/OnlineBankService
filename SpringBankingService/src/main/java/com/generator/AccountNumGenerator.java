@@ -13,14 +13,14 @@ public class AccountNumGenerator implements IdentifierGenerator {
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 		int count = 0;
-		String accNo = null;
+		String accNum = null;
 		do {
-			accNo = this.generateID();
-			Query query = session.createQuery("select count(*) from CustAccount a where a.accNo = :accNo");
-			query.setParameter("accNo", accNo);
+			accNum = this.generateID();
+			Query query = session.createQuery("select count(*) from CustAccount a where a.accNum = :accNum");
+			query.setParameter("accNum", accNum);
 			count = ((Long) query.getSingleResult()).intValue();
 		} while(count > 0);
-		return accNo;
+		return accNum;
 	}
 	
 	public String generateID() {

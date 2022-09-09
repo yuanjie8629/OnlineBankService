@@ -22,15 +22,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void save(Customer customer) {
-		template.persist(customer);
+		template.saveOrUpdate(customer);
 	}
 
 	@Override
+	@Transactional
 	public void update(Customer customer) {
 		template.update(customer);	
 	}
 
 	@Override
+	@Transactional
 	public void deactivate(int id) {
 		Customer cust = getCustomerById(id);
 		cust.setStatus("inactive");
@@ -38,6 +40,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
+	@Transactional
 	public void activate(int id) {
 		Customer cust = getCustomerById(id);
 		cust.setStatus("active");

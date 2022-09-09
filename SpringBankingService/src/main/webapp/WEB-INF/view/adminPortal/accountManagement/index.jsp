@@ -48,18 +48,18 @@
 					<tbody>
 						<c:forEach var="acc" items="${accList}">
 							<tr>
-								<th scope="row"><c:out value="${acc.getId()}" /></th>
+								<th scope="row"><c:out value="${acc.id}" /></th>
 								<td style="max-height: 50px;"><img src="data:image/png;base64,${acc.getBase64Thumbnail()}"
-									alt="accthumbnail-${acc.getId()}" class="img-fluid" /></td>
-								<td><c:out value="${acc.getTitle()}" /></td>
-								<td class="text-capitalize"><c:out value="${acc.getType()}" /></td>
-								<td><c:out value="${acc.getDescription()}" /></td>
-								<td><fmt:formatNumber value="${acc.getInterestRate()}" type="percent" minFractionDigits="2" /> p.a.</td>
-								<td><fmt:formatNumber value="${acc.getMinAmount()}" type="currency" currencyCode="SGD" /></td>
+									alt="accthumbnail-${acc.id}" class="img-fluid" /></td>
+								<td><c:out value="${acc.title}" /></td>
+								<td class="text-capitalize"><c:out value="${acc.type}" /></td>
+								<td><c:out value="${acc.description}" /></td>
+								<td><fmt:formatNumber value="${acc.interestRate}" type="percent" minFractionDigits="2" /> p.a.</td>
+								<td><fmt:formatNumber value="${acc.minAmount}" type="currency" currencyCode="SGD" /></td>
 								<td>
 									<div class="row g-3">
 										<div class="col-12">
-											<a href="<c:url value="/admin/account-management/update/${acc.getId()}" />" role="button"
+											<a href="<c:url value="/admin/account-management/update/${acc.id}" />" role="button"
 												class="btn btn-outline-primary btn-sm w-100"> <i class="fa-solid fa-pen-to-square me-2"></i> Update
 											</a>
 										</div>
@@ -67,13 +67,13 @@
 											<c:choose>
 												<c:when test="${!acc.isDeleted()}">
 													<button type="button" class="btn btn-outline-danger btn-sm w-100" data-bs-toggle="modal"
-														data-bs-target="#deleteAccModal" data-bs-id="${acc.getId()}">
+														data-bs-target="#deleteAccModal" data-bs-id="${acc.id}">
 														<i class="fa-solid fa-trash me-2"></i>Delete
 													</button>
 												</c:when>
 												<c:otherwise>
 													<button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal"
-														data-bs-target="#restoreAccModal" data-bs-id="${acc.getId()}">
+														data-bs-target="#restoreAccModal" data-bs-id="${acc.id}">
 														<i class="fa-solid fa-trash-can-arrow-up me-2"></i>Restore
 													</button>
 												</c:otherwise>
@@ -100,17 +100,18 @@
 </div>
 <jsp:include page="./deleteAccount.jsp" />
 <jsp:include page="./restoreAccount.jsp" />
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+</c:if>
 <script>
 	$(document).ready(function() {
 		$('#accountTable').DataTable();
 	});
-	
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
-		let msgToast = document.getElementById("msgToast");
-		let msgBsToast = new bootstrap.Toast(msgToast);
-		msgBsToast.show();
-	<%}%>
 	
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);

@@ -13,28 +13,28 @@ import javax.validation.constraints.Size;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	protected int id;
 	
 	@Column(unique=true)
-	private String username;
+	protected String username;
 	
 //	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message="Password does not matches all rules.")
 	@Size(min=8, message="Password must be at least 8 characters.")
-	private String password;
+	protected String password;
 	
 	@NotBlank(message="Please enter name.")
-	private String name;
+	protected String name;
 	
 	@NotBlank(message="Please enter email.")
 	@Email(message="Please enter valid email.")
-	private String email;
+	protected String email;
 	
 	@Column(name="contact_no")
 	@Pattern(regexp="^[689]\\d{7}$", message="Please enter valid Singapore phone number.")
-	private String contactNo;
+	protected String contactNo;
 	
 	@NotNull(message="Please select gender.")
-	private char gender;
+	protected char gender;
 	
 	public int getId() {
 		return id;

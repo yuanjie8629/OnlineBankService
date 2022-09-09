@@ -15,7 +15,7 @@ import com.validator.CustIdentityNumValidator;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IdentityNum {
 	
-	public String message() default "Duplicate Identity Numbert found.";
+	public String message() default "Duplicate Identity Number found.";
 	
 	public Class<?>[] groups() default {};
 	
