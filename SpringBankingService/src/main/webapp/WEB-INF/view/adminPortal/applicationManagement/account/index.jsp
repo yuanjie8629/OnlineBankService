@@ -8,6 +8,7 @@
 		</div>
 	</div>
 	<form name="filterAccApp" method="get" action="<c:url value="/admin/application-management/account" />" onsubmit="validateForm(this)">
+		<input type="hidden" name="status" />
 		<div class="card card-shadow my-4">
 			<div class="card-body p-4">
 				<h4 class="mb-4">Account Application List</h4>
@@ -28,17 +29,18 @@
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
-							<th scope="col">NRIC/Passport Number</th>
+							<th scope="col">Identity Number</th>
 							<th scope="col">Name</th>
 							<th scope="col">Email</th>
-							<th scope="col">Contact Number</th>
 							<th scope="col">Account</th>
+							<th scope="col">Application Date</th>
 							<th scope="col">Status</th>
 							<th scope="col" style="width: 10%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="accApp" items="${accAppList}">
+							<fmt:parseDate value="${accApp.applyDate}" var="applyDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 							<c:choose>
 								<c:when test="${fn:toLowerCase(accApp.status) == 'approved'}">
 									<c:set var="status" value="success" />
@@ -54,17 +56,17 @@
 								</c:otherwise>
 							</c:choose>
 							<tr>
-								<th scope="row"><c:out value="${accApp.getId()}" /></th>
-								<td><c:out value="${accApp.getIdentityNumber()}" /></td>
-								<td><c:out value="${accApp.getName()}" /></td>
-								<td><c:out value="${accApp.getEmail()}" /></td>
-								<td><c:out value="${accApp.getContactNo()}" /></td>
-								<td><c:out value="${accApp.getAccount().getTitle()}" /></td>
+								<th scope="row"><c:out value="${accApp.id}" /></th>
+								<td><c:out value="${accApp.identityNumber}" /></td>
+								<td><c:out value="${accApp.name}" /></td>
+								<td><c:out value="${accApp.email}" /></td>
+								<td><c:out value="${accApp.account.title}" /></td>
+								<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${applyDate}" /></td>
 								<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${accApp.status}" /></span></td>
 								<td>
 									<div class="row g-3">
 										<div class="col-12">
-											<a href="<c:url value="/admin/application-management/account/${accApp.getId()}" />"
+											<a href="<c:url value="/admin/application-management/account/${accApp.id}" />"
 												class="btn btn-outline-secondary"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a>
 										</div>
 									</div>
@@ -89,17 +91,21 @@
 		</div>
 	</div>
 </div>
-<script>
-	$(document).ready(function() {
-		$('#accAppTable').DataTable();
-	});
-	
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
 		let msgToast = document.getElementById("msgToast");
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
-	<%}%>
+	</script>
+	<c:remove var="msg"/>
+</c:if>
+<script>
+	$(document).ready(function() {
+		$('#accAppTable').DataTable({
+			order: [[5, 'desc']]
+		});
+	});
 	
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);

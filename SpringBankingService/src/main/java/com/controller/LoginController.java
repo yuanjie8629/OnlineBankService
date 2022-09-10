@@ -85,27 +85,57 @@ public class LoginController {
 			}
 		} else {
 			ra.addFlashAttribute("msg", "Failed verify your identity...");
+			ra.addFlashAttribute("verification", false);
 		}
 		return "redirect:/register";
 	}
 	
 	@RequestMapping(value="/register/save", method=RequestMethod.POST)
-	public String saveRegistration(@RequestParam String identityNumber, @RequestParam String username, @RequestParam String password, RedirectAttributes ra) {
-		Customer cust = custDao.getCustomerByIdentityNum(identityNumber);
-		if (cust != null) {
-			cust.setUsername(username);
-			cust.setPassword(password);
-			custDao.save(cust);
-			ra.addFlashAttribute("msg", "You have successfully registered. You can now login to the OBS Connect.");
-			return "redirect:/login";
-		} else {
-			ra.addFlashAttribute("msg", "Failed verify your identity...");
-			return "redirect:/register";
+	public String saveRegistration(@RequestParam String identityNumber, @RequestParam String username, @RequestParam String password, @RequestParam(required=false) boolean verification, RedirectAttributes ra) {
+		if (verification) {
+			Customer cust = custDao.getCustomerByIdentityNum(identityNumber);
+			if (cust != null) {
+				cust.setUsername(username);
+				cust.setPassword(password);
+				custDao.save(cust);
+				ra.addFlashAttribute("msg", "You have successfully registered. You can now login to the OBS Connect.");
+				return "redirect:/login";
+			}
 		}
+		ra.addFlashAttribute("msg", "Failed verify your identity...");
+		return "redirect:/register";
 	}
 	
 	@RequestMapping("/forgot-password")
 	public String forgotPassword() {
 		return "forgotPassword";
+	}
+	
+	@RequestMapping(value="/forgot-password/verification", method=RequestMethod.POST)
+	public String verifyForgotPassword(@RequestParam String identityNumber, @RequestParam String name, @RequestParam String email, RedirectAttributes ra) {
+		Customer cust = custDao.getCustomerForRegister(identityNumber, name, email);
+		if (cust != null) {
+				ra.addFlashAttribute("identityNumber", identityNumber);
+				ra.addFlashAttribute("verification", true);
+		} else {
+			ra.addFlashAttribute("msg", "Failed verify your identity...");
+			ra.addFlashAttribute("verification", false);
+		}
+		return "redirect:/forgot-password";
+	}
+	
+	@RequestMapping(value="/forgot-password/save", method=RequestMethod.POST)
+	public String saveForgotPassword(@RequestParam String identityNumber, @RequestParam String password, @RequestParam(required=false) boolean verification, RedirectAttributes ra) {
+		if (verification) {
+			Customer cust = custDao.getCustomerByIdentityNum(identityNumber);
+			if (cust != null) {
+				cust.setPassword(password);
+				custDao.save(cust);
+				ra.addFlashAttribute("msg", "You have successfully changed your password.");
+				return "redirect:/login";
+			}
+		}
+		ra.addFlashAttribute("msg", "Failed verify your identity...");
+		return "redirect:/forgot-password";
 	}
 }

@@ -107,6 +107,7 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
+	<c:remove var="msg"/>
 </c:if>
 <script>
 	$(document).ready(function() {

@@ -24,6 +24,12 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Override
+	@Transactional
+	public void update(User user) {
+		template.update(user);
+	}
+	
+	@Override
  	public User login(final String username, final String password) {
 		User user = template.execute(new HibernateCallback<User>() {
 			@Override

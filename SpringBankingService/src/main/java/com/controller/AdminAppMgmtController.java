@@ -1,11 +1,7 @@
 package com.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.annotation.CardNum;
 import com.bean.AccountApplication;
 import com.bean.Address;
 import com.bean.CreditCardApplication;
@@ -112,7 +106,9 @@ public class AdminAppMgmtController {
 
 		CustAccount custAcc = new CustAccount();
 		custAcc.setAccount(accApp.getAccount());
+		System.out.println(initialBal);
 		custAcc.setCurBal(initialBal);
+		System.out.println(custAcc.getCurBal());
 		custAcc.setAvailBal(initialBal - accApp.getAccount().getMinAmount());
 		custAcc.setStatus("active");
 		custAcc.setCustomer(customer);
@@ -187,7 +183,7 @@ public class AdminAppMgmtController {
 	@Transactional
 	@RequestMapping(value = "/card/approve", method = RequestMethod.POST)
 	public String approveCreditCardApplication(@Valid @ModelAttribute("custCard") CustCreditCard custCard,
-			BindingResult br, @RequestParam String appId, @RequestParam String expDate, Model m, RedirectAttributes ra) {
+			BindingResult br, @RequestParam String appId, Model m, RedirectAttributes ra) {
 		CreditCardApplication creditCardApp = creditCardAppDao.getCreditCardApplicationById(appId);
 		if (!br.hasErrors()) {
 			Customer customer = custDao.getCustomerByIdentityNum(creditCardApp.getIdentityNumber());
@@ -203,15 +199,6 @@ public class AdminAppMgmtController {
 			custDao.save(customer);
 
 			BeanUtils.copyProperties(creditCardApp, custCard);
-			custCard.setCardNum(custCard.getCardNum().replace(" ", ""));
-			
-			// format Date to dd/MM/yy
-			expDate = "01/" + expDate;
-			
-			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yy");
-			
-			// Set expiration date to the last day of month
-			custCard.setExpirationDate(LocalDate.parse(expDate, df).with(TemporalAdjusters.lastDayOfMonth()));
 			custCard.setCreditCard(creditCardApp.getCreditCard());
 			custCard.setStatus("active");
 			custCard.setCustomer(customer);

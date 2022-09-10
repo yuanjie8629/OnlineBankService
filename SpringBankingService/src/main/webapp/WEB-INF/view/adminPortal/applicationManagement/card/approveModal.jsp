@@ -2,8 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Approve Modal -->
-<form:form name="cardAppApprove" modelAttribute="custCard" action="approve" method="post" class="needs-validation"
-	novalidate="true">
+<form:form name="cardAppApprove" modelAttribute="custCard" action="approve" method="post" class="needs-validation" novalidate="true" onsubmit="test(this)">
 	<input type="hidden" name="appId" value="${cardApp.id}" />
 	<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered modal-confirm">
@@ -82,12 +81,12 @@
 						<tr>
 							<spring:bind path="expirationDate">
 								<td class="align-middle"><label class="form-label m-0" for="expiratioNDate">Expiration Date</label></td>
-								<td><input class="form-control${status.error ? ' is-invalid' : ''}" type="text" name="expDate" id="expDate"
+								<td><form:input class="form-control${status.error ? ' is-invalid' : ''}" path="expirationDate" id="expDate"
 									placeholder="MM/YY" minlength="5" maxlength="5" required="required" />
 									<div class="invalid-feedback">
 										<c:choose>
 											<c:when test="${status.error}">
-												<form:errors path="cvv" />
+												<form:errors path="expirationDate" />
 											</c:when>
 											<c:otherwise>
 												Please enter the card expiration date.
@@ -145,6 +144,7 @@
 	
 	//For Card Number Input Formatting
 	var cardNum = document.getElementById('cardNum');
+
 	cardNum.onkeyup = function (e) {
 	    if (this.value == this.lastValue) return;
 	    var caretPosition = this.selectionStart;
@@ -192,5 +192,9 @@
 	    
 	    this.value = this.lastValue = parts.join('/');
 	    this.selectionStart = this.selectionEnd = caretPosition;
+	}
+	
+	function test(form){
+		console.log(form['cardNum'].value);
 	}
 </script>

@@ -199,9 +199,9 @@ public class Customer extends User{
 
 	@Override
 	public String toString() {
-		return "Customer [salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
+		return "Customer [ " + super.toString() + ", salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
 				+ nationality + ", race=" + race + ", industry=" + industry + ", occupation=" + occupation
-				+ ", birthdate=" + birthdate + ", address=" + address + ", maritalStatus=" + maritalStatus + ", status="
+				+ ", birthdate=" + birthdate + ", maritalStatus=" + maritalStatus + ", status="
 				+ status + "]";
 	}
 }

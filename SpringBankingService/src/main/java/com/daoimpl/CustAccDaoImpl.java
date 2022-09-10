@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.CustAccount;
+import com.bean.Customer;
 import com.dao.CustAccDao;
 
 public class CustAccDaoImpl implements CustAccDao{
@@ -35,5 +36,10 @@ public class CustAccDaoImpl implements CustAccDao{
 	@Override
 	public List<CustAccount> getCustAccounts() {
 		return template.loadAll(CustAccount.class);
+	}
+
+	@Override
+	public List<CustAccount> getCustAccountsByCust(Customer cust) {
+		return cust.getAccounts();
 	}
 }

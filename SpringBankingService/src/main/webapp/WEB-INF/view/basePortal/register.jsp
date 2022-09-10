@@ -20,16 +20,16 @@
 				<div class="row justify-content-center align-items-center h-100">
 					<div class="col-12">
 						<div class="card card-shadow">
-							<div class="card-body p-4 p-md-5 w-75 mx-auto">
+							<div class="card-body p-4 p-md-5">
 								<div class="row g-5 align-items-center">
-									<div class="col-auto d-flex align-items-center pb-1">
-										<img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="150">
-									</div>
 									<div class="col-auto">
-										<h2>Registration Form</h2>
+										<a href="<c:url value="/home" />">
+											<img src="<c:url value="/resources/images/logo.png" />" alt="logo" width="150">
+										</a>
 									</div>
 								</div>
-								<div class="bs-stepper py-3 w-75 mx-auto">
+								<div class="bs-stepper py-3 w-50 mx-auto">
+									<h2 class="text-center">Registration Form</h2>
 									<div class="bs-stepper-header m-auto mb-3" role="tablist">
 										<!-- Steps -->
 										<div class="step" data-target="#verification">
@@ -73,9 +73,9 @@
 										<div id="registration" class="content" role="tabpanel" aria-labelledby="registrationTrigger">
 											<div class="container">
 												<h5 class="mb-4">Please enter your credentials to complete the registration process.</h5>
-												<form name="registration" action="register/save" method="post" class="needs-validation" novalidate
-													onsubmit="submitForm(this)">
+												<form name="registration" action="register/save" method="post" class="needs-validation" novalidate onsubmit="submitForm(this)">
 													<input type="hidden" name="identityNumber" value="${identityNumber}" />
+													<input type="hidden" name="verification" value="${verification}" />
 													<div class="form-floating mb-3">
 														<input class="form-control" name="username" placeholder="Username" required /> <label for="username">Username</label>
 														<div class="invalid-feedback">Please enter your username.</div>
@@ -130,15 +130,21 @@
 			let msgBsToast = new bootstrap.Toast(msgToast);
 			msgBsToast.show();
 		</script>
+		<c:remove var="msg"/>
 	</c:if>
 	<script>
 		// Script to initialize the stepper
 		var stepper;
 		document.addEventListener('DOMContentLoaded', function() {
 			stepper = new Stepper(document.querySelector('.bs-stepper'));
-			<c:if test="${not empty verification}">
-			stepper.next();
-			</c:if>
+			<c:choose>
+				<c:when test="${verification == true}">
+					stepper.to(2);
+				</c:when>
+				<c:otherwise>
+					stepper.to(1);
+				</c:otherwise>
+			</c:choose>
 		})
 	
 		// Script to validate password
@@ -148,8 +154,7 @@
 			let confirmPass = form['confirmPass'];
 			let confirmPassErr = document.getElementById("confirmPassErr");
 			if (password.value != confirmPass.value) {
-				confirmPass
-						.setCustomValidity("Confirm Password must be matched with New Password");
+				confirmPass.setCustomValidity("Confirm Password must be matched with New Password");
 				confirmPassErr.innerHTML = "Confirm Password must be matched with New Password";
 			} else {
 				confirmPass.setCustomValidity('');

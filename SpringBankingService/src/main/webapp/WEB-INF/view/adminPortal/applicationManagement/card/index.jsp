@@ -8,6 +8,7 @@
 		</div>
 	</div>
 	<form name="filterCardApp" method="get" action="<c:url value="/admin/application-management/card" />" onsubmit="validateForm(this)">
+		<input type="hidden" name="status" />
 		<div class="card card-shadow my-4">
 			<div class="card-body p-4">
 				<h4 class="mb-4">Card Application List</h4>
@@ -31,14 +32,15 @@
 							<th scope="col">NRIC/Passport Number</th>
 							<th scope="col">Name</th>
 							<th scope="col">Email</th>
-							<th scope="col">Contact Number</th>
 							<th scope="col">Card</th>
+							<th scope="col">Application Date</th>
 							<th scope="col">Status</th>
 							<th scope="col" style="width: 10%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="cardApp" items="${cardAppList}">
+						<fmt:parseDate value="${cardApp.applyDate}" var="applyDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 							<c:choose>
 								<c:when test="${fn:toLowerCase(cardApp.status) == 'approved'}">
 									<c:set var="status" value="success" />
@@ -58,8 +60,8 @@
 								<td><c:out value="${cardApp.getIdentityNumber()}" /></td>
 								<td><c:out value="${cardApp.getName()}" /></td>
 								<td><c:out value="${cardApp.getEmail()}" /></td>
-								<td><c:out value="${cardApp.getContactNo()}" /></td>
 								<td><c:out value="${cardApp.getCreditCard().getTitle()}" /></td>
+								<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${applyDate}" /></td>
 								<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${cardApp.status}" /></span></td>
 								<td>
 									<div class="row g-3">
@@ -102,10 +104,13 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
+	<c:remove var="msg"/>
 </c:if>
 <script>
 	$(document).ready(function() {
-		$('#cardAppTable').DataTable();
+		$('#cardAppTable').DataTable({
+			order: [[5, 'desc']]
+		});
 	});
 		
 	/* Script to make tab active based on url params */

@@ -56,7 +56,7 @@ public class AdminController {
 		return "admin-profile-mgmt";
 	}
 	
-	@RequestMapping(value = "/profile-management/changePass", method=RequestMethod.POST)
+	@RequestMapping(value = "/profile-management/change-pass", method=RequestMethod.POST)
 	public String changePassword(@RequestParam("id") int id, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, Model m, RedirectAttributes ra) {
 		Admin admin = adminDao.getAdminById(id);
 		if (admin.getPassword().equals(oldPass)) {

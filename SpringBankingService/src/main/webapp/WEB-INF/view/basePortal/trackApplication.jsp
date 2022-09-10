@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <div class="container my-5">
 	<div class="row card-shadow">
 		<div class="col-md-6 p-5">
@@ -46,6 +48,7 @@
 </div>
 <!-- Tracking Result Modal -->
 <div class="modal fade" id="trackingModal" tabindex="-1" aria-labelledby="trackingModal" aria-hidden="true">
+	<fmt:parseDate value="${application.applyDate}" var="applyDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 	<div class="modal-dialog modal-lg modal-dialog-centered modal-confirm">
 		<div class="modal-content p-4">
 			<div class="d-flex justify-content-end">
@@ -67,7 +70,16 @@
 					</c:otherwise>
 				</c:choose>
 				<i class="fa-solid fa-7x text-danger"></i>
-				<h3 class="mt-4 text-capitalize">${type}&nbsp;Application</h3>
+				<h3 class="mt-4 text-capitalize">
+					<c:choose>
+						<c:when test="${fn:toLowerCase(type) == 'creditcard'}">
+							Credit Card Application
+						</c:when>
+						<c:otherwise>
+							<c:out value="${type}" />&nbsp;Application
+						</c:otherwise>
+					</c:choose>
+				</h3>
 			</div>
 			<div class="modal-body w-75 m-auto px-5">
 				<table class="table table-fit m-auto">
@@ -84,6 +96,14 @@
 					<td>
 						<strong>
 							<c:out value="${title}" />
+						</strong>
+					</td>
+				</tr>
+				<tr>
+					<td>Application Date</td>
+					<td>
+						<strong>
+							<fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${applyDate}" />
 						</strong>
 					</td>
 				</tr>
@@ -108,7 +128,7 @@
 				</table>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-danger mx-2 px-4 py-2" data-bs-dismiss="modal">Got it</button>
+				<button type="button" class="btn btn-danger mx-2 px-4 py-2" data-bs-dismiss="modal" onClick="closeModal()">Got it</button>
 			</div>
 		</div>
 	</div>
@@ -129,12 +149,13 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
+	<c:remove var="msg"/>
 </c:if>
 <c:if test="${not empty application}">
 	<script>
 		// Success Modal
-		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
-		applySuccessModal.show();
+		let trackingModal = new bootstrap.Modal('#trackingModal');
+		trackingModal.show();
 	</script>
 </c:if>
 <script>
@@ -155,4 +176,8 @@
 	    }, false)
 	  })
 	})()
+	
+	function closeModal(){
+		<c:remove var="application"/>
+	}
 </script>

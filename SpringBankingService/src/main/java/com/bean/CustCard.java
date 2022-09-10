@@ -23,7 +23,8 @@ public class CustCard {
 	@CardNum(message="Card Number already exists.")
 	@Column(name="card_num")
 	@NotBlank(message="Please enter the card number.")
-	@Pattern(regexp="[\\d]{16}", message="Card Number should be 16 digits.")
+	// Pattern of cardNum = 0000 0000 0000 0000
+	@Pattern(regexp="[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}", message="Card Number should be 16 digits.")
 	private String cardNum;
 	
 	@NotBlank(message="Please enter the card brand.")
@@ -37,10 +38,12 @@ public class CustCard {
 	@CreationTimestamp
 	private LocalDate createDate;
 	
-	@NotNull(message="Please enter the card expiration date.")
-	@Column(name="expiration_date")
 	
-	private LocalDate expirationDate;
+	@Column(name="expiration_date")
+	@NotNull(message="Please enter the card expiration date.")
+	@Pattern(regexp="(0[1-9]|10|11|12)/[0-9]{2}", message="Please enter valid date in \'mm/yy\' format.")
+	private String expirationDate;
+	
 	@Pattern(regexp="[\\d]{6}", message="Card pin must be 6 digits.")
 	private String pin;
 	
@@ -78,11 +81,11 @@ public class CustCard {
 		this.createDate = createDate;
 	}
 
-	public LocalDate getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(LocalDate expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
@@ -109,7 +112,7 @@ public class CustCard {
 	public CustCard(@NotBlank(message = "Please enter the card number.") String cardNum,
 			@NotBlank(message = "Please enter the card brand.") String brand,
 			@NotBlank(message = "Please enter the card cvv.") @Size(min = 3, max = 3) String cvv, LocalDate createDate,
-			LocalDate expirationDate, @Size(min = 6, max = 6) String pin, String status) {
+			String expirationDate, @Size(min = 6, max = 6) String pin, String status) {
 		this.cardNum = cardNum;
 		this.brand = brand;
 		this.cvv = cvv;

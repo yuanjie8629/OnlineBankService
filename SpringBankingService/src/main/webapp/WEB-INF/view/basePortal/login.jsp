@@ -44,7 +44,9 @@
 									<div class="card-body px-5 py-4 text-black">
 										<!-- Logo -->
 										<div class="d-flex align-items-center mb-5 pb-1">
-											<img src="resources/images/logo.png" alt="logo" width="150">
+											<a href="<c:url value="/home" />">
+												<img src="resources/images/logo.png" alt="logo" width="150">
+											</a>
 										</div>
 										<c:if test="${not empty loginMsg}">
 											<div class="alert alert-danger" role="alert">
@@ -100,6 +102,7 @@
 			let msgBsToast = new bootstrap.Toast(msgToast);
 			msgBsToast.show();
 		</script>
+		<c:remove var="msg"/>
 	</c:if>
 	<script>
 	(() => {

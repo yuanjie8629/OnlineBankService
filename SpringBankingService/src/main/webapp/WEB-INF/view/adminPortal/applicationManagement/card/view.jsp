@@ -17,6 +17,7 @@
 	</c:otherwise>
 </c:choose>
 <fmt:parseDate value="${cardApp.lastUpdate}" var="lastUpdate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
+<fmt:parseDate value="${accApp.applyDate}" var="applyDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 <div class="container w-75 p-2">
 	<div class="row justify-content-between">
 		<div class="col-auto">
@@ -24,6 +25,10 @@
 		</div>
 		<div class="col-auto">
 			<div class="row justify-content-end align-items-center mb-2">
+				<div class="col-auto">
+					Application Date:
+					<fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${applyDate}" />
+				</div>
 				<div class="col-auto">
 					Last Update:
 					<fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${lastUpdate}" />
@@ -346,6 +351,7 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
+	<c:remove var="msg"/>
 </c:if>
 <c:if test="${not empty approveErr}">
 	<script>
@@ -353,6 +359,7 @@
 		let approveModal = new bootstrap.Modal('#approveModal');
 		approveModal.show();
 	</script>
+	<c:remove var="approveErr"/>
 </c:if>
 <script>
 	// Script to initialize the stepper

@@ -83,6 +83,7 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
+	<c:remove var="msg"/>
 </c:if>
 
 <c:if test="${not empty refNum}">
@@ -91,6 +92,7 @@
 		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
 		applySuccessModal.show();
 	</script>
+	<c:remove var="refNum"/>
 </c:if>
 <script>
 	// Script to make tab active based on url params
