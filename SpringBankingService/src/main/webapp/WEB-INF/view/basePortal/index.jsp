@@ -93,18 +93,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- 
-			<div class="col">
-				<div class="card card-btn h-100">
-					<div class="card-body">
-						<div class="text-center p-2">
-							<img src="resources/images/basePortal/ViewPromotion.png" alt="viewPromotion" class="img-fluid rounded img-btn" />
-						</div>
-						<div class="fw-bold my-2">View Promotions</div>
-					</div>
-				</div>
-			</div> 
-			-->
 		</div>
 	</div>
 	<!-- Currency Widget -->

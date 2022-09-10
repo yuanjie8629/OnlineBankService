@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import com.bean.Customer;
@@ -80,5 +81,27 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public List<Customer> getCustomers() {
 		return template.loadAll(Customer.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getCustomers(String status) {
+		DetachedCriteria query = DetachedCriteria.forClass(Customer.class);
+		query.add(Restrictions.eq("status", status));
+		return (List<Customer>) template.findByCriteria(query);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Customer getCustomerForRegister(String identityNumber, String name, String email) {
+		DetachedCriteria query = DetachedCriteria.forClass(Customer.class);
+		query.add(Restrictions.eq("identityNumber", identityNumber));
+		query.add(Restrictions.eq("name", name));
+		query.add(Restrictions.eq("email", email));
+		List<Customer> custList = (List<Customer>) template.findByCriteria(query);
+		if (!custList.isEmpty()) {
+			return custList.get(0);
+		}
+		return null;
 	}
 }

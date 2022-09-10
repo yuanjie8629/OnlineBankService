@@ -140,6 +140,10 @@
 	<bean id="loanAppDao" class="com.daoimpl.LoanAppDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
+	
+	<bean id="custLoanDao" class="com.daoimpl.CustLoanDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
 
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />

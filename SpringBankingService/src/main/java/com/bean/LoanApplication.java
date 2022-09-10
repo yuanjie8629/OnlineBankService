@@ -92,18 +92,23 @@ public class LoanApplication {
 	private double totalInstallment;
 	
 	@Column(name="loan_amount")
+	@NotNull(message="Please enter your desired loan amount.")
 	private double loanAmount;
 	
 	@Column(name="repayment_period")
-	private double repaymentPeriod;
+	@NotNull(message="Please select the repayment period.")
+	private int repaymentPeriod;
 	
 	@Column(name="disbursement_bank")
+	@NotBlank(message="Please enter the disbursement bank for the loan.")
 	private String disbursementBank;
 	
 	@Column(name="disbursement_acc_type")
+	@NotBlank(message="Please select the disbursement account type for the loan.")
 	private String disbursementAccType;
 	
 	@Column(name="disbursement_acc_num")
+	@NotBlank(message="Please select the disbursement account number for the loan.")
 	private String disbursementAccNum;
 
 	@Lob
@@ -307,11 +312,11 @@ public class LoanApplication {
 		this.loanAmount = loanAmount;
 	}
 
-	public double getRepaymentPeriod() {
+	public int getRepaymentPeriod() {
 		return repaymentPeriod;
 	}
 
-	public void setRepaymentPeriod(double repaymentPeriod) {
+	public void setRepaymentPeriod(int repaymentPeriod) {
 		this.repaymentPeriod = repaymentPeriod;
 	}
 
@@ -445,7 +450,7 @@ public class LoanApplication {
 			@NotBlank(message = "Please enter your adderess.") String addressLine1, String addressLine2,
 			String addressLine3, @NotBlank(message = "Please enter your postalCode.") String postalCode,
 			@NotBlank(message = "Please select your country.") String country, double totalInstallment,
-			double loanAmount, double repaymentPeriod, String disbursementBank, String disbursementAccType,
+			double loanAmount, int repaymentPeriod, String disbursementBank, String disbursementAccType,
 			String disbursementAccNum,
 			@NotNull(message = "Please upload your identity card or passport (front and back) in pdf format. (Max 5MB)") @Size(min = 1, max = 5242880, message = "Please upload your identity card or passport (front and back) in pdf format. (Max 5MB)") byte[] identityDoc,
 			@NotNull(message = "Please upload your payslip in pdf format. (Max 5MB)") @Size(min = 1, max = 5242880, message = "Please upload payslip in pdf format. (Max 5MB)") byte[] payslipDoc,

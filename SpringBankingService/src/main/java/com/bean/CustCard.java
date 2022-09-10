@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
 import com.annotation.CardNum;
 
+@Validated
 @Entity
 @Table(name="cust_card")
 @Inheritance(strategy=InheritanceType.JOINED)  
@@ -19,23 +23,25 @@ public class CustCard {
 	@CardNum(message="Card Number already exists.")
 	@Column(name="card_num")
 	@NotBlank(message="Please enter the card number.")
+	@Pattern(regexp="[\\d]{16}", message="Card Number should be 16 digits.")
 	private String cardNum;
 	
 	@NotBlank(message="Please enter the card brand.")
 	private String brand;
 	
 	@NotBlank(message="Please enter the card cvv.")
-	@Size(min=3, max=3)
+	@Pattern(regexp="[\\d]{3}", message="Card cvv must be 3 digits.")
 	private String cvv;
 	
 	@Column(name="create_date")
 	@CreationTimestamp
 	private LocalDate createDate;
 	
+	@NotNull(message="Please enter the card expiration date.")
 	@Column(name="expiration_date")
-	private LocalDate expirationDate;
 	
-	@Size(min=6, max=6)
+	private LocalDate expirationDate;
+	@Pattern(regexp="[\\d]{6}", message="Card pin must be 6 digits.")
 	private String pin;
 	
 	private String status;

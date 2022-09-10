@@ -19,6 +19,8 @@ public class CardNumValidator implements ConstraintValidator<CardNum, String>{
 	
 	@Override
 	public boolean isValid(String cardNum, ConstraintValidatorContext cvc) {
-		return custCardDao.checkCardByCardNum(cardNum);
+		if (custCardDao != null)
+			return custCardDao.checkCardByCardNum(cardNum);
+		return true;
 	}
 }

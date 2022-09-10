@@ -7,9 +7,7 @@
 			<h3>Manage Card Applications</h3>
 		</div>
 	</div>
-	<form name="filterCardApp" method="get" action="<c:url value="/admin/application-management/card" />"
-		onsubmit="validateForm(this)">
-		<input type="hidden" name="status">
+	<form name="filterCardApp" method="get" action="<c:url value="/admin/application-management/card" />" onsubmit="validateForm(this)">
 		<div class="card card-shadow my-4">
 			<div class="card-body p-4">
 				<h4 class="mb-4">Card Application List</h4>

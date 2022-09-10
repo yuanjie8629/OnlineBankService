@@ -271,10 +271,34 @@
 									<div class="col-12 col-lg-6">
 										<label class="form-label" for="repaymentPeriod">Repayment Period</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="repaymentPeriod">
-											<option value="24">24 months</option>
-											<option value="36">36 months</option>
-											<option value="48">48 months</option>
-											<option value="60">60 months</option>
+											<c:choose>
+												<c:when test="${loan.type == 'personal'}">
+												<option value="1">1 years</option>
+												<option value="2">2 years</option>
+												<option value="3">3 years</option>
+												<option value="4">4 years</option>
+												<option value="5">5 years</option>
+											</c:when>
+											<c:when test="${loan.type == 'home'}">
+												<option value="5">5 years</option>
+												<option value="10">10 years</option>
+												<option value="15">15 years</option>
+												<option value="20">20 years</option>
+												<option value="25">25 years</option>
+												<option value="30">30 years</option>
+											</c:when>
+											<c:otherwise>
+												<option value="1">1 years</option>
+												<option value="2">2 years</option>
+												<option value="3">3 years</option>
+												<option value="4">4 years</option>
+												<option value="5">5 years</option>
+												<option value="6">6 years</option>
+												<option value="7">7 years</option>
+												<option value="8">8 years</option>
+												<option value="9">9 years</option>
+											</c:otherwise>
+											</c:choose>
 										</form:select>
 										<div class="invalid-feedback">
 											<form:errors path="repaymentPeriod" />
@@ -301,7 +325,7 @@
 								</spring:bind>
 								<spring:bind path="disbursementAccType">
 									<div class="col-12 col-lg-6">
-										<label class="form-label" for="disbursementAccType">Disbursement Bank</label>
+										<label class="form-label" for="disbursementAccType">Disbursement Account Type</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="disbursementAccType">
 											<option value="saving">Saving Account</option>
 											<option value="current">Current Account</option>

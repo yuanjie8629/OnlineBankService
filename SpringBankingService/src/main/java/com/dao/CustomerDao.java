@@ -12,5 +12,7 @@ public interface CustomerDao {
 	Customer getCustomerById(int id);
 	Customer getCustomerByIdentityNum(String identityNumber);
 	Customer getCustomerByCredentials(String username, String password);
+	Customer getCustomerForRegister(String identityNumber, String name, String email);
 	List<Customer> getCustomers();
+	List<Customer> getCustomers(String status);
 }

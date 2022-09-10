@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto my-auto">
@@ -7,7 +8,6 @@
 		</div>
 	</div>
 	<form name="filterLoanApp" method="get" action="<c:url value="/admin/application-management/loan" />" onsubmit="validateForm(this)">
-		<input type="hidden" name="status">
 		<div class="card card-shadow my-4">
 			<div class="card-body p-4">
 				<h4 class="mb-4">Loan Application List</h4>
@@ -15,11 +15,11 @@
 					<div class="col-auto">
 						<!-- Application Status Tabs -->
 						<nav id="app-status" class="nav nav-pills nav-tab-category fw-bold">
-							<a id="all" class="nav-link px-3 py-2 me-4 active" href="javascript:showAppStatus('all');">All</a>
-							<a id="pending" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('pending');">Pending</a>
-							<a id="approved" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('approved');">Approved</a>
-							<a id="rejected" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('rejected');">Rejected</a>
-							<a id="furtherAction" class="nav-link px-3 py-2" href="javascript:showAppStatus('furtherAction');">Further Action</a>
+							<a id="All" class="nav-link px-3 py-2 me-4 active" href="javascript:showAppStatus('All');">All</a>
+							<a id="Pending" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Pending');">Pending</a>
+							<a id="Approved" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Approved');">Approved</a>
+							<a id="Rejected" class="nav-link px-3 py-2 me-4" href="javascript:showAppStatus('Rejected');">Rejected</a>
+							<a id="Further Action" class="nav-link px-3 py-2" href="javascript:showAppStatus('Further Action');">Further Action</a>
 						</nav>
 					</div>
 				</div>
@@ -34,11 +34,25 @@
 							<th scope="col">Contact Number</th>
 							<th scope="col">Loan</th>
 							<th scope="col">Status</th>
-							<th scope="col"></th>
+							<th scope="col" style="width: 10%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="loanApp" items="${loanAppList}">
+							<c:choose>
+								<c:when test="${fn:toLowerCase(loanApp.status) == 'approved'}">
+									<c:set var="status" value="success" />
+								</c:when>
+								<c:when test="${fn:toLowerCase(loanApp.status) == 'rejected'}">
+									<c:set var="status" value="danger" />
+								</c:when>
+								<c:when test="${fn:toLowerCase(loanApp.status) == 'further action'}">
+									<c:set var="status" value="warning" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="status" value="secondary" />
+								</c:otherwise>
+							</c:choose>
 							<tr>
 								<th scope="row"><c:out value="${loanApp.getId()}" /></th>
 								<td><c:out value="${loanApp.getIdentityNumber()}" /></td>
@@ -46,18 +60,13 @@
 								<td><c:out value="${loanApp.getEmail()}" /></td>
 								<td><c:out value="${loanApp.getContactNo()}" /></td>
 								<td><c:out value="${loanApp.getLoan().getTitle()}" /></td>
-								<td class="text-capitalize"><c:out value="${loanApp.getStatus()}" /></td>
+								<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${loanApp.status}" /></span></td>
 								<td class="text-center">
-									<div class="dropdown-center">
-										<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
-										<ul class="dropdown-menu">
-											<li><a href="<c:url value="/admin/application-management/account/view/${accApp.getId()}" />" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a></li>
-											<c:if test="${accApp.status != 'approved' and accApp.status != 'rejected'}">
-												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-up fa-fw me-2"></i>Approve</a></li>
-												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-thumbs-down fa-fw me-2"></i>Reject</a></li>
-												<li><a href="" class="dropdown-item" style="cursor: pointer;"><i class="fa-solid fa-circle-exclamation fa-fw me-2"></i>Further Action</a></li>
-											</c:if>
-										</ul>
+									<div class="row g-3">
+										<div class="col-12">
+											<a href="<c:url value="/admin/application-management/loan/${loanApp.getId()}" />"
+												class="btn btn-outline-secondary"><i class="fa-solid fa-eye fa-fw me-2"></i>View</a>
+										</div>
 									</div>
 								</td>
 							</tr>
@@ -77,17 +86,18 @@
 		</div>
 	</div>
 </div>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+</c:if>
 <script>
 	$(document).ready(function() {
 		$('#loanAppTable').DataTable();
 	});
-	
-	/* Message Toast */
-	<%if (request.getAttribute("msg") != null) {%>
-		let msgToast = document.getElementById("msgToast");
-		let msgBsToast = new bootstrap.Toast(msgToast);
-		msgBsToast.show();
-	<%}%>
 	
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);

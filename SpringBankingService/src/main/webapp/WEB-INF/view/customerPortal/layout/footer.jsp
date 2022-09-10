@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <footer class="bg-light text-lg-start text-muted mt-2">
 	<section class="px-3">
 		<div class="row d-flex align-items-center">

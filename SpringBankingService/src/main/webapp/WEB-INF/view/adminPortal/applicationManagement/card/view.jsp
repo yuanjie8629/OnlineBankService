@@ -67,7 +67,7 @@
 			<!-- Steps -->
 			<div class="step" data-target="#selectedCard">
 				<button type="button" class="step-trigger" role="tab" aria-controls="selectedCard" id="selectedCardTrigger">
-					<span class="bs-stepper-circle">1</span><span class="bs-stepper-label">Submit</span>
+					<span class="bs-stepper-circle">1</span><span class="bs-stepper-label">Selected Card</span>
 				</button>
 			</div>
 			<div class="line"></div>
@@ -96,7 +96,7 @@
 			</div>
 		</div>
 		<div class="bs-stepper-content p-0">
-			<form:form name="applyCard" modelAttribute="cardApp" action="" method="post" enctype="multipart/form-data">
+			<form:form name="viewCardApp" modelAttribute="cardApp">
 				<div class="card card-shadow">
 					<div class="card-body p-4">
 						<!-- Contents -->
@@ -254,7 +254,7 @@
 									<form:input class="form-control" path="cardDisplayName" readonly="true" />
 								</div>
 								<div class="col-12">
-									<label class="form-check-label" for="creditLimit">Preferred Credit Limit</label>
+									<label class="form-label" for="creditLimit">Preferred Credit Limit</label>
 									<c:choose>
 										<c:when test="${not empty cardApp.creditLimit}">
 											<div class="input-group">
@@ -263,21 +263,21 @@
 											</div>
 										</c:when>
 										<c:otherwise>
-											<input class="form-control" value="None" />
+											<input class="form-control" value="None" readonly />
 										</c:otherwise>
 									</c:choose>
 								</div>
 								<div class="col-12">
-									<label class="form-check-label" for="totalInstallment">Financial commitments</label>
+									<label class="form-label" for="totalInstallment">Financial commitments</label>
 									<c:choose>
-										<c:when test="${not empty cardApp.creditLimit}">
-										<div id="totalInstallmentInput" class="input-group d-none">
-											<form:input class="form-control" type="number" path="totalInstallment" readonly="true" />
-											<span class="input-group-text">SGD</span>
-										</div>
+										<c:when test="${not empty cardApp.totalInstallment}">
+											<div id="totalInstallmentInput" class="input-group">
+												<form:input class="form-control" type="number" path="totalInstallment" readonly="true" />
+												<span class="input-group-text">SGD</span>
+											</div>
 										</c:when>
 										<c:otherwise>
-											<input class="form-control" value="None" />
+											<input class="form-control" value="None" readonly />
 										</c:otherwise>
 									</c:choose>
 								</div>

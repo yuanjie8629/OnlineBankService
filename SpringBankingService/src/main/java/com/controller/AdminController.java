@@ -39,11 +39,6 @@ public class AdminController {
 		return "admin-home";
 	}
 
-	@RequestMapping(value = "/customer-management")
-	public String customerManagement() {
-		return "admin-cust-mgmt";
-	}
-
 	@RequestMapping(value = "/profile-management")
 	public String profileManagement(Model m) {
 		m.addAttribute("user", (User) session.getAttribute("user"));

@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <div class="container mt-4">
 	<div>
 		<h3>Welcome to OBS Connect, ${user.name}</h3>

@@ -199,13 +199,9 @@ public class Customer extends User{
 
 	@Override
 	public String toString() {
-		final int maxLen = 10;
-		return "Customer [" + super.toString() + ", salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
+		return "Customer [salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
 				+ nationality + ", race=" + race + ", industry=" + industry + ", occupation=" + occupation
 				+ ", birthdate=" + birthdate + ", address=" + address + ", maritalStatus=" + maritalStatus + ", status="
-				+ status + ", accounts="
-				+ (accounts != null ? accounts.subList(0, Math.min(accounts.size(), maxLen)) : null) + ", creditCards="
-				+ (creditCards != null ? creditCards.subList(0, Math.min(creditCards.size(), maxLen)) : null)
-				+ ", loans=" + (loans != null ? loans.subList(0, Math.min(loans.size(), maxLen)) : null) + "]";
+				+ status + "]";
 	}
 }

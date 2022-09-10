@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bean.Admin;
 import com.bean.Customer;
 import com.bean.User;
+import com.dao.CustomerDao;
 import com.dao.UserDao;
 
 @Controller
@@ -24,6 +25,9 @@ import com.dao.UserDao;
 public class LoginController {
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	CustomerDao custDao;
 	
 	@Autowired
 	HttpSession session;
@@ -51,7 +55,7 @@ public class LoginController {
 			else
 				return "redirect:/customer/home";
 		} else {
-			ra.addFlashAttribute("msg", "Login Failed. Invalid Username or Password...");
+			ra.addFlashAttribute("loginMsg", "Login Failed. Invalid Username or Password...");
 			return "redirect:/login";
 		}
 	}
@@ -62,5 +66,46 @@ public class LoginController {
 		status.setComplete();
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/register")
+	public String register() {
+		return "register";
+	}
+	
+	@RequestMapping(value="/register/verification", method=RequestMethod.POST)
+	public String verifyRegistration(@RequestParam String identityNumber, @RequestParam String name, @RequestParam String email, RedirectAttributes ra) {
+		Customer cust = custDao.getCustomerForRegister(identityNumber, name, email);
+		if (cust != null) {
+			if (cust.getUsername() != null && cust.getPassword() != null) {
+				ra.addFlashAttribute("msg", "You have already registered. Please login to your account.");
+			} else {
+				ra.addFlashAttribute("identityNumber", identityNumber);
+				ra.addFlashAttribute("verification", true);
+			}
+		} else {
+			ra.addFlashAttribute("msg", "Failed verify your identity...");
+		}
+		return "redirect:/register";
+	}
+	
+	@RequestMapping(value="/register/save", method=RequestMethod.POST)
+	public String saveRegistration(@RequestParam String identityNumber, @RequestParam String username, @RequestParam String password, RedirectAttributes ra) {
+		Customer cust = custDao.getCustomerByIdentityNum(identityNumber);
+		if (cust != null) {
+			cust.setUsername(username);
+			cust.setPassword(password);
+			custDao.save(cust);
+			ra.addFlashAttribute("msg", "You have successfully registered. You can now login to the OBS Connect.");
+			return "redirect:/login";
+		} else {
+			ra.addFlashAttribute("msg", "Failed verify your identity...");
+			return "redirect:/register";
+		}
+	}
+	
+	@RequestMapping("/forgot-password")
+	public String forgotPassword() {
+		return "forgotPassword";
 	}
 }
