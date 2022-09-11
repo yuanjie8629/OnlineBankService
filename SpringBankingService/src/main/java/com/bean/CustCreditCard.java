@@ -1,6 +1,6 @@
 package com.bean;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,8 +20,8 @@ public class CustCreditCard extends CustCard {
 	@Column(name="credit_limit")
 	private double creditLimit;
 	
-	@OneToMany(mappedBy="custCreditCard", cascade=CascadeType.ALL)
-	private List<CreditCardTransaction> transactions;
+	@OneToMany(mappedBy="custCreditCard", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<CreditCardTransaction> transactions;
 	
 	@ManyToOne
 	@JoinColumn(name="credit_card_id")
@@ -55,11 +55,11 @@ public class CustCreditCard extends CustCard {
 		this.creditLimit = creditLimit;
 	}
 
-	public List<CreditCardTransaction> getTransactions() {
+	public Set<CreditCardTransaction> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(List<CreditCardTransaction> transactions) {
+	public void setTransactions(Set<CreditCardTransaction> transactions) {
 		this.transactions = transactions;
 	}
 
@@ -84,7 +84,7 @@ public class CustCreditCard extends CustCard {
 	}
 
 	public CustCreditCard(String cardDisplayName, double availAmt, double creditLimit,
-			List<CreditCardTransaction> transactions, CreditCard creditCard, Customer customer) {
+			Set<CreditCardTransaction> transactions, CreditCard creditCard, Customer customer) {
 		super();
 		this.cardDisplayName = cardDisplayName;
 		this.availAmt = availAmt;
@@ -96,10 +96,7 @@ public class CustCreditCard extends CustCard {
 
 	@Override
 	public String toString() {
-		final int maxLen = 10;
 		return "CustCreditCard [" + super.toString() + ", cardDisplayName=" + cardDisplayName + ", availAmt=" + availAmt + ", creditLimit="
-				+ creditLimit + ", transactions="
-				+ (transactions != null ? transactions.subList(0, Math.min(transactions.size(), maxLen)) : null)
-				+ ", creditCard=" + creditCard + ", customer=" + customer + "]";
+				+ creditLimit +  ", creditCard=" + creditCard + ", customer=" + customer + "]";
 	}
 }

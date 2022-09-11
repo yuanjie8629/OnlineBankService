@@ -114,6 +114,10 @@
 		<property name="template" ref="template"></property>
 	</bean>
 	
+	<bean id="accTransactionDao" class="com.daoimpl.AccountTranscationDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
 	<bean id="custAccDao" class="com.daoimpl.CustAccDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>

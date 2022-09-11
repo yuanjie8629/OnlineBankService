@@ -11,6 +11,7 @@
 			<form:form name="profile" modelAttribute="user" action="${url}" method="post">
 				<form:input type="hidden" path="id" />
 				<form:input type="hidden" path="password" />
+				<form:input type="hidden" path="status" />
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item px-4 py-3"><spring:bind path="username">
 							<div class="row align-items-center">

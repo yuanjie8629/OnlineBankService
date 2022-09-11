@@ -136,6 +136,21 @@
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/updateCustomer.jsp" />
 	</definition>
 	
+	<definition name="admin-cust-mgmt-account" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/account/index.jsp" />
+	</definition>
+	
+	<definition name="admin-cust-mgmt-credit-card" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/creditCard/index.jsp" />
+	</definition>
+	
+	<definition name="admin-cust-mgmt-loan" extends="admin.definition">
+		<put-attribute name="title" value="OBS Card Management" />
+		<put-attribute name="body" value="/WEB-INF/view/adminPortal/customerManagement/loan/index.jsp" />
+	</definition>
+	
 	<definition name="admin-app-mgmt" extends="admin.definition">
 		<put-attribute name="title" value="OBS Application Management" />
 		<put-attribute name="body" value="/WEB-INF/view/adminPortal/applicationManagement/index.jsp" />
@@ -200,7 +215,19 @@
 	<definition name="cust-account-summary" extends="customer.definition">
 		<put-attribute name="title" value="OBS Connect" />
 		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/customerPortal/account/viewAccSummary.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/account/viewSummary.jsp" />
+	</definition>
+	
+	<definition name="cust-account-transaction" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/account/viewTransaction.jsp" />
+	</definition>
+	
+	<definition name="cust-fund-transfer" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/fundTransfer/index.jsp" />
 	</definition>
 	
 	<definition name="cust-fund-transfer-own" extends="customer.definition">
@@ -213,6 +240,12 @@
 		<put-attribute name="title" value="OBS Connect" />
 		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/customerPortal/fundTransfer/transferToOthers.jsp" />
+	</definition>
+	
+	<definition name="cust-payment" extends="customer.definition">
+		<put-attribute name="title" value="OBS Connect" />
+		<put-attribute name="header" value="/WEB-INF/view/customerPortal/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/customerPortal/payment/index.jsp" />
 	</definition>
 	
 	<definition name="cust-payment-credit-card" extends="customer.definition">

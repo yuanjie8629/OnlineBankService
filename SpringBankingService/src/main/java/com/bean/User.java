@@ -36,6 +36,9 @@ public class User {
 	@NotNull(message="Please select gender.")
 	protected char gender;
 	
+	@Column(columnDefinition="varchar(30) default 'active'")
+	protected String status;
+	
 	public int getId() {
 		return id;
 	}
@@ -92,6 +95,14 @@ public class User {
 		this.gender = gender;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	public User() {
 		
 	}
@@ -101,7 +112,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(int id, String username, String password, String name, String email, String contactNo, char gender) {
+	public User(int id, String username, String password, String name, String email, String contactNo, char gender, String status) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -109,6 +120,7 @@ public class User {
 		this.email = email;
 		this.contactNo = contactNo;
 		this.gender = gender;
+		this.status = status;
 	}
 
 	@Override

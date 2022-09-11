@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name="credit_card_transaction")
 public class CreditCardTransaction {
@@ -19,6 +21,7 @@ public class CreditCardTransaction {
 	
 	private String type;
 	
+	@CreationTimestamp
 	private LocalDateTime date;
 	
 	private String description;
@@ -26,6 +29,8 @@ public class CreditCardTransaction {
 	private double amount;
 	
 	private double balance;
+	
+	private String status;
 	
 	@ManyToOne(targetEntity=CustCreditCard.class)
 	@JoinColumn(name="card_num")

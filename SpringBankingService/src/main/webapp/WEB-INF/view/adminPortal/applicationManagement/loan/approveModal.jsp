@@ -111,6 +111,7 @@
 								<td class="align-middle"><label class="form-label" for="disbursementBank">Disbursement Bank</label></td>
 								<td><form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="disbursementBank"
 										required="required">
+										<form:option value="OBS">OBS</form:option>
 										<form:option value="DBS">DBS</form:option>
 										<form:option value="UOB">UOB</form:option>
 										<form:option value="OCBC">OCBC</form:option>

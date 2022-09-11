@@ -1,8 +1,8 @@
 package com.bean;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,24 +44,21 @@ public class Customer extends User{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthdate;
 	
-	@OneToOne(targetEntity=Address.class, cascade = {CascadeType.ALL})
+	@OneToOne(targetEntity=Address.class, cascade = CascadeType.ALL)
 	private Address address;
 	
 	@Column(name="marital_status")
 	@NotBlank(message="Please select your marital status.")
 	private String maritalStatus;
 	
-	@Column(columnDefinition="varchar(30) default 'active'")
-	private String status;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<CustAccount> accounts;
 	
-	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
-	private List<CustAccount> accounts;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<CustCreditCard> creditCards;
 	
-	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
-	private List<CustCreditCard> creditCards;
-	
-	@OneToMany(mappedBy="customer", cascade = {CascadeType.MERGE})
-	private List<CustLoan> loans;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<CustLoan> loans;
 
 	public String getSalutation() {
 		return salutation;
@@ -135,42 +132,34 @@ public class Customer extends User{
 		this.maritalStatus = maritalStatus;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public List<CustAccount> getAccounts() {
+	public Set<CustAccount> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(List<CustAccount> accounts) {
+	public void setAccounts(Set<CustAccount> accounts) {
 		this.accounts = accounts;
 	}
 
-	public List<CustCreditCard> getCreditCards() {
+	public Set<CustCreditCard> getCreditCards() {
 		return creditCards;
 	}
 
-	public void setCreditCards(List<CustCreditCard> creditCards) {
+	public void setCreditCards(Set<CustCreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
 
-	public List<CustLoan> getLoans() {
+	public Set<CustLoan> getLoans() {
 		return loans;
 	}
 
-	public void setLoans(List<CustLoan> loans) {
+	public void setLoans(Set<CustLoan> loans) {
 		this.loans = loans;
 	}
 	
 	public Customer() {
-		this.accounts = new ArrayList<CustAccount>();
-		this.creditCards = new ArrayList<CustCreditCard>();
-		this.loans = new ArrayList<CustLoan>();
+		this.accounts = new LinkedHashSet<CustAccount>();
+		this.creditCards = new LinkedHashSet<CustCreditCard>();
+		this.loans = new LinkedHashSet<CustLoan>();
 	}
 	
 	public Customer(@NotBlank(message = "Please select your salutation.") String salutation, String identityNumber,
@@ -179,8 +168,8 @@ public class Customer extends User{
 			@NotBlank(message = "Please select your industry.") String industry,
 			@NotBlank(message = "Please enter your occupation.") String occupation,
 			@NotBlank(message = "Please enter your birthdate.") LocalDate birthdate, Address address,
-			@NotBlank(message = "Please select your marital status.") String maritalStatus, String status,
-			List<CustAccount> accounts, List<CustCreditCard> creditCards, List<CustLoan> loans) {
+			@NotBlank(message = "Please select your marital status.") String maritalStatus,
+			Set<CustAccount> accounts, Set<CustCreditCard> creditCards, Set<CustLoan> loans) {
 		super();
 		this.salutation = salutation;
 		this.identityNumber = identityNumber;
@@ -191,7 +180,6 @@ public class Customer extends User{
 		this.birthdate = birthdate;
 		this.address = address;
 		this.maritalStatus = maritalStatus;
-		this.status = status;
 		this.accounts = accounts;
 		this.creditCards = creditCards;
 		this.loans = loans;
@@ -201,7 +189,6 @@ public class Customer extends User{
 	public String toString() {
 		return "Customer [ " + super.toString() + ", salutation=" + salutation + ", identityNumber=" + identityNumber + ", nationality="
 				+ nationality + ", race=" + race + ", industry=" + industry + ", occupation=" + occupation
-				+ ", birthdate=" + birthdate + ", maritalStatus=" + maritalStatus + ", status="
-				+ status + "]";
+				+ ", birthdate=" + birthdate + ", maritalStatus=" + maritalStatus + "]";
 	}
 }

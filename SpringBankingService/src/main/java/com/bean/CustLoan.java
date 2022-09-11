@@ -1,6 +1,6 @@
 package com.bean;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,13 +61,14 @@ public class CustLoan {
 	
 	private String status;
 	
-	@OneToMany(mappedBy="loan", cascade=CascadeType.ALL)
-	private List<LoanPayment> transactions;
+	@OneToMany(mappedBy="loan", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<LoanPayment> transactions;
 	
 	@ManyToOne
 	private Loan loan;
 	
 	@ManyToOne
+	@JoinColumn(name="customer_id")
 	private Customer customer;
 
 	public String getId() {
@@ -150,11 +151,11 @@ public class CustLoan {
 		this.status = status;
 	}
 
-	public List<LoanPayment> getTransactions() {
+	public Set<LoanPayment> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(List<LoanPayment> transactions) {
+	public void setTransactions(Set<LoanPayment> transactions) {
 		this.transactions = transactions;
 	}
 
@@ -186,7 +187,7 @@ public class CustLoan {
 			@NotBlank(message = "Please enter the disbursement bank for the loan.") String disbursementBank,
 			@NotBlank(message = "Please select the disbursement account type for the loan.") String disbursementAccType,
 			@NotBlank(message = "Please select the disbursement account number for the loan.") String disbursementAccNum,
-			List<LoanPayment> transactions, Loan loan, Customer customer) {
+			Set<LoanPayment> transactions, Loan loan, Customer customer) {
 		this.id = id;
 		this.interestRate = interestRate;
 		this.repaymentPeriod = repaymentPeriod;

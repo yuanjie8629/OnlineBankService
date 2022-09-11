@@ -71,4 +71,19 @@ public class AdminCustMgmtController {
 		ra.addFlashAttribute("msg", "You have successfully deactivated the customer with ID " + id);
 		return "redirect:/admin/customer-management/";
 	}
+	
+	@RequestMapping(value = "/account")
+	public String customerAccountManagement(@RequestParam(required=false) String status, Model m) {
+		return "admin-cust-mgmt-account";
+	}
+	
+	@RequestMapping(value = "/credit-card")
+	public String customerCreditCardManagement(@RequestParam(required=false) String status, Model m) {
+		return "admin-cust-mgmt-credit-card";
+	}
+	
+	@RequestMapping(value = "/loan")
+	public String customerLoanManagement(@RequestParam(required=false) String status, Model m) {
+		return "admin-cust-mgmt-loan";
+	}
 }

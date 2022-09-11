@@ -48,16 +48,21 @@ public class LoginController {
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model m, RedirectAttributes ra) {
 		User user = userDao.login(username, password);
 		if (user != null) {
-			session.setAttribute("user", user);
-			ra.addFlashAttribute("user", user);
-			if (user instanceof Admin)
-				return "redirect:/admin/home";
-			else
-				return "redirect:/customer/home";
-		} else {
-			ra.addFlashAttribute("loginMsg", "Login Failed. Invalid Username or Password...");
-			return "redirect:/login";
+			if (user.getStatus() == null || user.getStatus().equalsIgnoreCase("inactive")) {
+				ra.addFlashAttribute("loginMsg", "Your account is inactive. Please contact us.");
+			} else {
+				session.setAttribute("user", user);
+				ra.addFlashAttribute("user", user);
+				if (user instanceof Admin)
+					return "redirect:/admin/home";
+				else  if (user instanceof Customer){
+					return "redirect:/customer/home";
+				}
+			}
+		}  else {
+			ra.addFlashAttribute("loginMsg", "Invalid Username or Password...");
 		}
+		return "redirect:/login";
 	}
 	
 	@RequestMapping("/logout")
@@ -97,7 +102,7 @@ public class LoginController {
 			if (cust != null) {
 				cust.setUsername(username);
 				cust.setPassword(password);
-				custDao.save(cust);
+				custDao.update(cust);
 				ra.addFlashAttribute("msg", "You have successfully registered. You can now login to the OBS Connect.");
 				return "redirect:/login";
 			}

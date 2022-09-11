@@ -1,22 +1,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="container my-4">
-	<div class="my-auto">
-		<h3>Manage Customers</h3>
+	<div class="row justify-content-between align-items-center my-auto">
+		<div class="col-auto">
+			<h3>Manage Customers</h3>
+		</div>
+		<div class="col-auto">
+			<div class="row">
+				<div class="col-auto">
+					<a href="<c:url value="/admin/customer-management/account" />" role="button" class="btn btn-danger px-3 py-2">
+						Customer Account
+					</a>
+				</div>
+				<div class="col-auto">
+					<a href="<c:url value="/admin/customer-management/credit-card" />" role="button" class="btn btn-danger px-3 py-2">
+						Customer Credit Card
+					</a>
+				</div>
+				<div class="col-auto">
+					<a href="<c:url value="/admin/customer-management/loan" />" role="button" class="btn btn-danger px-3 py-2">
+						Customer Loan
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="card card-shadow my-5">
 		<div class="card-body p-4">
 			<h4 class="mb-4">Customer List</h4>
-				<div class="row justify-content-between align-items-center g-3 mt-2 mb-5">
-					<div class="col-auto">
-						<!-- Customer Status Tabs -->
-						<nav id="cust-status" class="nav nav-pills nav-tab-category fw-bold">
-							<a id="all" class="nav-link px-3 py-2 me-4 active" href="customer-management">All</a>
-							<a id="active" class="nav-link px-3 py-2 me-4" href="customer-management?status=active">Active</a>
-							<a id="inactive" class="nav-link px-3 py-2 me-4" href="customer-management?status=inactive">Inactive</a>
-						</nav>
-					</div>
+			<div class="row justify-content-between align-items-center g-3 mt-2 mb-5">
+				<div class="col-auto">
+					<!-- Customer Status Tabs -->
+					<nav id="cust-status" class="nav nav-pills nav-tab-category fw-bold">
+						<a id="all" class="nav-link px-3 py-2 me-4 active" href="customer-management">All</a> <a id="active"
+							class="nav-link px-3 py-2 me-4" href="customer-management?status=active">Active</a> <a id="inactive"
+							class="nav-link px-3 py-2 me-4" href="customer-management?status=inactive">Inactive</a>
+					</nav>
 				</div>
+			</div>
 			<!-- Customer List -->
 			<table id="custTable" class="table table-hover">
 				<thead>
@@ -45,49 +66,45 @@
 							<td>
 								<div class="row align-items-center">
 									<div class="col-auto">
-									<c:choose>
-										<c:when test="${fn:toLowerCase(cust.status) == 'active'}">
-											<span class="dot bg-success"></span>
-										</c:when>
-										<c:when test="${fn:toLowerCase(cust.status) == 'inactive'}">
-											<span class="dot bg-danger"></span>
-										</c:when>
-										<c:otherwise>
-											<span class="dot bg-secondary"></span>
-										</c:otherwise>
-									</c:choose>
+										<c:choose>
+											<c:when test="${fn:toLowerCase(cust.status) == 'active'}">
+												<span class="dot bg-success"></span>
+											</c:when>
+											<c:when test="${fn:toLowerCase(cust.status) == 'inactive'}">
+												<span class="dot bg-danger"></span>
+											</c:when>
+											<c:otherwise>
+												<span class="dot bg-secondary"></span>
+											</c:otherwise>
+										</c:choose>
 									</div>
-									<div class="col-auto p-0 text-capitalize"><c:out value="${cust.status}" /></div>
+									<div class="col-auto p-0 text-capitalize">
+										<c:out value="${cust.status}" />
+									</div>
 								</div>
 							</td>
 							<td class="text-center">
 								<div class="dropdown-center">
 									<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
 									<ul class="dropdown-menu">
-										<li>
-											<a href="<c:url value="/admin/customer-management/view/${cust.id}" />" class="dropdown-item" style="cursor: pointer;">
-												<i class="fa-solid fa-eye fa-fw me-2"></i>View
-											</a>
-										</li>
-										<li>
-											<a href="<c:url value="/admin/customer-management/update/${cust.id}" />" class="dropdown-item" style="cursor: pointer;">
-												<i class="fa-solid fa-pen-to-square fa-fw me-2"></i>Update
-											</a>
-										</li>
-										<li>
-											<c:choose>
+										<li><a href="<c:url value="/admin/customer-management/view/${cust.id}" />" class="dropdown-item"
+											style="cursor: pointer;"> <i class="fa-solid fa-eye fa-fw me-2"></i>View
+										</a></li>
+										<li><a href="<c:url value="/admin/customer-management/update/${cust.id}" />" class="dropdown-item"
+											style="cursor: pointer;"> <i class="fa-solid fa-pen-to-square fa-fw me-2"></i>Update
+										</a></li>
+										<li><c:choose>
 												<c:when test="${fn:toLowerCase(cust.status) == 'active'}">
-													<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${cust.id}" data-bs-target="#deactivateCustModal">
-														<i class="fa-solid fa-circle-xmark fa-fw me-2"></i>Deactivate
+													<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${cust.id}"
+														data-bs-target="#deactivateCustModal"> <i class="fa-solid fa-circle-xmark fa-fw me-2"></i>Deactivate
 													</a>
 												</c:when>
 												<c:when test="${fn:toLowerCase(cust.status) == 'inactive'}">
-													<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${cust.id}" data-bs-target="#activateCustModal">
-															<i class="fa-solid fa-circle-check fa-fw me-2"></i>Activate
+													<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${cust.id}"
+														data-bs-target="#activateCustModal"> <i class="fa-solid fa-circle-check fa-fw me-2"></i>Activate
 													</a>
 												</c:when>
-											</c:choose>
-										</li>
+											</c:choose></li>
 									</ul>
 								</div>
 							</td>
@@ -116,13 +133,13 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
-	<c:remove var="msg"/>
+	<c:remove var="msg" />
 </c:if>
 <script>
 	$(document).ready(function() {
 		$('#custTable').DataTable();
 	});
-		
+
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);
 	let custStatus = queryParams.get("status");
@@ -133,8 +150,8 @@
 			if (custStatusList[i].id.toLowerCase() == custStatus.toLowerCase())
 				custStatusList[i].className += " active";
 			else
-				custStatusList[i].className = custStatusList[i].className.replace(
-						" active", "");
+				custStatusList[i].className = custStatusList[i].className
+						.replace(" active", "");
 		}
 	}
 </script>

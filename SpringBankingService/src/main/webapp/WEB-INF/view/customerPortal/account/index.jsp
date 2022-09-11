@@ -29,7 +29,7 @@
 							<div class="col fw-bold"><fmt:formatNumber value="${custAcc.curBal}" type="currency" currencyCode="SGD"/></div>
 						</div>
 						<div>
-							<a href="<c:url value="/customer/account/6445533431/summary" />" role="button"
+							<a href="<c:url value="/customer/account/summary/${custAcc.accNum}" />" role="button"
 								class="btn btn-danger stretched-link float-end">View More</a>
 						</div>
 					</div>

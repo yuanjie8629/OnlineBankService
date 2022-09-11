@@ -42,26 +42,6 @@ public class CustomerController {
 		return "cust-home";
 	}
 	
-	@RequestMapping(value="/fund-transfer/own")
-	public String fundTransferToOwn() {
-		return "cust-fund-transfer-own";
-	}
-	
-	@RequestMapping(value="/fund-transfer/others")
-	public String fundTransferToOthers() {
-		return "cust-fund-transfer-others";
-	}
-	
-	@RequestMapping(value="/payment/credit-card")
-	public String creditCardPayment() {
-		return "cust-payment-credit-card";
-	}
-	
-	@RequestMapping(value="/payment/loan")
-	public String loanPayment() {
-		return "cust-payment-loan";
-	}
-	
 	@RequestMapping(value = "/profile-management")
 	public String profileManagement(Model m) {
 		m.addAttribute("user", (User) session.getAttribute("user"));

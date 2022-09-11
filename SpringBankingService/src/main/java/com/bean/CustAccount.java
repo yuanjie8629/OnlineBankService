@@ -1,7 +1,8 @@
 package com.bean;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +35,6 @@ public class CustAccount {
 	@Column(name="hold_amt")
 	private double holdAmt;
 	
-	
 	@Column(name="open_date")
 	@CreationTimestamp
 	private LocalDateTime openDate;
@@ -52,8 +52,8 @@ public class CustAccount {
 	@JoinColumn(name="account_id")
 	private Account account;
 	
-	@OneToMany(mappedBy="account")
-	private List<AccountTransaction> transactions;
+	@OneToMany(mappedBy="account", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private Set<AccountTransaction> transactions;
 
 	public String getAccNum() {
 		return accNum;
@@ -127,22 +127,25 @@ public class CustAccount {
 		this.account = account;
 	}
 
-	public List<AccountTransaction> getTransactions() {
+	public Set<AccountTransaction> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(List<AccountTransaction> transactions) {
+	public void setTransactions(Set<AccountTransaction> transactions) {
 		this.transactions = transactions;
 	}
 	
 	public CustAccount() {
 		
 	}
+	
+	public CustAccount(String accNum) {
+		this.accNum = accNum;
+	}
 
 	public CustAccount(String accNum, double curBal, double availBal, double holdAmt, LocalDateTime openDate,
 			LocalDateTime closeDate, String status, Customer customer, Account account,
-			List<AccountTransaction> transactions) {
-		super();
+			Set<AccountTransaction> transactions) {
 		this.accNum = accNum;
 		this.curBal = curBal;
 		this.availBal = availBal;
@@ -153,5 +156,22 @@ public class CustAccount {
 		this.customer = customer;
 		this.account = account;
 		this.transactions = transactions;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accNum);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustAccount other = (CustAccount) obj;
+		return Objects.equals(accNum, other.accNum);
 	}
 }

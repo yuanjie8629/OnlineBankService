@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name="loan_payment")
 public class LoanPayment {
@@ -18,6 +20,7 @@ public class LoanPayment {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@CreationTimestamp
 	private LocalDateTime date;
 	
 	private String description;
@@ -33,7 +36,7 @@ public class LoanPayment {
 	
 	private String status;
 	
-	@ManyToOne(targetEntity=CustLoan.class)
+	@ManyToOne()
 	@JoinColumn(name="loan_id")
 	private CustLoan loan;
 }

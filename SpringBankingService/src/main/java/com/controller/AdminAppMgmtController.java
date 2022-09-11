@@ -53,9 +53,6 @@ public class AdminAppMgmtController {
 	CustomerDao custDao;
 
 	@Autowired
-	CustAccDao custAccDao;
-
-	@Autowired
 	CustCreditCardDao custCreditCardDao;
 	
 	@Autowired
@@ -93,26 +90,29 @@ public class AdminAppMgmtController {
 			RedirectAttributes ra) {
 		AccountApplication accApp = accAppDao.getAccountApplicationById(id);
 		Customer customer = custDao.getCustomerByIdentityNum(accApp.getIdentityNumber());
+		Address address;
 		if (customer == null) {
 			customer = new Customer();
+			address = new Address();
+		} else {
+			address = customer.getAddress();
 		}
 
-		Address address = new Address();
 		BeanUtils.copyProperties(accApp, customer);
 		BeanUtils.copyProperties(accApp, address);
 		customer.setAddress(address);
 		customer.setStatus("active");
-		custDao.save(customer);
-
+		
 		CustAccount custAcc = new CustAccount();
 		custAcc.setAccount(accApp.getAccount());
-		System.out.println(initialBal);
 		custAcc.setCurBal(initialBal);
-		System.out.println(custAcc.getCurBal());
 		custAcc.setAvailBal(initialBal - accApp.getAccount().getMinAmount());
 		custAcc.setStatus("active");
 		custAcc.setCustomer(customer);
-		custAccDao.save(custAcc);
+		
+		// Add custAcc to customer's acc List
+		customer.getAccounts().add(custAcc);
+		custDao.save(customer);
 
 		accApp.setStatus("Approved");
 		accAppDao.update(accApp);
@@ -187,22 +187,27 @@ public class AdminAppMgmtController {
 		CreditCardApplication creditCardApp = creditCardAppDao.getCreditCardApplicationById(appId);
 		if (!br.hasErrors()) {
 			Customer customer = custDao.getCustomerByIdentityNum(creditCardApp.getIdentityNumber());
+			Address address;
 			if (customer == null) {
 				customer = new Customer();
+				address = new Address();
+			} else {
+				address = customer.getAddress();
 			}
 
-			Address address = new Address();
 			BeanUtils.copyProperties(creditCardApp, customer);
 			BeanUtils.copyProperties(creditCardApp, address);
 			customer.setAddress(address);
 			customer.setStatus("active");
-			custDao.save(customer);
 
 			BeanUtils.copyProperties(creditCardApp, custCard);
 			custCard.setCreditCard(creditCardApp.getCreditCard());
 			custCard.setStatus("active");
 			custCard.setCustomer(customer);
-			custCreditCardDao.save(custCard);
+			
+			// Add custCard to customer's credit card List
+			customer.getCreditCards().add(custCard);
+			custDao.save(customer);
 
 			creditCardApp.setStatus("Approved");
 			creditCardAppDao.update(creditCardApp);
@@ -299,21 +304,27 @@ public class AdminAppMgmtController {
 		LoanApplication loanApp = loanAppDao.getLoanApplicationById(appId);
 		if (!br.hasErrors()) {
 			Customer customer = custDao.getCustomerByIdentityNum(loanApp.getIdentityNumber());
+			Address address;
 			if (customer == null) {
 				customer = new Customer();
+				address = new Address();
+			} else {
+				address = customer.getAddress();
 			}
 
-			Address address = new Address();
 			BeanUtils.copyProperties(loanApp, customer);
 			BeanUtils.copyProperties(loanApp, address);
 			customer.setAddress(address);
 			customer.setStatus("active");
-			custDao.save(customer);
+
 			custLoan.setPrincipalBal(custLoan.getTotalAmount() - custLoan.getDownpayment());
 			custLoan.setStatus("active");
 			custLoan.setLoan(loanApp.getLoan());
 			custLoan.setCustomer(customer);
-			custLoanDao.save(custLoan);
+			
+			// Add custLoan to customer's loan List
+			customer.getLoans().add(custLoan);
+			custDao.save(customer);
 
 			loanApp.setStatus("Approved");
 			loanAppDao.update(loanApp);

@@ -309,6 +309,7 @@
 									<div class="col-12 col-lg-6">
 										<label class="form-label" for="disbursementBank">Disbursement Bank</label>
 										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="disbursementBank">
+											<option value="OBS">OBS</option>
 											<option value="DBS">DBS</option>
 											<option value="UOB">UOB</option>
 											<option value="OCBC">OCBC</option>

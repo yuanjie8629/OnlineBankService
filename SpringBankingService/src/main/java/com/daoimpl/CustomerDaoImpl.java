@@ -23,7 +23,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void save(Customer customer) {
-		template.saveOrUpdate(customer);
+		template.persist(customer);
 	}
 
 	@Override

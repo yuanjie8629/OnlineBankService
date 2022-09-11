@@ -2,6 +2,8 @@ package com.daoimpl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ public class CustAccDaoImpl implements CustAccDao{
 	@Override
 	@Transactional
 	public void save(CustAccount custAccount) {
-		template.save(custAccount);
+		template.persist(custAccount);
 	}
 
 	@Override
@@ -29,8 +31,21 @@ public class CustAccDaoImpl implements CustAccDao{
 	}
 
 	@Override
-	public CustAccount getCustAccountById(int id) {
-		return template.get(CustAccount.class, id);
+	public CustAccount getCustAccountById(String accNum) {
+		return template.get(CustAccount.class, accNum);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public CustAccount getCustAccountByCust(String accNum, Customer cust) {
+		DetachedCriteria query = DetachedCriteria.forClass(CustAccount.class);
+		query.add(Restrictions.eq("customer", cust));
+		query.add(Restrictions.eq("accNum", accNum));
+		List<CustAccount> custAccList = (List<CustAccount>) template.findByCriteria(query);
+		if (!custAccList.isEmpty()) {
+			return custAccList.get(0);
+		}
+		return null;
 	}
 
 	@Override
@@ -38,8 +53,11 @@ public class CustAccDaoImpl implements CustAccDao{
 		return template.loadAll(CustAccount.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CustAccount> getCustAccountsByCust(Customer cust) {
-		return cust.getAccounts();
+		DetachedCriteria query = DetachedCriteria.forClass(CustAccount.class);
+		query.add(Restrictions.eq("customer", cust));
+		return (List<CustAccount>) template.findByCriteria(query);
 	}
 }
