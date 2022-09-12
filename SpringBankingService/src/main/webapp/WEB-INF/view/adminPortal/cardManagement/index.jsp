@@ -6,8 +6,7 @@
 			<h3>Manage Cards</h3>
 		</div>
 		<div class="col-auto my-auto">
-			<a href="<c:url value="/admin/card-management/add" />" role="button" class="btn btn-danger"
-				style="padding: 12px 36px;"> <strong>Add Card</strong></a>
+			<a href="<c:url value="/admin/card-management/add" />" role="button" class="btn btn-danger px-3 py-2">Add Card</a>
 		</div>
 	</div>
 	<form name="filterCard" method="get" action="<c:url value="/admin/card-management" />" onsubmit="validateForm(this)">

@@ -57,13 +57,7 @@
 								<spring:bind path="salutation">
 									<div class="form-group col-5 col-md-2">
 										<label class="form-label" for="salutation">Salutation</label>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="salutation">
-											<option value="Mr">Dr.</option>
-											<option value="Mr.">Mr.</option>
-											<option value="Mrs.">Mrs.</option>
-											<option value="Ms.">Ms.</option>
-											<option value="Madam.">Madam.</option>
-										</form:select>
+										<form:select items="${salutationList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="salutation" />
 										<div class="invalid-feedback">
 											<form:errors path="salutation" />
 										</div>
@@ -99,9 +93,7 @@
 								<spring:bind path="nationality">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="nationality">Nationality</label>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="nationality">
-											<jsp:include page="/WEB-INF/view/selection/nationalitySelection.jsp" />
-										</form:select>
+										<form:select items="${nationalityList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="nationality" />
 										<div class="invalid-feedback">
 											<form:errors path="nationality" />
 										</div>
@@ -122,9 +114,7 @@
 								<spring:bind path="maritalStatus">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="maritalStatus">Marital Status</label><br>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="maritalStatus">
-											<jsp:include page="/WEB-INF/view/selection/maritalStatusSelection.jsp" />
-										</form:select>
+										<form:select items="${maritalStatusList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="maritalStatus" />
 										<div class="invalid-feedback">
 											<form:errors path="maritalStatus" />
 										</div>
@@ -142,9 +132,7 @@
 								<spring:bind path="race">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="race">Race</label><br>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="race">
-											<jsp:include page="/WEB-INF/view/selection/raceSelection.jsp" />
-										</form:select>
+										<form:select items="${raceList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="race" />
 										<div class="invalid-feedback">
 											<form:errors path="race" />
 										</div>
@@ -153,9 +141,7 @@
 								<spring:bind path="industry">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="industry">Industry</label>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="industry">
-											<jsp:include page="/WEB-INF/view/selection/industrySelection.jsp" />
-										</form:select>
+										<form:select items="${industryList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="industry" />
 										<div class="invalid-feedback">
 											<form:errors path="industry" />
 										</div>
@@ -217,9 +203,7 @@
 								<spring:bind path="country">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="country">Country</label>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="country">
-											<jsp:include page="/WEB-INF/view/selection/countrySelection.jsp" />
-										</form:select>
+										<form:select items="${countryList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="country" />
 										<div class="invalid-feedback">
 											<form:errors path="country" />
 										</div>

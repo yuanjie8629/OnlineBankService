@@ -23,20 +23,115 @@ public class LoanPayment {
 	@CreationTimestamp
 	private LocalDateTime date;
 	
+	@Column(name="paid_date")
+	private LocalDateTime paidDate;
+	
+	@Column(name="due_date")
+	private LocalDateTime dueDate;
+	
 	private String description;
 	
 	private double principal;
 	
-	private double interest;
+	@Column(name="interest_charged")
+	private double interestCharged;
 	
-	@Column(name="amount_paid")
-	private double amountPaid;
-	
-	private double balance;
+	@Column(name="amount")
+	private double amount;
 	
 	private String status;
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name="loan_id")
 	private CustLoan loan;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public LocalDateTime getPaidDate() {
+		return paidDate;
+	}
+
+	public void setPaidDate(LocalDateTime paidDate) {
+		this.paidDate = paidDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(double principal) {
+		this.principal = principal;
+	}
+
+	public double getInterestCharged() {
+		return interestCharged;
+	}
+
+	public void setInterestCharged(double interestCharged) {
+		this.interestCharged = interestCharged;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public CustLoan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(CustLoan loan) {
+		this.loan = loan;
+	}
+	
+	public LoanPayment() {
+		
+	}
+
+	public LoanPayment(int id, LocalDateTime date, LocalDateTime paidDate, String description, double principal,
+			double interestCharged, double amount, String status, CustLoan loan) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.paidDate = paidDate;
+		this.description = description;
+		this.principal = principal;
+		this.interestCharged = interestCharged;
+		this.amount = amount;
+		this.status = status;
+		this.loan = loan;
+	}
 }

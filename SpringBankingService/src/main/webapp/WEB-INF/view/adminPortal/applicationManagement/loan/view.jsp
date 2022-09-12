@@ -309,9 +309,9 @@
 									<label class="form-label" for="payslipDoc">Payslip</label> <a class="form-control border-0 p-0 text-primary"
 										href="${loanApp.id}/payslip-doc" target="_blank">Download</a>
 								</div>
-								<c:if test="${not empty loanApp.supportDoc}">
+								<c:if test="${not empty supportDoc}">
 									<div class="col-12">
-										<label class="form-label" for="payslipDoc">Supporting Document</label> <a class="form-control border-0 p-0 text-primary"
+										<label class="form-label" for="supportDoc">Supporting Document</label> <a class="form-control border-0 p-0 text-primary"
 											href="${loanApp.id}/support-doc" target="_blank">Download</a>
 									</div>
 								</c:if>

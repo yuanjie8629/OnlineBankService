@@ -51,6 +51,9 @@ public class AdminAppMgmtController {
 
 	@Autowired
 	CustomerDao custDao;
+	
+	@Autowired
+	CustAccDao custAccDao;
 
 	@Autowired
 	CustCreditCardDao custCreditCardDao;
@@ -83,9 +86,9 @@ public class AdminAppMgmtController {
 		m.addAttribute("accApp", accApp);
 		return "admin-app-mgmt-acc-view";
 	}
-
-	@Transactional
+	
 	@RequestMapping(value = "/account/approve", method = RequestMethod.POST)
+	@Transactional
 	public String approveAccountApplication(@RequestParam String id, @RequestParam double initialBal, Model m,
 			RedirectAttributes ra) {
 		AccountApplication accApp = accAppDao.getAccountApplicationById(id);
@@ -102,6 +105,7 @@ public class AdminAppMgmtController {
 		BeanUtils.copyProperties(accApp, address);
 		customer.setAddress(address);
 		customer.setStatus("active");
+		custDao.save(customer);
 		
 		CustAccount custAcc = new CustAccount();
 		custAcc.setAccount(accApp.getAccount());
@@ -109,10 +113,7 @@ public class AdminAppMgmtController {
 		custAcc.setAvailBal(initialBal - accApp.getAccount().getMinAmount());
 		custAcc.setStatus("active");
 		custAcc.setCustomer(customer);
-		
-		// Add custAcc to customer's acc List
-		customer.getAccounts().add(custAcc);
-		custDao.save(customer);
+		custAccDao.save(custAcc);
 
 		accApp.setStatus("Approved");
 		accAppDao.update(accApp);
@@ -180,8 +181,8 @@ public class AdminAppMgmtController {
 		return "admin-app-mgmt-card-view";
 	}
 
-	@Transactional
 	@RequestMapping(value = "/card/approve", method = RequestMethod.POST)
+	@Transactional
 	public String approveCreditCardApplication(@Valid @ModelAttribute("custCard") CustCreditCard custCard,
 			BindingResult br, @RequestParam String appId, Model m, RedirectAttributes ra) {
 		CreditCardApplication creditCardApp = creditCardAppDao.getCreditCardApplicationById(appId);
@@ -199,15 +200,15 @@ public class AdminAppMgmtController {
 			BeanUtils.copyProperties(creditCardApp, address);
 			customer.setAddress(address);
 			customer.setStatus("active");
+			custDao.save(customer);
 
-			BeanUtils.copyProperties(creditCardApp, custCard);
+			custCard.setCardDisplayName(creditCardApp.getCardDisplayName());
 			custCard.setCreditCard(creditCardApp.getCreditCard());
+			custCard.setBalance(custCard.getCreditLimit());
 			custCard.setStatus("active");
 			custCard.setCustomer(customer);
+			custCreditCardDao.save(custCard);
 			
-			// Add custCard to customer's credit card List
-			customer.getCreditCards().add(custCard);
-			custDao.save(customer);
 
 			creditCardApp.setStatus("Approved");
 			creditCardAppDao.update(creditCardApp);
@@ -291,13 +292,15 @@ public class AdminAppMgmtController {
 			custLoan.setTotalAmount(loanApp.getLoanAmount());
 			custLoan.setInterestRate(loanApp.getLoan().getInterestRate() * 100);
 			custLoan.setDownpayment(loanApp.getLoan().getDownpayment() * loanApp.getLoanAmount());
+			if (loanApp.getSupportDoc().length > 0)
+				m.addAttribute("supportDoc", true);
 			m.addAttribute("custLoan", custLoan);
 		}
 		return "admin-app-mgmt-loan-view";
 	}
 	
-	@Transactional
 	@RequestMapping(value = "/loan/approve", method = RequestMethod.POST)
+	@Transactional
 	public String approveCreditCardApplication(@Valid @ModelAttribute("custLoan") CustLoan custLoan,
 			BindingResult br, @RequestParam String appId, Model m, RedirectAttributes ra) {
 		custLoan.setInterestRate(custLoan.getInterestRate() / 100);
@@ -316,16 +319,14 @@ public class AdminAppMgmtController {
 			BeanUtils.copyProperties(loanApp, address);
 			customer.setAddress(address);
 			customer.setStatus("active");
-
-			custLoan.setPrincipalBal(custLoan.getTotalAmount() - custLoan.getDownpayment());
-			custLoan.setStatus("active");
-			custLoan.setLoan(loanApp.getLoan());
-			custLoan.setCustomer(customer);
-			
-			// Add custLoan to customer's loan List
-			customer.getLoans().add(custLoan);
 			custDao.save(customer);
 
+			custLoan.setLoan(loanApp.getLoan());
+			custLoan.setPrincipalBal(custLoan.getTotalAmount() - custLoan.getDownpayment());
+			custLoan.setStatus("active");
+			custLoan.setCustomer(customer);
+			custLoanDao.save(custLoan);
+			
 			loanApp.setStatus("Approved");
 			loanAppDao.update(loanApp);
 			ra.addFlashAttribute("msg", "You have successfully approved the loan application.");
@@ -392,7 +393,7 @@ public class AdminAppMgmtController {
 		header.setContentType(MediaType.APPLICATION_PDF);
 		header.set(HttpHeaders.CONTENT_DISPOSITION,
 				"attachment; filename=" + loanApp.getName().replace(" ", "") + "_supportDoc.pdf");
-		header.setContentLength(loanApp.getPayslipDoc().length);
-		return new HttpEntity<byte[]>(loanApp.getPayslipDoc(), header);
+		header.setContentLength(loanApp.getSupportDoc().length);
+		return new HttpEntity<byte[]>(loanApp.getSupportDoc(), header);
 	}
 }

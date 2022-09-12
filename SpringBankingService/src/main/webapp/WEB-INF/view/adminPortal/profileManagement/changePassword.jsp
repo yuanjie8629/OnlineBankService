@@ -17,14 +17,12 @@
 							<c:out value="${changePassMsg}" />
 						</div>
 					</c:if>
-					<c:url var="url" value="/admin/profile-management/changePass" />
-					<input type="hidden" value="${user.id}">
 					<div class="mb-3">
-						<label for="oldPass">Old Password</label> <input name="oldPass" type="password" class="form-control" required>
+						<label class="form-label" for="oldPass">Old Password</label> <input name="oldPass" type="password" class="form-control" required>
 						<div class="invalid-feedback">Please enter old password.</div>
 					</div>
 					<div class="mb-3">
-						<label for="newPass">New Password</label>
+						<label class="form-label" for="newPass">New Password</label>
 						<input name="newPass" type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required onchange="validatePassword()">
 						<div class="invalid-feedback">
 							Password must match the following conditions:
@@ -37,7 +35,7 @@
 						</div>
 					</div>
 					<div class="mb-3">
-						<label for="confirmPass">Confirm New Password</label>
+						<label class="form-label" for="confirmPass">Confirm New Password</label>
 						<input name="confirmPass" type="password" class="form-control" required onkeyup="validatePassword()">
 						<div id="confirmPassErr" class="invalid-feedback">Please enter confirm password.</div>
 					</div>

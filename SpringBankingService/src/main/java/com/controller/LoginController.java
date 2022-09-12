@@ -82,7 +82,7 @@ public class LoginController {
 	public String verifyRegistration(@RequestParam String identityNumber, @RequestParam String name, @RequestParam String email, RedirectAttributes ra) {
 		Customer cust = custDao.getCustomerForRegister(identityNumber, name, email);
 		if (cust != null) {
-			if (cust.getUsername() != null && cust.getPassword() != null) {
+			if (cust.getUsername() != null && !cust.getUsername().isEmpty() && cust.getPassword() != null && !cust.getPassword().isEmpty()) {
 				ra.addFlashAttribute("msg", "You have already registered. Please login to your account.");
 			} else {
 				ra.addFlashAttribute("identityNumber", identityNumber);

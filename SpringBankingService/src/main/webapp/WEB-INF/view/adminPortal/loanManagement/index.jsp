@@ -6,8 +6,7 @@
 			<h3>Manage Loans</h3>
 		</div>
 		<div class="col-auto my-auto">
-			<a href="<c:url value="/admin/loan-management/add" />" role="button" class="btn btn-danger"
-				style="padding: 12px 36px;"> <strong>Add Loan</strong></a>
+			<a href="<c:url value="/admin/loan-management/add" />" role="button" class="btn btn-danger px-3 py-2">Add Loan</a>
 		</div>
 	</div>
 	<form name="filterLoan" method="get" action="<c:url value="/admin/loan-management" />" onsubmit="validateForm(this)">

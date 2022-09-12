@@ -2,11 +2,11 @@ package com.daoimpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.Loan;
 import com.dao.LoanDao;

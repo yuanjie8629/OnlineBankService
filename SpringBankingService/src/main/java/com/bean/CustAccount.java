@@ -2,7 +2,7 @@ package com.bean;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,7 +53,7 @@ public class CustAccount {
 	private Account account;
 	
 	@OneToMany(mappedBy="account", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<AccountTransaction> transactions;
+	private List<AccountTransaction> transactions;
 
 	public String getAccNum() {
 		return accNum;
@@ -127,11 +127,11 @@ public class CustAccount {
 		this.account = account;
 	}
 
-	public Set<AccountTransaction> getTransactions() {
+	public List<AccountTransaction> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(Set<AccountTransaction> transactions) {
+	public void setTransactions(List<AccountTransaction> transactions) {
 		this.transactions = transactions;
 	}
 	
@@ -145,7 +145,7 @@ public class CustAccount {
 
 	public CustAccount(String accNum, double curBal, double availBal, double holdAmt, LocalDateTime openDate,
 			LocalDateTime closeDate, String status, Customer customer, Account account,
-			Set<AccountTransaction> transactions) {
+			List<AccountTransaction> transactions) {
 		this.accNum = accNum;
 		this.curBal = curBal;
 		this.availBal = availBal;

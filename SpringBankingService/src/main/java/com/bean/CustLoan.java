@@ -1,10 +1,11 @@
 package com.bean;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -62,9 +63,10 @@ public class CustLoan {
 	private String status;
 	
 	@OneToMany(mappedBy="loan", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<LoanPayment> transactions;
+	private List<LoanPayment> payments;
 	
 	@ManyToOne
+	@JoinColumn(name="loan_id")
 	private Loan loan;
 	
 	@ManyToOne
@@ -151,12 +153,12 @@ public class CustLoan {
 		this.status = status;
 	}
 
-	public Set<LoanPayment> getTransactions() {
-		return transactions;
+	public List<LoanPayment> getPayments() {
+		return payments;
 	}
 
-	public void setTransactions(Set<LoanPayment> transactions) {
-		this.transactions = transactions;
+	public void setPayments(List<LoanPayment> payments) {
+		this.payments = payments;
 	}
 
 	public Loan getLoan() {
@@ -187,7 +189,7 @@ public class CustLoan {
 			@NotBlank(message = "Please enter the disbursement bank for the loan.") String disbursementBank,
 			@NotBlank(message = "Please select the disbursement account type for the loan.") String disbursementAccType,
 			@NotBlank(message = "Please select the disbursement account number for the loan.") String disbursementAccNum,
-			Set<LoanPayment> transactions, Loan loan, Customer customer) {
+			String status, List<LoanPayment> payments, Loan loan, Customer customer) {
 		this.id = id;
 		this.interestRate = interestRate;
 		this.repaymentPeriod = repaymentPeriod;
@@ -197,8 +199,19 @@ public class CustLoan {
 		this.disbursementBank = disbursementBank;
 		this.disbursementAccType = disbursementAccType;
 		this.disbursementAccNum = disbursementAccNum;
-		this.transactions = transactions;
+		this.status = status;
+		this.payments = payments;
 		this.loan = loan;
 		this.customer = customer;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		return "CustLoan [id=" + id + ", interestRate=" + interestRate + ", repaymentPeriod=" + repaymentPeriod
+				+ ", principalBal=" + principalBal + ", totalAmount=" + totalAmount + ", downpayment=" + downpayment
+				+ ", disbursementBank=" + disbursementBank + ", disbursementAccType=" + disbursementAccType
+				+ ", disbursementAccNum=" + disbursementAccNum + ", status=" + status  + ", loan=" + loan
+				+ ", customer=" + customer + "]";
 	}
 }

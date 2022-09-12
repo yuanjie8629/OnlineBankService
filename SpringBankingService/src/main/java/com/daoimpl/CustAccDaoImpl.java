@@ -29,8 +29,7 @@ public class CustAccDaoImpl implements CustAccDao{
 	public void update(CustAccount custAccount) {
 		template.update(custAccount);
 	}
-
-	@Override
+	
 	public CustAccount getCustAccountById(String accNum) {
 		return template.get(CustAccount.class, accNum);
 	}
@@ -51,6 +50,14 @@ public class CustAccDaoImpl implements CustAccDao{
 	@Override
 	public List<CustAccount> getCustAccounts() {
 		return template.loadAll(CustAccount.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CustAccount> getCustAccounts(String status) {
+		DetachedCriteria query = DetachedCriteria.forClass(CustAccount.class);
+		query.add(Restrictions.eq("status", status));
+		return (List<CustAccount>) template.findByCriteria(query);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -6,8 +6,7 @@
 			<h3>Manage Accounts</h3>
 		</div>
 		<div class="col-auto my-auto">
-			<a href="<c:url value="/admin/account-management/add" />" role="button" class="btn btn-danger"
-				style="padding: 12px 36px;"> <strong>Add Account</strong></a>
+			<a href="<c:url value="/admin/account-management/add" />" role="button" class="btn btn-danger px-3 py-2">Add Account</a>
 		</div>
 	</div>
 	<form name="filterAcc" method="get" action="<c:url value="/admin/account-management" />" onsubmit="validateForm(this)">

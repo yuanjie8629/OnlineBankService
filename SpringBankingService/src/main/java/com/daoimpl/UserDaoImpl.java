@@ -3,15 +3,14 @@ package com.daoimpl;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.bean.Customer;
 import com.bean.User;
 import com.dao.UserDao;
 

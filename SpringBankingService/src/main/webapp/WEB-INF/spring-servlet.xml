@@ -134,6 +134,14 @@
 		<property name="template" ref="template"></property>
 	</bean>
 	
+	<bean id="creditCardTransactionDao" class="com.daoimpl.CreditCardTransactionDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="creditCardPaymentDao" class="com.daoimpl.CreditCardPaymentDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
 	<bean id="custCreditCardDao" class="com.daoimpl.CustCreditCardDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
@@ -143,6 +151,10 @@
 	</bean>
 	
 	<bean id="loanAppDao" class="com.daoimpl.LoanAppDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<bean id="loanPaymentDao" class="com.daoimpl.LoanPaymentDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
 	

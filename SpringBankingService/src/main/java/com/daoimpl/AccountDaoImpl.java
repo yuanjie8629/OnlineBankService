@@ -5,8 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 

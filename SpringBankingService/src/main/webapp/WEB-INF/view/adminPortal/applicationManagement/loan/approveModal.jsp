@@ -2,8 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Approve Modal -->
-<form:form name="cardAppApprove" modelAttribute="custLoan" action="approve" method="post" class="needs-validation"
-	novalidate="true">
+<form:form name="cardAppApprove" modelAttribute="custLoan" action="approve" method="post" class="needs-validation" novalidate="true">
 	<input type="hidden" name="appId" value="${loanApp.id}" />
 	<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered modal-confirm">

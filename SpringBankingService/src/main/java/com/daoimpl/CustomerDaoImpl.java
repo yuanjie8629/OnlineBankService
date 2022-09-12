@@ -2,12 +2,11 @@ package com.daoimpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.Customer;
 import com.dao.CustomerDao;
@@ -31,7 +30,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public void update(Customer customer) {
 		template.update(customer);	
 	}
-
+	
 	@Override
 	@Transactional
 	public void deactivate(int id) {

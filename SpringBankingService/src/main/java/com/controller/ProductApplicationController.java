@@ -34,6 +34,7 @@ import com.dao.CreditCardDao;
 import com.dao.CustomerDao;
 import com.dao.LoanAppDao;
 import com.dao.LoanDao;
+import com.utils.SelectionUtils;
 
 @Controller
 @RequestMapping("/")
@@ -89,6 +90,12 @@ public class ProductApplicationController {
 		Account acc = accDao.getAccountById(id);
 		m.addAttribute("application", application);
 		m.addAttribute("account", acc);
+		m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+		m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+		m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+		m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+		m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+		m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 		return "account-apply";
 	}
 	
@@ -105,6 +112,12 @@ public class ProductApplicationController {
 			return "redirect:/account";
 		} else {
 			m.addAttribute("account", acc);
+			m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+			m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+			m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+			m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+			m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+			m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 			m.addAttribute("msg", "Failed to submit the account application. Please ensure all information are valid.");
 			return "account-apply";
 		}
@@ -132,6 +145,12 @@ public class ProductApplicationController {
 		CreditCard creditCard = creditCardDao.getCreditCardById(id);
 		m.addAttribute("application", application);
 		m.addAttribute("card", creditCard);
+		m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+		m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+		m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+		m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+		m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+		m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 		return "credit-card-apply";
 	}
 	
@@ -149,6 +168,12 @@ public class ProductApplicationController {
 		} else {
 			m.addAttribute("card", creditCard);
 			m.addAttribute("msg", "Failed to submit the credit card application. Please ensure all information are valid.");
+			m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+			m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+			m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+			m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+			m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+			m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 			return "credit-card-apply";
 		}
 	}
@@ -175,6 +200,12 @@ public class ProductApplicationController {
 		Loan loan = loanDao.getLoanById(id);
 		m.addAttribute("application", application);
 		m.addAttribute("loan", loan);
+		m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+		m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+		m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+		m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+		m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+		m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 		return "loan-apply";
 	}
 	
@@ -182,7 +213,6 @@ public class ProductApplicationController {
 	public String applyLoan(@PathVariable int id, @Valid @ModelAttribute("application") LoanApplication application, BindingResult br, Model m, RedirectAttributes ra) {
 		Loan loan = loanDao.getLoanById(id);
 		if (!br.hasErrors()) {
-			System.out.println(application.getPayslipDoc().length);
 			application.setLoan(loan);
 			application.setStatus("Pending");
 			Serializable refNum = loanAppDao.save(application);
@@ -193,6 +223,12 @@ public class ProductApplicationController {
 		} else {
 			m.addAttribute("loan", loan);
 			m.addAttribute("msg", "Failed to submit the loan application. Please ensure all information are valid.");
+			m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+			m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+			m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+			m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+			m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+			m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 			return "loan-apply";
 		}
 	}

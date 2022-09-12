@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Approve Modal -->
-<form:form name="cardAppApprove" modelAttribute="custCard" action="approve" method="post" class="needs-validation" novalidate="true" onsubmit="test(this)">
+<form:form name="cardAppApprove" modelAttribute="custCard" action="approve" method="post" class="needs-validation" novalidate="true">
 	<input type="hidden" name="appId" value="${cardApp.id}" />
 	<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered modal-confirm">
@@ -23,7 +23,7 @@
 								<td>
 									<div class="input-group has-validation">
 										<form:input class="form-control${status.error ? ' is-invalid' : ''}" path="creditLimit" type="number"
-											step="0.01" required="required" />
+											step="0.01" value="${empty custApp.creditLimit ? 1000 : custApp.creditLimit}" required="required" />
 										<span class="input-group-text">SGD</span>
 										<div class="invalid-feedback">
 											<c:choose>
@@ -58,7 +58,7 @@
 						<tr>
 						<tr>
 							<spring:bind path="brand">
-								<td><label class="form-label m-0" for="brand">Card Brand</label></td>
+								<td class="align-middle"><label class="form-label m-0" for="brand">Card Brand</label></td>
 								<td><form:select class="form-select${status.error ? ' is-invalid' : ''}" path="brand">
 										<option value="Visa">Visa</option>
 										<option value="Mastercard">Mastercard</option>
@@ -192,9 +192,5 @@
 	    
 	    this.value = this.lastValue = parts.join('/');
 	    this.selectionStart = this.selectionEnd = caretPosition;
-	}
-	
-	function test(form){
-		console.log(form['cardNum'].value);
 	}
 </script>

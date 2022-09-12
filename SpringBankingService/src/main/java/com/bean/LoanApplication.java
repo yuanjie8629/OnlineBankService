@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -93,6 +94,7 @@ public class LoanApplication {
 	
 	@Column(name="loan_amount")
 	@NotNull(message="Please enter your desired loan amount.")
+	@Min(value=1000, message="Loan amount must be greater than 1000 SGD.")
 	private double loanAmount;
 	
 	@Column(name="repayment_period")

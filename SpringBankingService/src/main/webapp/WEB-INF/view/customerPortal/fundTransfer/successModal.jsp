@@ -12,7 +12,7 @@
 			<div class="modal-header flex-column">
 				<i class="fa-solid fa-circle-check fa-7x text-success"></i>
 				<h3 class="mt-4 text-capitalize">
-					Success Fund Transfer.
+					Success Fund Transfer
 				</h3>
 			</div>
 			<div class="modal-body w-75 m-auto px-5">

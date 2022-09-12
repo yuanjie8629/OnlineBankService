@@ -20,34 +20,45 @@ import com.annotation.CardNum;
 @Inheritance(strategy=InheritanceType.JOINED)  
 public class CustCard {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	protected int id;
+	
+	@Column(name="card_num", unique=true)
 	@CardNum(message="Card Number already exists.")
-	@Column(name="card_num")
 	@NotBlank(message="Please enter the card number.")
 	// Pattern of cardNum = 0000 0000 0000 0000
 	@Pattern(regexp="[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}", message="Card Number should be 16 digits.")
-	private String cardNum;
+	protected String cardNum;
 	
 	@NotBlank(message="Please enter the card brand.")
-	private String brand;
+	protected String brand;
 	
 	@NotBlank(message="Please enter the card cvv.")
 	@Pattern(regexp="[\\d]{3}", message="Card cvv must be 3 digits.")
-	private String cvv;
+	protected String cvv;
 	
 	@Column(name="create_date")
 	@CreationTimestamp
-	private LocalDate createDate;
+	protected LocalDate createDate;
 	
 	
 	@Column(name="expiration_date")
 	@NotNull(message="Please enter the card expiration date.")
 	@Pattern(regexp="(0[1-9]|10|11|12)/[0-9]{2}", message="Please enter valid date in \'mm/yy\' format.")
-	private String expirationDate;
+	protected String expirationDate;
 	
 	@Pattern(regexp="[\\d]{6}", message="Card pin must be 6 digits.")
-	private String pin;
+	protected String pin;
 	
-	private String status;
+	protected String status;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCardNum() {
 		return cardNum;
@@ -109,10 +120,14 @@ public class CustCard {
 		
 	}
 
-	public CustCard(@NotBlank(message = "Please enter the card number.") String cardNum,
+	public CustCard(int id,
+			@NotBlank(message = "Please enter the card number.") @Pattern(regexp = "[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}", message = "Card Number should be 16 digits.") String cardNum,
 			@NotBlank(message = "Please enter the card brand.") String brand,
-			@NotBlank(message = "Please enter the card cvv.") @Size(min = 3, max = 3) String cvv, LocalDate createDate,
-			String expirationDate, @Size(min = 6, max = 6) String pin, String status) {
+			@NotBlank(message = "Please enter the card cvv.") @Pattern(regexp = "[\\d]{3}", message = "Card cvv must be 3 digits.") String cvv,
+			LocalDate createDate,
+			@NotNull(message = "Please enter the card expiration date.") @Pattern(regexp = "(0[1-9]|10|11|12)/[0-9]{2}", message = "Please enter valid date in 'mm/yy' format.") String expirationDate,
+			@Pattern(regexp = "[\\d]{6}", message = "Card pin must be 6 digits.") String pin, String status) {
+		this.id = id;
 		this.cardNum = cardNum;
 		this.brand = brand;
 		this.cvv = cvv;
@@ -124,7 +139,7 @@ public class CustCard {
 
 	@Override
 	public String toString() {
-		return "CustCard [cardNum=" + cardNum + ", brand=" + brand + ", cvv=" + cvv + ", createDate=" + createDate
-				+ ", expirationDate=" + expirationDate + ", pin=" + pin + ", status=" + status + "]";
+		return "CustCard [id=" + id + ", cardNum=" + cardNum + ", brand=" + brand + ", cvv=" + cvv + ", createDate="
+				+ createDate + ", expirationDate=" + expirationDate + ", pin=" + pin + ", status=" + status + "]";
 	}
 }

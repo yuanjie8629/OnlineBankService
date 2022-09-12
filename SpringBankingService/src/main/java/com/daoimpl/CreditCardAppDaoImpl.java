@@ -3,7 +3,7 @@ package com.daoimpl;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;

@@ -6,10 +6,10 @@
 				<div class="card-body">
 					<div class="p-2 m-auto" style="max-width: 120px;">
 						<img src="<c:url value="/resources/images/customerPortal/payment/CreditCardPayment.png" />"
-							alt="ownAccountTransfer" class="img-fluid rounded img-btn" />
+							alt="creditCardPayment" class="img-fluid rounded img-btn" />
 					</div>
 					<div class="my-2">
-						<a href="fund-transfer/own" class="stretched-link text-dark text-decoration-none fw-bold fs-5">Credit Card Payment</a>
+						<a href="payment/credit-card" class="stretched-link text-dark text-decoration-none fw-bold fs-5">Credit Card Payment</a>
 					</div>
 				</div>
 			</div>
@@ -19,10 +19,10 @@
 				<div class="card-body">
 					<div class="p-2 m-auto" style="max-width: 120px;">
 						<img src="<c:url value="/resources/images/customerPortal/payment/LoanPayment.png" />"
-							alt="transferToOthers" class="img-fluid rounded img-btn" />
+							alt="loanPayment" class="img-fluid rounded img-btn" />
 					</div>
 					<div class="my-2">
-						<a href="fund-transfer/others" class="stretched-link text-dark text-decoration-none fw-bold fs-5">Loan Payment</a>
+						<a href="payment/loan" class="stretched-link text-dark text-decoration-none fw-bold fs-5">Loan Payment</a>
 					</div>
 				</div>
 			</div>

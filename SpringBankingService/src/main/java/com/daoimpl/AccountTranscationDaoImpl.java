@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.AccountTransaction;
 import com.bean.CustAccount;
@@ -22,11 +23,13 @@ public class AccountTranscationDaoImpl implements AccountTransactionDao {
 	}
 
 	@Override
+	@Transactional
 	public void save(AccountTransaction transaction) {
 		template.save(transaction);
 	}
 
 	@Override
+	@Transactional
 	public void update(AccountTransaction transaction) {
 		template.update(transaction);
 	}

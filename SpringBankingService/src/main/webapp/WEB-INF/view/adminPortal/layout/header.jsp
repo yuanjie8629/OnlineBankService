@@ -48,8 +48,18 @@
 								<li><a class="dropdown-item" href="<c:url value="/admin/loan-management/add" />">Add Loan</a></li>
 							</ul>
 						</div></li>
-					<li id="customer-management" class="nav-item"><a class="nav-link"
-						href="<c:url value="/admin/customer-management" />">Customer Management</a></li>
+					<li id="customer-management" class="nav-item dropdown">
+						<a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Customer Management</a>
+						<div class="dropdown-menu w-100">
+							<span class="dropdown-menu-arrow d-none d-lg-block"></span>
+							<ul class="list-unstyled">
+								<li><a class="dropdown-item" href="<c:url value="/admin/customer-management" />">Customer</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/customer-management/account" />">Customer Account</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/customer-management/credit-card" />">Customer Credit Card</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/admin/customer-management/loan" />">Customer Loan</a></li>
+							</ul>
+						</div>
+					</li>
 					<li id="application-management" class="nav-item dropdown">
 						<a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Application Management</a>
 						<div class="dropdown-menu w-100">
@@ -72,7 +82,7 @@
 	let url = window.location.href;
 	let navbar = document.getElementById("header-nav").children;
 	for (var i = 0; i < navbar.length; i++) {
-		if (navbar[i].id !== 'home' && url.includes(navbar[i].id)) {
+		if (navbar[i].id !== 'home' && url.split("/")[5].includes(navbar[i].id)) {
 			navbar[i].className += " active";
 		} else {
 			navbar[i].className = navbar[i].className.replace(" active", "");

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bean.Customer;
 import com.dao.CustomerDao;
+import com.utils.SelectionUtils;
 
 @Controller
 @RequestMapping("/admin/customer-management")
@@ -45,6 +46,12 @@ public class AdminCustMgmtController {
 	@RequestMapping(value="/update/{id}")
 	public String showUpdateCust(@PathVariable int id, Model m) {
 		m.addAttribute("cust", custDao.getCustomerById(id));
+		m.addAttribute("salutationList", SelectionUtils.getSalutationSelections());
+		m.addAttribute("maritalStatusList", SelectionUtils.getMaritalStatusSelections());
+		m.addAttribute("industryList", SelectionUtils.getIndustrySelections());
+		m.addAttribute("raceList", SelectionUtils.getRaceSelections());
+		m.addAttribute("countryList", SelectionUtils.getCountrySelections());
+		m.addAttribute("nationalityList", SelectionUtils.getNationalitySelections());
 		return "admin-cust-mgmt-update";
 	}
 	
@@ -70,16 +77,6 @@ public class AdminCustMgmtController {
 		custDao.deactivate(id);
 		ra.addFlashAttribute("msg", "You have successfully deactivated the customer with ID " + id);
 		return "redirect:/admin/customer-management/";
-	}
-	
-	@RequestMapping(value = "/account")
-	public String customerAccountManagement(@RequestParam(required=false) String status, Model m) {
-		return "admin-cust-mgmt-account";
-	}
-	
-	@RequestMapping(value = "/credit-card")
-	public String customerCreditCardManagement(@RequestParam(required=false) String status, Model m) {
-		return "admin-cust-mgmt-credit-card";
 	}
 	
 	@RequestMapping(value = "/loan")

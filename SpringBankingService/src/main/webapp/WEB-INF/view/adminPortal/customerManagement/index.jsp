@@ -143,7 +143,7 @@
 	/* Script to make tab active based on url params */
 	let queryParams = new URLSearchParams(window.location.search);
 	let custStatus = queryParams.get("status");
-	let filterCardAppForm = document.forms["filterCardApp"];
+	let filterCustForm = document.forms["filterCust"];
 	if (custStatus != null) {
 		let custStatusList = document.getElementById("cust-status").children;
 		for (var i = 0; i < custStatusList.length; i++) {

@@ -1,27 +1,28 @@
 package com.bean;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
 
 @Entity
 @Table(name="cust_credit_card")
-@PrimaryKeyJoinColumn(name="card_num")  
+@PrimaryKeyJoinColumn(name="id")  
 public class CustCreditCard extends CustCard {
 	
 	@Column(name="card_display_name")
 	private String cardDisplayName;
 	
-	@Column(name="avail_amt")
-	private double availAmt;
+	@Column(name="balance")
+	private double balance;
 	
 	@Column(name="credit_limit")
 	private double creditLimit;
 	
-	@OneToMany(mappedBy="custCreditCard", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<CreditCardTransaction> transactions;
+	@OneToMany(mappedBy="creditCard", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private List<CreditCardTransaction> transactions;
+	
+	@OneToMany(mappedBy="creditCard", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private List<CreditCardPayment> payments;
 	
 	@ManyToOne
 	@JoinColumn(name="credit_card_id")
@@ -30,7 +31,15 @@ public class CustCreditCard extends CustCard {
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
-
+	
+	public int getId() {
+		return super.getId();
+	}
+	
+	public void setId(int id) {
+		super.setId(id);
+	}
+	
 	public String getCardDisplayName() {
 		return cardDisplayName;
 	}
@@ -39,12 +48,12 @@ public class CustCreditCard extends CustCard {
 		this.cardDisplayName = cardDisplayName;
 	}
 
-	public double getAvailAmt() {
-		return availAmt;
+	public double getBalance() {
+		return balance;
 	}
 
-	public void setAvailAmt(double availAmt) {
-		this.availAmt = availAmt;
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 	public double getCreditLimit() {
@@ -55,12 +64,20 @@ public class CustCreditCard extends CustCard {
 		this.creditLimit = creditLimit;
 	}
 
-	public Set<CreditCardTransaction> getTransactions() {
+	public List<CreditCardTransaction> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(Set<CreditCardTransaction> transactions) {
+	public void setTransactions(List<CreditCardTransaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	public List<CreditCardPayment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(List<CreditCardPayment> payments) {
+		this.payments = payments;
 	}
 
 	public CreditCard getCreditCard() {
@@ -83,20 +100,21 @@ public class CustCreditCard extends CustCard {
 		
 	}
 
-	public CustCreditCard(String cardDisplayName, double availAmt, double creditLimit,
-			Set<CreditCardTransaction> transactions, CreditCard creditCard, Customer customer) {
-		super();
+	public CustCreditCard(String cardDisplayName, double balance, double creditLimit,
+			List<CreditCardTransaction> transactions, List<CreditCardPayment> payments, CreditCard creditCard,
+			Customer customer) {
 		this.cardDisplayName = cardDisplayName;
-		this.availAmt = availAmt;
+		this.balance = balance;
 		this.creditLimit = creditLimit;
 		this.transactions = transactions;
+		this.payments = payments;
 		this.creditCard = creditCard;
 		this.customer = customer;
 	}
 
 	@Override
 	public String toString() {
-		return "CustCreditCard [" + super.toString() + ", cardDisplayName=" + cardDisplayName + ", availAmt=" + availAmt + ", creditLimit="
+		return "CustCreditCard [" + super.toString() + ", cardDisplayName=" + cardDisplayName + ", balance=" + balance + ", creditLimit="
 				+ creditLimit +  ", creditCard=" + creditCard + ", customer=" + customer + "]";
 	}
 }

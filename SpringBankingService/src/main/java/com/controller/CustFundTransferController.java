@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bean.AccountTransaction;
 import com.bean.CustAccount;
 import com.bean.Customer;
+import com.dao.AccountTransactionDao;
 import com.dao.CustAccDao;
 
 @Controller
@@ -24,6 +25,9 @@ public class CustFundTransferController {
 
 	@Autowired
 	CustAccDao custAccDao;
+	
+	@Autowired
+	AccountTransactionDao accTransactionDao;
 
 	@Autowired
 	HttpSession session;
@@ -53,7 +57,7 @@ public class CustFundTransferController {
 				// Update balance for accFrom
 				custAccFrom.setAvailBal(custAccFrom.getAvailBal() - amount);
 				custAccFrom.setCurBal(custAccFrom.getCurBal() - amount);
-				
+				custAccDao.update(custAccFrom);
 				
 				// Replace the accNum with * after the 6th accNum digit
 				String encryptedAccFrom = accFrom.substring(0, 6) + String.join("", Collections.nCopies(accFrom.length() - 6, "*"));
@@ -68,15 +72,14 @@ public class CustFundTransferController {
 				accFromTransaction.setReference("Own Account Transfer to " + encryptedAccTo);
 				accFromTransaction.setBalance(custAccFrom.getAvailBal());
 				accFromTransaction.setStatus("posted");
+				accTransactionDao.save(accFromTransaction);
 				
-				// Add transaction to the custAcc's transaction list
-				custAccFrom.getTransactions().add(accFromTransaction);
-				custAccDao.save(custAccFrom);
 				
 				// Update balance for accTo
 				CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
 				custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
 				custAccTo.setCurBal(custAccTo.getCurBal() + amount);
+				custAccDao.update(custAccTo);
 				
 				// Add transaction for accTo
 				AccountTransaction accToTransaction = new AccountTransaction();
@@ -87,10 +90,7 @@ public class CustFundTransferController {
 				accToTransaction.setReference("Own Account Transfer from " + encryptedAccFrom);
 				accToTransaction.setBalance(custAccTo.getAvailBal());
 				accToTransaction.setStatus("posted");
-				
-				// Add transaction to the custAcc's transaction list
-				custAccTo.getTransactions().add(accToTransaction);
-				custAccDao.save(custAccTo);
+				accTransactionDao.save(accToTransaction);
 				
 				ra.addFlashAttribute("success", true);
 				ra.addFlashAttribute("transaction", accFromTransaction);
@@ -134,7 +134,7 @@ public class CustFundTransferController {
 					// Update balance for accFrom
 					custAccFrom.setAvailBal(custAccFrom.getAvailBal() - amount);
 					custAccFrom.setCurBal(custAccFrom.getCurBal() - amount);
-					
+					custAccDao.update(custAccFrom);
 					
 					// Replace the accNum with * after the 6th accNum digit
 					String encryptedAccFrom = accFrom.substring(0, 6) + String.join("", Collections.nCopies(accFrom.length() - 6, "*"));
@@ -149,14 +149,13 @@ public class CustFundTransferController {
 					accFromTransaction.setReference("Online Transfer to " + encryptedAccTo);
 					accFromTransaction.setBalance(custAccFrom.getAvailBal());
 					accFromTransaction.setStatus("posted");
+					accTransactionDao.save(accFromTransaction);
 					
-					// Add transaction to the custAcc's transaction list
-					custAccFrom.getTransactions().add(accFromTransaction);
-					custAccDao.save(custAccFrom);
 					
 					// Update balance for accTo
 					custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
 					custAccTo.setCurBal(custAccTo.getCurBal() + amount);
+					custAccDao.update(custAccTo);
 					
 					// Add transaction for accTo
 					AccountTransaction accToTransaction = new AccountTransaction();
@@ -167,10 +166,7 @@ public class CustFundTransferController {
 					accToTransaction.setReference("Online Transfer from " + encryptedAccFrom);
 					accToTransaction.setBalance(custAccTo.getAvailBal());
 					accToTransaction.setStatus("posted");
-					
-					// Add transaction to the custAcc's transaction list
-					custAccTo.getTransactions().add(accToTransaction);
-					custAccDao.save(custAccTo);
+					accTransactionDao.save(accToTransaction);
 					
 					ra.addFlashAttribute("success", true);
 					ra.addFlashAttribute("transaction", accFromTransaction);

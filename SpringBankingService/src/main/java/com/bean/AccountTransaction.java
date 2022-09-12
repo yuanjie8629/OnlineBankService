@@ -128,4 +128,11 @@ public class AccountTransaction {
 		this.status = status;
 		this.account = account;
 	}
+
+	@Override
+	public String toString() {
+		return "AccountTransaction [id=" + id + ", type=" + type + ", date=" + date + ", description=" + description
+				+ ", reference=" + reference + ", amount=" + amount + ", balance=" + balance + ", status=" + status
+				+ ", account=" + account + "]";
+	}
 }

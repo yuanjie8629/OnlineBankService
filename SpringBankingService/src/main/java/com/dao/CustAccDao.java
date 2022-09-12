@@ -10,5 +10,6 @@ public interface CustAccDao {
 	CustAccount getCustAccountById(String accNum);
 	CustAccount getCustAccountByCust(String accNum, Customer cust);
 	List<CustAccount> getCustAccounts();
+	List<CustAccount> getCustAccounts(String status);
 	List<CustAccount> getCustAccountsByCust(Customer cust);
 }

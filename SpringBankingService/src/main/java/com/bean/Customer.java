@@ -1,12 +1,13 @@
 package com.bean;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -51,14 +52,14 @@ public class Customer extends User{
 	@NotBlank(message="Please select your marital status.")
 	private String maritalStatus;
 	
-	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<CustAccount> accounts;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	private List<CustAccount> accounts = new ArrayList<>();
 	
-	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<CustCreditCard> creditCards;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	private List<CustCreditCard> creditCards = new ArrayList<>();
 	
-	@OneToMany(mappedBy="customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<CustLoan> loans;
+	@OneToMany(mappedBy="customer", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	private List<CustLoan> loans = new ArrayList<>();
 
 	public String getSalutation() {
 		return salutation;
@@ -132,34 +133,32 @@ public class Customer extends User{
 		this.maritalStatus = maritalStatus;
 	}
 
-	public Set<CustAccount> getAccounts() {
+	public List<CustAccount> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(Set<CustAccount> accounts) {
+	public void setAccounts(List<CustAccount> accounts) {
 		this.accounts = accounts;
 	}
 
-	public Set<CustCreditCard> getCreditCards() {
+	public List<CustCreditCard> getCreditCards() {
 		return creditCards;
 	}
 
-	public void setCreditCards(Set<CustCreditCard> creditCards) {
+	public void setCreditCards(List<CustCreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
 
-	public Set<CustLoan> getLoans() {
+	public List<CustLoan> getLoans() {
 		return loans;
 	}
 
-	public void setLoans(Set<CustLoan> loans) {
+	public void setLoans(List<CustLoan> loans) {
 		this.loans = loans;
 	}
 	
 	public Customer() {
-		this.accounts = new LinkedHashSet<CustAccount>();
-		this.creditCards = new LinkedHashSet<CustCreditCard>();
-		this.loans = new LinkedHashSet<CustLoan>();
+		
 	}
 	
 	public Customer(@NotBlank(message = "Please select your salutation.") String salutation, String identityNumber,
@@ -169,7 +168,7 @@ public class Customer extends User{
 			@NotBlank(message = "Please enter your occupation.") String occupation,
 			@NotBlank(message = "Please enter your birthdate.") LocalDate birthdate, Address address,
 			@NotBlank(message = "Please select your marital status.") String maritalStatus,
-			Set<CustAccount> accounts, Set<CustCreditCard> creditCards, Set<CustLoan> loans) {
+			List<CustAccount> accounts, List<CustCreditCard> creditCards, List<CustLoan> loans) {
 		super();
 		this.salutation = salutation;
 		this.identityNumber = identityNumber;

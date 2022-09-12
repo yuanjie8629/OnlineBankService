@@ -1,8 +1,8 @@
 package com.daoimpl;
 
-import javax.transaction.Transactional;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.Admin;
 import com.dao.AdminDao;

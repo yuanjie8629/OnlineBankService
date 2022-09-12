@@ -28,5 +28,4 @@ public class CustCardDaoImpl implements CustCardDao {
 			return true;
 		return false;
 	}
-
 }

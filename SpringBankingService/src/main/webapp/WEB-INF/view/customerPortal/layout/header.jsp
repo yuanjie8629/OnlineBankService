@@ -21,6 +21,17 @@
 				<ul id="header-nav" class="navbar-nav text-center">
 					<li id="home" class="nav-item active"><a class="nav-link" aria-current="page" href="<c:url value="/customer/home" />">Home</a></li>
 					<li id="account" class="nav-item"><a class="nav-link" href="<c:url value="/customer/account" />">Account</a></li>
+					<li id="credit-card" class="nav-item dropdown-center">
+						<a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Credit Card</a>
+						<div class="dropdown-menu">
+							<span class="dropdown-menu-arrow d-none d-lg-block"></span>
+							<ul class="list-unstyled">
+								<li><a class="dropdown-item" href="<c:url value="/customer/credit-card/view" />" >View Credit Cards</a></li>
+								<li><a class="dropdown-item" href="<c:url value="/customer/credit-card/transfer" />" >Transfer to Account</a></li>
+							</ul>
+						</div>
+					</li>
+					<li id="loan" class="nav-item"><a class="nav-link" href="<c:url value="/customer/loan" />">Loan</a></li>
 					<li id="fund-transfer" class="nav-item dropdown-center">
 						<a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fund Transfer</a>
 						<div class="dropdown-menu">
@@ -52,7 +63,7 @@
 	let url = window.location.href;
 	let navbar = document.getElementById("header-nav").children;
 	for (var i = 0; i < navbar.length; i++) {
-		if (url.includes(navbar[i].id)) {
+		if (url.split("/")[5].includes(navbar[i].id)) {
 			navbar[i].className += " active";
 		} else {
 			navbar[i].className = navbar[i].className.replace(" active", "");
