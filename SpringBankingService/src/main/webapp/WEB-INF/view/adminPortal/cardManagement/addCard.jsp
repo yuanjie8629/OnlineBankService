@@ -10,7 +10,7 @@
 					<spring:bind path="title">
 						<div class="mb-3">
 							<label for="title" class="form-label">Title</label>
-							<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="title"
+							<form:input class="form-control${status.error ? 'is-invalid' : ''}" path="title"
 								placeholder="Enter Card Title" />
 							<div class="invalid-feedback">
 								<form:errors path="title" />
@@ -20,7 +20,7 @@
 					<spring:bind path="description">
 						<div class="mb-3">
 							<label for="description" class="form-label">Description</label>
-							<form:textarea class="form-control ${status.error ? 'is-invalid' : ''}" path="description" rows="3"
+							<form:textarea class="form-control${status.error ? 'is-invalid' : ''}" path="description" rows="3"
 								placeholder="Enter Description" />
 							<div class="invalid-feedback">
 								<form:errors path="description" />
@@ -31,7 +31,7 @@
 						<div class="mb-3">
 							<label for="minIncome" class="form-label">Min Income</label>
 							<div class="input-group">
-								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="minIncome"
+								<form:input class="form-control${status.error ? 'is-invalid' : ''}" type="number" path="minIncome"
 									placeholder="Enter Mininum Income" min="0" step="0.01" />
 								<span class="input-group-text">SGD</span>
 							</div>
@@ -44,7 +44,7 @@
 						<div class="mb-3">
 							<label for="interestRate" class="form-label">Interest Rate</label>
 							<div class="input-group">
-								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="interestRate"
+								<form:input class="form-control${status.error ? 'is-invalid' : ''}" type="number" path="interestRate"
 									placeholder="Enter Interest Rate" min="0" max="100" step="0.01" />
 								<span class="input-group-text">%</span>
 							</div>
@@ -57,7 +57,7 @@
 						<div class="mb-3">
 							<label for="annualFee" class="form-label">Annual Fee</label>
 							<div class="input-group">
-								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="annualFee"
+								<form:input class="form-control${status.error ? 'is-invalid' : ''}" type="number" path="annualFee"
 									placeholder="Enter Annual Fee" min="0" step="0.01" />
 								<span class="input-group-text">SGD</span>
 							</div>
@@ -69,7 +69,7 @@
 					<spring:bind path="thumbnail">
 						<div class="mb-3">
 							<label for="thumbnail" class="form-label">Thumbnail (Image)</label>
-							<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="thumbnail" type="file"
+							<form:input class="form-control${status.error ? 'is-invalid' : ''}" path="thumbnail" type="file"
 								accept="image/*" />
 							<div class="invalid-feedback">
 								<form:errors path="thumbnail" />

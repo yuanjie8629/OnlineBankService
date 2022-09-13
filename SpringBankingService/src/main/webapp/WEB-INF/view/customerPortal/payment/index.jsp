@@ -29,3 +29,21 @@
 		</div>
 	</div>
 </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex align-items-center p-2">
+			<div class="toast-body">
+				<c:out value="${msg}" />
+			</div>
+		</div>
+	</div>
+</div>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+	<c:remove var="msg" />
+</c:if>

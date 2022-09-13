@@ -48,52 +48,87 @@
 								<spring:bind path="identityNumber">
 									<div class="form-group col-12">
 										<label class="form-label" for="username">NRIC/Passport Number</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="identityNumber" />
+										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" path="identityNumber" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="identityNumber" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="identityNumber" />
+												</c:when>
+												<c:otherwise>
+													Please enter your identity Number.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="salutation">
 									<div class="form-group col-5 col-md-2">
 										<label class="form-label" for="salutation">Salutation</label>
-										<form:select items="${salutationList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="salutation" />
+										<form:select items="${salutationList}" class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="salutation" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="salutation" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="salutation" />
+												</c:when>
+												<c:otherwise>
+													Please select your salutation.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="name">
 									<div class="col-7 col-md-5">
 										<label class="form-label" for="name">Name</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="name" />
+										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" path="name" required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="name" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="name" />
+												</c:when>
+												<c:otherwise>
+													Please enter your name.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="email">
 									<div class="col-12 col-md-5">
 										<label class="form-label" for="email">Email</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="email" />
+										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" type="email" path="email" required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="email" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="email" />
+												</c:when>
+												<c:otherwise>
+													Please enter valid email.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="contactNo">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="contactNum">Contact Number</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="contactNo" />
+										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" path="contactNo" required="required" pattern="[6|8|9]\d{7}"/>
 										<div class="invalid-feedback">
-											<form:errors path="contactNo" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="contactNo" />
+												</c:when>
+												<c:otherwise>
+													Please enter valid Singapore phone number.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="nationality">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="nationality">Nationality</label>
-										<form:select  items="${nationalityList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="nationality" />
+										<form:select items="${nationalityList}" class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="nationality" required="required" />
 										<div class="invalid-feedback">
 											<form:errors path="nationality" />
 										</div>
@@ -101,63 +136,105 @@
 								</spring:bind>
 								<spring:bind path="gender">
 									<div class="col-12 col-md-6">
-										<label class="form-label" for="gender">Gender</label><br>
-										<form:select class="form-select ${status.error ? 'is-invalid' : ''}" path="gender">
+										<label class="form-label" for="gender">Gender</label>
+										<form:select class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="gender" required="required" >
 											<option value="m">Male</option>
 											<option value="f">Female</option>
 										</form:select>
 										<div class="invalid-feedback">
-											<form:errors path="gender" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="gender" />
+												</c:when>
+												<c:otherwise>
+													Please select your gender.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="maritalStatus">
 									<div class="col-12 col-md-6">
-										<label class="form-label" for="maritalStatus">Marital Status</label><br>
-										<form:select items="${maritalStatusList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="maritalStatus" />
+										<label class="form-label" for="maritalStatus">Marital Status</label>
+										<form:select items="${maritalStatusList}" class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="maritalStatus" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="maritalStatus" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="maritalStatus" />
+												</c:when>
+												<c:otherwise>
+													Please select your marital status.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="birthdate">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="birthdate">Date of Birth</label>
-										<form:input class="form-control date ${status.error ? 'is-invalid' : ''}" type="date" path="birthdate" />
+										<form:input class="step-1 form-control date${status.error ? ' is-invalid' : ''}" type="date" path="birthdate" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="birthdate" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="birthdate" />
+												</c:when>
+												<c:otherwise>
+													Please enter your date of birth.
+												</c:otherwise>
+											</c:choose>			
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="race">
 									<div class="col-12 col-md-6">
-										<label class="form-label" for="race">Race</label><br>
-										<form:select items="${raceList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="race" />
+										<label class="form-label" for="race">Race</label>
+										<form:select items="${raceList}" class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="race" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="race" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="race" />
+												</c:when>
+												<c:otherwise>
+													Please select your race.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="industry">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="industry">Industry</label>
-										<form:select items="${industryList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="industry" />
+										<form:select items="${industryList}" class="step-1 form-select${status.error ? ' is-invalid' : ''}" path="industry" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="industry" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="industry" />
+												</c:when>
+												<c:otherwise>
+													Please select your working industry.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="occupation">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="occupation">Occupation</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="occupation" />
+										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" path="occupation" required="required"/>
 										<div class="invalid-feedback">
-											<form:errors path="occupation" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="occupation" />
+												</c:when>
+												<c:otherwise>
+													Please enter your occupation.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<div class="col-12">
-									<button type="button" class="btn btn-danger btn-next-form float-end px-4 py-2" onclick="stepper.next()">Next</button>
+									<button class="btn btn-danger btn-next-form float-end px-4 py-2" onclick="return nextStep()">Next</button>
 								</div>
 							</div>
 						</div>
@@ -167,55 +244,90 @@
 								<spring:bind path="addressLine1">
 									<div class="col-12">
 										<label class="form-label" for="addressLine1">Address Line 1</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="addressLine1" />
+										<form:input class="step-2 form-control${status.error ? ' is-invalid' : ''}" path="addressLine1" required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="addressLine1" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="addressLine1" />
+												</c:when>
+												<c:otherwise>
+													Please enter your address line 1.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="addressLine2">
 									<div class="col-12">
 										<label class="form-label" for="addressLine2">Address Line 2</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="addressLine2" />
+										<form:input class="step-2 form-control${status.error ? ' is-invalid' : ''}" path="addressLine2" />
 										<div class="invalid-feedback">
-											<form:errors path="addressLine2" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="addressLine2" />
+												</c:when>
+												<c:otherwise>
+													Please enter your address line 2.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="addressLine3">
 									<div class="col-12">
 										<label class="form-label" for="addressLine3">Address Line 3</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="addressLine3" />
+										<form:input class="step-2 form-control${status.error ? ' is-invalid' : ''}" path="addressLine3" />
 										<div class="invalid-feedback">
-											<form:errors path="addressLine3" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="addressLine3" />
+												</c:when>
+												<c:otherwise>
+													Please enter your address line 3.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="postalCode">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="postalcode">Postal Code</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="postalCode" />
+										<form:input class="step-2 form-control${status.error ? ' is-invalid' : ''}" path="postalCode"  required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="postalCode" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="postalCode" />
+												</c:when>
+												<c:otherwise>
+													Please enter your postal code.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="country">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="country">Country</label>
-										<form:select items="${countryList}" class="form-select ${status.error ? 'is-invalid' : ''}" path="country" />
+										<form:select items="${countryList}" class="step-2 form-select${status.error ? ' is-invalid' : ''}" path="country"  required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="country" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="country" />
+												</c:when>
+												<c:otherwise>
+													Please select your country.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<div class="col-12">
 									<div class="row justify-content-end">
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.previous()">Previous</button>
+											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="previousStep()">Previous</button>
 										</div>
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.next()">Next</button>
+											<button class="btn btn-danger btn-next-form float-end px-4 py-2" onclick="return nextStep()">Next</button>
 										</div>
 									</div>
 								</div>
@@ -227,21 +339,35 @@
 								<spring:bind path="income">
 									<div class="col-12 col-lg-6">
 										<label class="form-label" for="income">Monthly Income</label>
-										<div class="input-group">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="income" type="number" min="0" step="0.01" placeholder="Enter your monthly income"/>
+										<div class="input-group has-validation">
+											<form:input class="step-3 form-control ${status.error ? 'is-invalid' : ''}" path="income" type="number" min="0" step="0.01" placeholder="Enter your monthly income" required="required"/>
 											<span class="input-group-text">SGD</span>
-										</div>
-										<div class="invalid-feedback">
-											<form:errors path="income" />
+											<div class="invalid-feedback">
+												<c:choose>
+													<c:when test="${status.error}">
+														<form:errors path="income" />
+													</c:when>
+													<c:otherwise>
+														Please enter your income.
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="cardDisplayName">
 									<div class="col-12 col-lg-6">
 										<label class="form-label" for="cardDisplayName">How would you like to display your name on card?</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="cardDisplayName" />
+										<form:input class="step-3 form-control ${status.error ? 'is-invalid' : ''}" path="cardDisplayName"  required="required" />
 										<div class="invalid-feedback">
-											<form:errors path="cardDisplayName" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="cardDisplayName" />
+												</c:when>
+												<c:otherwise>
+													Please enter your preferred card display name.
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
@@ -253,17 +379,24 @@
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" name="creditLimitTrigger"
-														onchange="triggerCreditLimit(this)"> <label class="form-check-label" for="creditLimitTrigger">Yes</label>
+													<input class="step-3 form-check-input" type="checkbox" name="creditLimitTrigger" onchange="triggerCreditLimit(this)">
+													<label class="form-check-label" for="creditLimitTrigger">Yes</label>
 												</div>
 											</div>
 										</div>
-										<div id="creditLimitInput" class="input-group d-none">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="creditLimit" type="number" min="0" step="0.01" placeholder="Enter your preffered credit limit"/>
+										<div id="creditLimitInput" class="input-group has-validation d-none">
+											<form:input class="step-3 form-control ${status.error ? 'is-invalid' : ''}" path="creditLimit" type="number" min="0" step="0.01" placeholder="Enter your preffered credit limit" required="required"/>
 											<span class="input-group-text">SGD</span>
-										</div>
-										<div class="invalid-feedback">
-											<form:errors path="creditLimit" />
+											<div class="invalid-feedback">
+												<c:choose>
+													<c:when test="${status.error}">
+														<form:errors path="creditLimit" />
+													</c:when>
+													<c:otherwise>
+														Please enter your preferred credit limit.
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</spring:bind>
@@ -275,27 +408,34 @@
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" name="totalInstallmentTrigger"
-														onchange="triggerTotalInstallment(this)"> <label class="form-check-label" for="totalInstallmentTrigger">Yes</label>
+													<input class="step-3 form-check-input" type="checkbox" name="totalInstallmentTrigger" onchange="triggerTotalInstallment(this)">
+													<label class="form-check-label" for="totalInstallmentTrigger">Yes</label>
 												</div>
 											</div>
 										</div>
-										<div id="totalInstallmentInput" class="input-group d-none">
-											<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="totalInstallment" type="number" min="0" step="0.01" placeholder="Enter your total monthly installment"/>
+										<div id="totalInstallmentInput" class="input-group has-validation d-none">
+											<form:input class="step-3 form-control ${status.error ? 'is-invalid' : ''}" path="totalInstallment" type="number" min="0" step="0.01" placeholder="Enter your total monthly installment" required="required"/>
 											<span class="input-group-text">SGD</span>
-										</div>
-										<div class="invalid-feedback">
-											<form:errors path="totalInstallment" />
+											<div class="invalid-feedback">
+												<c:choose>
+													<c:when test="${status.error}">
+														<form:errors path="totalInstallment" />
+													</c:when>
+													<c:otherwise>
+														Please enter your total installment.
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</spring:bind>
 								<div class="col-12">
 									<div class="row justify-content-end">
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.previous()">Previous</button>
+											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="previousStep()">Previous</button>
 										</div>
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.next()">Next</button>
+											<button class="btn btn-danger float-end px-4 py-2" onclick="return nextStep()">Next</button>
 										</div>
 									</div>
 								</div>
@@ -307,32 +447,46 @@
 								<spring:bind path="identityDoc">
 									<div class="col-12">
 										<label class="form-label" for="identityDoc">Please upload your Identity Card / Passport (Front and Back) in pdf format</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="identityDoc"
-											accept="application/pdf" onchange="getIdentityDocLink(this)"/>
+										<form:input class="step-4 form-control ${status.error ? 'is-invalid' : ''}" type="file" path="identityDoc"
+											accept="application/pdf" onchange="getIdentityDocLink(this)" required="required"/>
 										<a id="identityDocLink" target="_blank"></a>
 										<div class="invalid-feedback">
-											<form:errors path="identityDoc" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="identityDoc" />
+												</c:when>
+												<c:otherwise>
+													Please upload your identity card or passport (front and back) in pdf format. (Max 5MB)
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<spring:bind path="payslipDoc">
 									<div class="col-12">
 										<label class="form-label" for="payslipDoc">Please upload your latest payslip within 3 months (in pdf format)</label>
-										<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="file" path="payslipDoc"
-											accept="application/pdf" onchange="getPayslipDocLink(this)"/>
+										<form:input class="step-4 form-control ${status.error ? 'is-invalid' : ''}" type="file" path="payslipDoc"
+											accept="application/pdf" onchange="getPayslipDocLink(this)" required="required"/>
 										<a id="payslipDocLink" target="_blank"></a>
 										<div class="invalid-feedback">
-											<form:errors path="payslipDoc" />
+											<c:choose>
+												<c:when test="${status.error}">
+													<form:errors path="payslipDoc" />
+												</c:when>
+												<c:otherwise>
+													Please upload payslip in pdf format. (Max 5MB)
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</spring:bind>
 								<div class="col-12">
 									<div class="row justify-content-end">
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.previous()">Previous</button>
+											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="previousStep()">Previous</button>
 										</div>
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.next()">Next</button>
+											<button class="btn btn-danger float-end px-4 py-2" onclick="return nextStep()">Next</button>
 										</div>
 									</div>
 								</div>
@@ -381,7 +535,7 @@
 								<div class="col-12">
 									<div class="row justify-content-end">
 										<div class="col-auto">
-											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="stepper.previous()">Previous</button>
+											<button type="button" class="btn btn-danger float-end px-4 py-2" onclick="previousStep()">Previous</button>
 										</div>
 										<div class="col-auto">
 											<button type="submit" class="btn btn-danger float-end px-4 py-2">Submit</button>
@@ -418,9 +572,7 @@
 	// Script to initialize the stepper
 	var stepper;
 	document.addEventListener('DOMContentLoaded', function() {
-		stepper = new Stepper(document.querySelector('.bs-stepper'), {
-			linear : false
-		})
+		stepper = new Stepper(document.querySelector('.bs-stepper'))
 	})
 
 	// Script to trigger credit limit input
@@ -459,5 +611,35 @@
 		let payslipDocLink = document.getElementById("payslipDocLink");
 		payslipDocLink.href = objectURL;
 		payslipDocLink.innerHTML = file.name;
+	}
+	
+	let form = document.forms['applyCard'];
+	function nextStep() {
+		// Get all inputs by step (specified with class step-{currentIndex})
+		let inputsByStep = document.querySelectorAll(".step-" + (stepper._currentIndex + 1));
+		let valid = true;
+		// Validate each input
+		for (var i = 0; i < inputsByStep.length; i++) {
+			if (!inputsByStep[i].checkValidity()) {
+				valid = false;
+				break;
+			}
+		}
+		if (!valid) {
+			// Display Err Msg if invalid inputs
+			event.preventDefault();
+			event.stopPropagation();
+			form.classList.add('was-validated');
+		} else {
+			// Next step if valid inputs
+			stepper.next();
+			form.classList.remove('was-validated');
+		}
+		return false;
+	}
+	
+	function previousStep() {
+		form.classList.remove('was-validated');
+		stepper.previous();
 	}
 </script>

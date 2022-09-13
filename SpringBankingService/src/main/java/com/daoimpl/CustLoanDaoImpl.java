@@ -52,6 +52,14 @@ public class CustLoanDaoImpl implements CustLoanDao {
 	public List<CustLoan> getCustLoans() {
 		return template.loadAll(CustLoan.class);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CustLoan> getCustLoans(String status) {
+		DetachedCriteria query = DetachedCriteria.forClass(CustLoan.class);
+		query.add(Restrictions.eq("status", status));
+		return (List<CustLoan>) template.findByCriteria(query);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

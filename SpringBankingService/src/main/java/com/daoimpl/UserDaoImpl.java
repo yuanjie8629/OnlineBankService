@@ -6,6 +6,8 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -51,5 +53,16 @@ public class UserDaoImpl implements UserDao{
 //		if (userList.isEmpty())
 //			return null;	
 //		return userList.get(0);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean checkUsername(String username) {
+		DetachedCriteria query = DetachedCriteria.forClass(User.class);
+		query.add(Restrictions.eq("username", username));
+		List<User> list = (List<User>) template.findByCriteria(query);
+		if (list.isEmpty())
+			return false;
+		return true;
 	}
 }

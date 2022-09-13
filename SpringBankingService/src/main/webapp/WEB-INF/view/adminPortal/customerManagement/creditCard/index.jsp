@@ -35,6 +35,17 @@
 				</thead>
 				<tbody>
 					<c:forEach var="custCreditCard" items="${custCreditCardList}">
+						<c:choose>
+							<c:when test="${fn:toLowerCase(custCreditCard.status) == 'active'}">
+								<c:set var="status" value="success" />
+							</c:when>
+							<c:when test="${fn:toLowerCase(custCreditCard.status) == 'inactive'}">
+								<c:set var="status" value="danger" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="status" value="secondary" />
+							</c:otherwise>
+						</c:choose>
 						<tr>
 							<th scope="row"><c:out value="${custCreditCard.id}" /></th>
 							<td class="text-capitalize"><c:out value="${custCreditCard.creditCard.title}" /></td>
@@ -42,26 +53,7 @@
 							<td><c:out value="${custCreditCard.customer.name}" /></td>
 							<td><c:out value="${custCreditCard.customer.email}" /></td>
 							<td><c:out value="${custCreditCard.expirationDate}" /></td>
-							<td>
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<c:choose>
-											<c:when test="${fn:toLowerCase(custCreditCard.status) == 'active'}">
-												<span class="dot bg-success"></span>
-											</c:when>
-											<c:when test="${fn:toLowerCase(custCreditCard.status) == 'inactive'}">
-												<span class="dot bg-danger"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="dot bg-secondary"></span>
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="col-auto p-0 text-capitalize">
-										<c:out value="${custCreditCard.status}" />
-									</div>
-								</div>
-							</td>
+							<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${custCreditCard.status}" /></span></td>
 							<td class="text-center">
 								<div class="dropdown-center">
 									<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>

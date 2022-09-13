@@ -43,7 +43,7 @@ public class AdminCustAccMgmtController {
 	}
 	
 	@RequestMapping(value="/view/{accNum}")
-	public String viewCust(@PathVariable String accNum, @RequestParam(required=false) String transactionMonth, Model m) {
+	public String viewCustAcc(@PathVariable String accNum, @RequestParam(required=false) String transactionMonth, Model m) {
 		CustAccount custAcc = custAccDao.getCustAccountById(accNum);
 		// Get this and last 5 months
 		Format formatter = new SimpleDateFormat("yyyyMM");

@@ -70,7 +70,7 @@
 				<div class="row align-items-center">
 					<div class="col-3 text-secondary fw-bold mx-2">Repayment Period</div>
 					<div class="col-auto">
-						<c:out value="${custLoan.repaymentPeriod}" />
+						<c:out value="${custLoan.repaymentPeriod}" /> Year(s)
 					</div>
 				</div>
 			</li>

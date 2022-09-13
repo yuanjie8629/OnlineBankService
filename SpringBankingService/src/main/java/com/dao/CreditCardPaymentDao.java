@@ -9,5 +9,6 @@ public interface CreditCardPaymentDao {
 	void save(CreditCardPayment payment);
 	void update(CreditCardPayment payment);
 	CreditCardPayment getPaymentById(int id);
+	List<CreditCardPayment> getPayments(CustCreditCard custCreditCard);
 	List<CreditCardPayment> getPaymentsByMonth(CustCreditCard custCreditCard, String month);
 }

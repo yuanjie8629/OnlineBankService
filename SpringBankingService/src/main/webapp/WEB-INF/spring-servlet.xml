@@ -161,6 +161,10 @@
 	<bean id="custLoanDao" class="com.daoimpl.CustLoanDaoImpl">
 		<property name="template" ref="template"></property>
 	</bean>
+	
+	<bean id="feedbackDao" class="com.daoimpl.FeedbackDaoImpl">
+		<property name="template" ref="template"></property>
+	</bean>
 
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />

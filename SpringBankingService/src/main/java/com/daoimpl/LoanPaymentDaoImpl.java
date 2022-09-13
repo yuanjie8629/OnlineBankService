@@ -1,9 +1,5 @@
 package com.daoimpl;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -41,15 +37,18 @@ public class LoanPaymentDaoImpl implements LoanPaymentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<LoanPayment> getPaymentsByMonth(CustLoan custLoan, String month) {
-		// Add day to the string to avoid DateTimeParseException due to no day
-		month += "01";
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
-		LocalDateTime thisMonth = LocalDate.parse(month, df).atStartOfDay();
-
+	public List<LoanPayment> getPayments(CustLoan custLoan) {
 		DetachedCriteria query = DetachedCriteria.forClass(LoanPayment.class);
 		query.add(Restrictions.eq("loan", custLoan));
-		query.add(Restrictions.between("date", thisMonth, thisMonth.with(TemporalAdjusters.lastDayOfMonth())));
+		return (List<LoanPayment>) template.findByCriteria(query);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LoanPayment> getPaymentsByMonth(CustLoan custLoan, String month) {
+		DetachedCriteria query = DetachedCriteria.forClass(LoanPayment.class);
+		query.add(Restrictions.eq("loan", custLoan));
+		query.add(Restrictions.eq("paymentMonth", month));
 		return (List<LoanPayment>) template.findByCriteria(query);
 	}
 }

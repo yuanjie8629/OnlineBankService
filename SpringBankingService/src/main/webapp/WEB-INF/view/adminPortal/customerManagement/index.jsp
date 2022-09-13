@@ -55,6 +55,17 @@
 				</thead>
 				<tbody>
 					<c:forEach var="cust" items="${custList}">
+						<c:choose>
+							<c:when test="${fn:toLowerCase(cust.status) == 'active'}">
+								<c:set var="status" value="success" />
+							</c:when>
+							<c:when test="${fn:toLowerCase(cust.status) == 'inactive'}">
+								<c:set var="status" value="danger" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="status" value="secondary" />
+							</c:otherwise>
+						</c:choose>
 						<tr>
 							<th scope="row"><c:out value="${cust.id}" /></th>
 							<td><c:out value="${cust.name}" /></td>
@@ -63,26 +74,7 @@
 							<td><c:out value="${cust.identityNumber}" /></td>
 							<td><c:out value="${cust.birthdate}" /></td>
 							<td><c:out value="${cust.occupation}" /></td>
-							<td>
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<c:choose>
-											<c:when test="${fn:toLowerCase(cust.status) == 'active'}">
-												<span class="dot bg-success"></span>
-											</c:when>
-											<c:when test="${fn:toLowerCase(cust.status) == 'inactive'}">
-												<span class="dot bg-danger"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="dot bg-secondary"></span>
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="col-auto p-0 text-capitalize">
-										<c:out value="${cust.status}" />
-									</div>
-								</div>
-							</td>
+							<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${cust.status}" /></span></td>
 							<td class="text-center">
 								<div class="dropdown-center">
 									<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>

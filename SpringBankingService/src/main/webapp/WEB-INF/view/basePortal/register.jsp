@@ -76,6 +76,11 @@
 												<form name="registration" action="register/save" method="post" class="needs-validation" novalidate onsubmit="submitForm(this)">
 													<input type="hidden" name="identityNumber" value="${identityNumber}" />
 													<input type="hidden" name="verification" value="${verification}" />
+													<c:if test="${not empty alertMsg}">
+														<div class="alert alert-danger" role="alert">
+															<c:out value="${alertMsg}" />
+														</div>
+													</c:if>
 													<div class="form-floating mb-3">
 														<input class="form-control" name="username" placeholder="Username" required /> <label for="username">Username</label>
 														<div class="invalid-feedback">Please enter your username.</div>

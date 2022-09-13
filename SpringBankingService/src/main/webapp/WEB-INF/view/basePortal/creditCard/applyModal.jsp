@@ -83,7 +83,6 @@ applyModal.addEventListener('show.bs.modal', event => {
   let inputId = document.getElementById("id");
   inputId.value = id;
   let newCustBtn = document.getElementById("newCustBtn");
-  console.log("${url}" + id);
   newCustBtn.href = "${url}" + id;
 })
 </script>

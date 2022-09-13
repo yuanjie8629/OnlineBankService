@@ -1,5 +1,6 @@
 package com.bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="loan_payment")
@@ -26,9 +30,15 @@ public class LoanPayment {
 	@Column(name="paid_date")
 	private LocalDateTime paidDate;
 	
-	@Column(name="due_date")
-	private LocalDateTime dueDate;
+	@Column(name="payment_month")
+	private String paymentMonth;
 	
+	@Column(name="due_date")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@NotNull(message="Please select payment due date.")
+	private LocalDate dueDate;
+	
+	@NotBlank(message="Please enter payment description.")
 	private String description;
 	
 	private double principal;
@@ -36,8 +46,13 @@ public class LoanPayment {
 	@Column(name="interest_charged")
 	private double interestCharged;
 	
+	private double balance;
+	
 	@Column(name="amount")
 	private double amount;
+	
+	@Column(name="additional_charge")
+	private double additionalCharge;
 	
 	private String status;
 	
@@ -67,6 +82,22 @@ public class LoanPayment {
 
 	public void setPaidDate(LocalDateTime paidDate) {
 		this.paidDate = paidDate;
+	}
+
+	public String getPaymentMonth() {
+		return paymentMonth;
+	}
+
+	public void setPaymentMonth(String paymentMonth) {
+		this.paymentMonth = paymentMonth;
+	}
+
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public String getDescription() {
@@ -101,6 +132,22 @@ public class LoanPayment {
 		this.amount = amount;
 	}
 
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public double getAdditionalCharge() {
+		return additionalCharge;
+	}
+
+	public void setAdditionalCharge(double additionalCharge) {
+		this.additionalCharge = additionalCharge;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -121,17 +168,31 @@ public class LoanPayment {
 		
 	}
 
-	public LoanPayment(int id, LocalDateTime date, LocalDateTime paidDate, String description, double principal,
-			double interestCharged, double amount, String status, CustLoan loan) {
-		super();
+	public LoanPayment(int id, LocalDateTime date, LocalDateTime paidDate, String paymentMonth,
+			@NotNull(message = "Please select payment due date.") LocalDate dueDate,
+			@NotBlank(message = "Please enter payment description.") String description, double principal,
+			double interestCharged, double balance, double amount, double additionalCharge, String status,
+			CustLoan loan) {
 		this.id = id;
 		this.date = date;
 		this.paidDate = paidDate;
+		this.paymentMonth = paymentMonth;
+		this.dueDate = dueDate;
 		this.description = description;
 		this.principal = principal;
 		this.interestCharged = interestCharged;
+		this.balance = balance;
 		this.amount = amount;
+		this.additionalCharge = additionalCharge;
 		this.status = status;
 		this.loan = loan;
+	}
+
+	@Override
+	public String toString() {
+		return "LoanPayment [id=" + id + ", date=" + date + ", paidDate=" + paidDate + ", paymentMonth=" + paymentMonth
+				+ ", dueDate=" + dueDate + ", description=" + description + ", principal=" + principal
+				+ ", interestCharged=" + interestCharged + ", amount=" + amount + ", additionalCharge="
+				+ additionalCharge + ", status=" + status + ", loan=" + loan + "]";
 	}
 }

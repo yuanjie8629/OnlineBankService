@@ -12,15 +12,15 @@
 			<h4 class="mb-4">Customer Loan List</h4>
 			<div class="row justify-content-between align-items-center g-3 mt-2 mb-5">
 				<div class="col-auto">
-					<!-- Credit Card Status Tabs -->
+					<!-- Loan Status Tabs -->
 					<nav id="loan-status" class="nav nav-pills nav-tab-category fw-bold">
 						<a id="all" class="nav-link px-3 py-2 me-4 active" href="loan">All</a>
 						<a id="active" class="nav-link px-3 py-2 me-4" href="loan?status=active">Active</a>
-						<a id="inactive" class="nav-link px-3 py-2 me-4" href="loan?status=inactive">Inactive</a>
+						<a id="completed" class="nav-link px-3 py-2 me-4" href="loan?status=completed">Completed</a>
 					</nav>
 				</div>
 			</div>
-			<!-- Customer Credit Card List -->
+			<!-- Customer Loan List -->
 			<table id="custLoanTable" class="table table-hover">
 				<thead>
 					<tr>
@@ -37,6 +37,17 @@
 				</thead>
 				<tbody>
 					<c:forEach var="custLoan" items="${custLoanList}">
+						<c:choose>
+							<c:when test="${fn:toLowerCase(custLoan.status) == 'active'}">
+								<c:set var="status" value="success" />
+							</c:when>
+							<c:when test="${fn:toLowerCase(custLoan.status) == 'inactive'}">
+								<c:set var="status" value="danger" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="status" value="secondary" />
+							</c:otherwise>
+						</c:choose>
 						<tr>
 							<th scope="row"><c:out value="${custLoan.id}" /></th>
 							<td class="text-capitalize"><c:out value="${custLoan.loan.title}" /></td>
@@ -45,26 +56,7 @@
 							<td><c:out value="${custLoan.totalAmount}" /></td>
 							<td><fmt:formatNumber value="${custLoan.interestRate}" type="percent" maxFractionDigits="3" /> p.a.</td>
 							<td><c:out value="${custLoan.repaymentPeriod}" /> Year(s)</td>
-							<td>
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<c:choose>
-											<c:when test="${fn:toLowerCase(custLoan.status) == 'active'}">
-												<span class="dot bg-success"></span>
-											</c:when>
-											<c:when test="${fn:toLowerCase(custLoan.status) == 'inactive'}">
-												<span class="dot bg-danger"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="dot bg-secondary"></span>
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="col-auto p-0 text-capitalize">
-										<c:out value="${custLoan.status}" />
-									</div>
-								</div>
-							</td>
+							<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${custLoan.status}" /></span></td>
 							<td class="text-center">
 								<div class="dropdown-center">
 									<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
@@ -74,11 +66,13 @@
 												<i class="fa-solid fa-eye fa-fw me-2"></i>View
 											</a>
 										</li>
-										<li>
-											<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${custLoan.id}"
-														data-bs-target="#completeCustLoanModal"> <i class="fa-solid fa-circle-check fa-fw me-2"></i>Mark as completed
-													</a>
-										</li>
+										<c:if test="${fn:toLowerCase(custLoan.status) != 'completed'}">
+											<li>
+												<a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-id="${custLoan.id}" data-bs-target="#completeCustLoanModal">
+													<i class="fa-solid fa-circle-check fa-fw me-2"></i>Mark as completed
+												</a>
+											</li>
+										</c:if>
 									</ul>
 								</div>
 							</td>
@@ -89,6 +83,7 @@
 		</div>
 	</div>
 </div>
+<jsp:include page="./completeCustLoan.jsp" />
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
 	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
 		<div class="d-flex align-items-center p-2">

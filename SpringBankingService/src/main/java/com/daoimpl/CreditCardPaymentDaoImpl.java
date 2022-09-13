@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.CreditCardPayment;
+import com.bean.CreditCardPayment;
 import com.bean.CustCreditCard;
 import com.dao.CreditCardPaymentDao;
 
@@ -41,16 +42,18 @@ public class CreditCardPaymentDaoImpl implements CreditCardPaymentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CreditCardPayment> getPaymentsByMonth(CustCreditCard custCreditCard, String month) {
-		// Add day to the string to avoid DateTimeParseException due to no day
-		month += "01";
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
-		LocalDateTime thisMonth = LocalDate.parse(month, df).atStartOfDay();
-
+	public List<CreditCardPayment> getPayments(CustCreditCard custCreditCard) {
 		DetachedCriteria query = DetachedCriteria.forClass(CreditCardPayment.class);
 		query.add(Restrictions.eq("creditCard", custCreditCard));
-		query.add(Restrictions.between("date", thisMonth, thisMonth.with(TemporalAdjusters.lastDayOfMonth())));
 		return (List<CreditCardPayment>) template.findByCriteria(query);
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CreditCardPayment> getPaymentsByMonth(CustCreditCard custCreditCard, String month) {
+		DetachedCriteria query = DetachedCriteria.forClass(CreditCardPayment.class);
+		query.add(Restrictions.eq("creditCard", custCreditCard));
+		query.add(Restrictions.eq("paymentMonth", month));
+		return (List<CreditCardPayment>) template.findByCriteria(query);
+	}
 }

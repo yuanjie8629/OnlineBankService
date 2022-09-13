@@ -11,5 +11,6 @@ public interface CustLoanDao {
 	CustLoan getCustLoanById(String id);
 	CustLoan getCustLoanByCust(String id, Customer cust);
 	List<CustLoan> getCustLoans();
+	List<CustLoan> getCustLoans(String status);
 	List<CustLoan> getCustLoansByCust(Customer cust);
 }

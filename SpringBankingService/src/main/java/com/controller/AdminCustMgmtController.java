@@ -78,9 +78,4 @@ public class AdminCustMgmtController {
 		ra.addFlashAttribute("msg", "You have successfully deactivated the customer with ID " + id);
 		return "redirect:/admin/customer-management/";
 	}
-	
-	@RequestMapping(value = "/loan")
-	public String customerLoanManagement(@RequestParam(required=false) String status, Model m) {
-		return "admin-cust-mgmt-loan";
-	}
 }

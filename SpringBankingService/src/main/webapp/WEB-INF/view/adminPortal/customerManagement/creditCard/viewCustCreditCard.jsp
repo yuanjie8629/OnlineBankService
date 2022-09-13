@@ -9,10 +9,10 @@
 		<div class="col-auto">
 			<div class="row justify-content-end align-items-center mb-2">
 				<div class="col-auto">
-					<button class="btn btn-danger" data-bs-toggle="modal" data-bs-id="${custCreditCard.id}"
-						data-bs-target="#depositModal">
-						<i class="fa-solid fa-credit-card fa-fw me-2"></i>Add Payment
-					</button>
+					<a role="button" class="btn btn-danger"
+						href="<c:url value="/admin/customer-management/credit-card/${custCreditCard.id}/payment/add" />"> <i
+						class="fa-solid fa-credit-card fa-fw me-2"></i>Add Payment
+					</a>
 				</div>
 				<div class="col-auto">
 					<c:choose>
@@ -179,44 +179,53 @@
 						</div>
 					</div>
 					<div id="paymentHistory" class="content" role="tabpanel" aria-labelledby="paymentHistoryTrigger">
-						<div class="row align-items-center mb-4">
-							<label class="col-auto col-form-label"> Transaction Month </label>
-							<div class="col-auto">
-								<form name="fiterPayment" action="">
-									<select class="form-select" name="paymentMonth" onchange="submitPaymentForm()">
-										<c:forEach var="month" items="${months}">
-											<fmt:parseDate value="${month}" var="parsedMonth" pattern="yyyyMM" />
-											<option value="${month}"><fmt:formatDate pattern="MMMM, yyyy" value="${parsedMonth}" /></option>
-										</c:forEach>
-									</select>
-								</form>
-							</div>
-						</div>
 						<div class="row">
 							<table id="creditCardPaymentTable" class="table">
 								<thead>
 									<tr>
-										<th scope="col">Date</th>
+										<th scope="col">Month</th>
 										<th scope="col">Payment Description</th>
-										<th scope="col">Total Amount</th>
-										<th scope="col">Interest Charged</th>
-										<th scope="col">Due Date</th>
+										<th scope="col">Amount</th>
+										<th scope="col">Interest</th>
+										<th scope="col">Add. Charges</th>
+										<th scope="col">Total</th>
 										<th scope="col">Status</th>
+										<th scope="col" style="width: 10%"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="payment" items="${payments}">
+										<c:choose>
+											<c:when test="${fn:toLowerCase(payment.status) == 'completed'}">
+												<c:set var="status" value="success" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="status" value="secondary" />
+											</c:otherwise>
+										</c:choose>
 										<fmt:parseDate value="${payment.date}" var="date" type="both" pattern="yyyy-MM-dd" />
+										<fmt:parseDate value="${payment.paymentMonth}" var="paymentMonth" type="both" pattern="yyyyMM" />
 										<fmt:parseDate value="${payment.dueDate}" var="dueDate" type="both" pattern="yyyy-MM-dd" />
 										<fmt:formatNumber var="amount" value="${payment.amount}" type="currency" currencySymbol="" />
-										<fmt:formatNumber var="interest" value="${payment.interestPaid}" type="currency" currencySymbol="" />
+										<fmt:formatNumber var="interest" value="${payment.interestCharged}" type="currency" currencySymbol="" />
+										<fmt:formatNumber var="additionalCharge" value="${payment.additionalCharge}" type="currency" currencySymbol="" />
+										<fmt:formatNumber var="total" value="${payment.amount + payment.interestCharged + payment.additionalCharge}" type="currency" currencySymbol="" />
 										<tr>
-											<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy" value="${date}" /></td>
+											<td><fmt:formatDate type="both" pattern="MMM, YYYY" value="${paymentMonth}" /></td>
 											<td><c:out value="${not empty payment.description ? payment.description : '-'}" /></td>
 											<td><c:out value="${amount}" /></td>
 											<td><c:out value="${interest}" /></td>
-											<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy" value="${dueDate}" /></td>
-											<td><c:out value="${status}" /></td>
+											<td><c:out value="${additionalCharge}" /></td>
+											<td><c:out value="${total}" /></td>
+											<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out
+														value="${payment.status}" /></span></td>
+											<td>
+												<c:if test="${fn:toLowerCase(payment.status) != 'completed'}">
+													<a href="<c:url value="/admin/customer-management/credit-card/payment/update/${payment.id}" />" role="button" class="btn btn-outline-primary btn-sm w-100">
+														<i class="fa-solid fa-pen-to-square me-2"></i>Update
+													</a>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -230,6 +239,24 @@
 </div>
 <jsp:include page="./activateCustCreditCard.jsp" />
 <jsp:include page="./deactivateCustCreditCard.jsp" />
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex align-items-center p-2">
+			<div class="toast-body">
+				<c:out value="${msg}" />
+			</div>
+		</div>
+	</div>
+</div>
+<c:if test="${not empty msg}">
+	<script>
+		// Message Toast
+		let msgToast = document.getElementById("msgToast");
+		let msgBsToast = new bootstrap.Toast(msgToast);
+		msgBsToast.show();
+	</script>
+	<c:remove var="msg" />
+</c:if>
 <script>
 	$(document).ready(function() {
 		$('#creditCardTransactionTable').DataTable({
@@ -244,18 +271,12 @@
 	});
 
 	let transactionForm = document.forms['filterTransaction'];
-	let paymentForm = document.forms['fiterPayment'];
 
 	// Update input value based on search query params
 	let queryParams = new URLSearchParams(window.location.search);
 	let transactionMonth = queryParams.get("transactionMonth");
 	if (transactionMonth != null) {
 		transactionForm['transactionMonth'].value = transactionMonth;
-	}
-
-	let paymentMonth = queryParams.get("paymentMonth");
-	if (paymentMonth != null) {
-		paymentForm['paymentMonth'].value = paymentMonth;
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {
@@ -265,16 +286,9 @@
 
 		if (transactionMonth != null)
 			stepper.to(2);
-
-		if (paymentMonth != null)
-			stepper.to(3);
 	});
 
 	function submitTransactionForm() {
 		transactionForm.submit();
-	}
-
-	function submitPaymentForm() {
-		paymentForm.submit();
 	}
 </script>

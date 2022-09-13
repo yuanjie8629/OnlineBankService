@@ -34,32 +34,24 @@
 				</thead>
 				<tbody>
 					<c:forEach var="custAcc" items="${custAccList}">
+						<c:choose>
+							<c:when test="${fn:toLowerCase(custAcc.status) == 'active'}">
+								<c:set var="status" value="success" />
+							</c:when>
+							<c:when test="${fn:toLowerCase(custAcc.status) == 'inactive'}">
+								<c:set var="status" value="danger" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="status" value="secondary" />
+							</c:otherwise>
+						</c:choose>
 						<tr>
 							<th scope="row"><c:out value="${custAcc.accNum}" /></th>
 							<td class="text-capitalize"><c:out value="${custAcc.account.type}" /></td>
 							<td><c:out value="${custAcc.account.title}" /></td>
 							<td><c:out value="${custAcc.customer.name}" /></td>
 							<td><c:out value="${custAcc.customer.email}" /></td>
-							<td>
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<c:choose>
-											<c:when test="${fn:toLowerCase(custAcc.status) == 'active'}">
-												<span class="dot bg-success"></span>
-											</c:when>
-											<c:when test="${fn:toLowerCase(custAcc.status) == 'inactive'}">
-												<span class="dot bg-danger"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="dot bg-secondary"></span>
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="col-auto p-0 text-capitalize">
-										<c:out value="${custAcc.status}" />
-									</div>
-								</div>
-							</td>
+							<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${custAcc.status}" /></span></td>
 							<td class="text-center">
 								<div class="dropdown-center">
 									<i class="fa-solid fa-ellipsis fa-xl menu-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
