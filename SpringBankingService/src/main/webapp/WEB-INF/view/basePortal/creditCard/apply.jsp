@@ -573,7 +573,7 @@
 	var stepper;
 	document.addEventListener('DOMContentLoaded', function() {
 		stepper = new Stepper(document.querySelector('.bs-stepper'))
-	})
+	});
 	
 	// Script to initialize international phone input
 	let phoneInput = document.getElementById("phone");
