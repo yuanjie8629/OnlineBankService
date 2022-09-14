@@ -37,7 +37,7 @@ public class AccountApplication {
 	private String email;
 	
 	@Column(name="contact_no")
-	@Pattern(regexp="^[689]\\d{7}$", message="Please enter valid Singapore phone number.")
+	@NotBlank(message="Please enter contact number.")
 	private String contactNo;
 	
 	@NotNull(message="Please select gender.")

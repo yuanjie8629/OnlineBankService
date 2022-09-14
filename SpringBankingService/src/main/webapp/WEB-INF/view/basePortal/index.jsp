@@ -6,6 +6,7 @@
 				<li data-bs-target="#baseCarousel" data-bs-slide-to="0" class="active"></li>
 				<li data-bs-target="#baseCarousel" data-bs-slide-to="1"></li>
 				<li data-bs-target="#baseCarousel" data-bs-slide-to="2"></li>
+				<li data-bs-target="#baseCarousel" data-bs-slide-to="3"></li>
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
@@ -15,6 +16,17 @@
 						</div>
 					</div>
 					<img src="resources/images/basePortal/carousel/HomeBackground.jpg" alt="carouselBackground1">
+				</div>
+				<div class="carousel-item">
+					<div class="container">
+						<div class="carousel-caption carousel-caption-left">
+							<h1>OBS Saving Account</h1>
+							<h4 class="carousel-desc">Open your saving account directly online with OBS</h4>
+							<a class="btn btn-md btn-danger" href="account" role="button"> <strong>Learn More</strong>
+							</a>
+						</div>
+					</div>
+					<img src="resources/images/basePortal/carousel/AccountBackground.jpg" alt="carouselBackground3">
 				</div>
 				<div class="carousel-item">
 					<div class="container">

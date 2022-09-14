@@ -33,7 +33,7 @@ import com.dao.CustCreditCardDao;
 public class CustCreditCardController {
 	@Autowired
 	CustCreditCardDao custCreditCardDao;
-	
+
 	@Autowired
 	AccountTransactionDao accTransactionDao;
 
@@ -70,12 +70,12 @@ public class CustCreditCardController {
 		Customer cust = (Customer) session.getAttribute("user");
 		CustCreditCard custCreditCard = custCreditCardDao.getCustCreditCardById(id, cust);
 		if (custCreditCard != null) {
+			if (custCreditCard.getPin() != null && !custCreditCard.getPin().isEmpty())
+				m.addAttribute("isPin", true);
 			// Remove card pin from all card for safety purpose
-			m.addAttribute("isPin", true);
 			custCreditCard.setPin("");
-
-			String encryptedCardNum = String.join("", Collections.nCopies(3, "**** "))
-					+ custCreditCard.getCardNum().split(" ")[3];
+			
+			String encryptedCardNum = String.join("", Collections.nCopies(3, "**** ")) + custCreditCard.getCardNum().split(" ")[3];
 			m.addAttribute("custCreditCard", custCreditCard);
 			m.addAttribute("encryptedCardNum", encryptedCardNum);
 			return "cust-credit-card-summary";
@@ -123,10 +123,10 @@ public class CustCreditCardController {
 	public String updateCreditCardPin(@RequestParam int id, @RequestParam String cardNum, @RequestParam String password,
 			@RequestParam String pin, RedirectAttributes ra) {
 		if (pin.length() != 6) {
-			ra.addFlashAttribute("changePinMsg","Card Pin Number must be 6 digits.");
+			ra.addFlashAttribute("changePinMsg", "Card Pin Number must be 6 digits.");
 			return "redirect:/customer/credit-card/summary/" + id;
 		}
-		
+
 		Customer cust = (Customer) session.getAttribute("user");
 		CustCreditCard custCreditCard = custCreditCardDao.getCustCreditCardById(id, cust);
 		if (custCreditCard != null) {
@@ -136,7 +136,7 @@ public class CustCreditCardController {
 				ra.addFlashAttribute("msg", "You have successfully updated your credit card pin.");
 				return "redirect:/customer/credit-card/summary/" + id;
 			} else {
-				ra.addFlashAttribute("changePinMsg","Failed to update credit card pin. Invalid details.");
+				ra.addFlashAttribute("changePinMsg", "Failed to update credit card pin. Invalid details.");
 				return "redirect:/customer/credit-card/summary/" + id;
 			}
 		}
@@ -171,60 +171,59 @@ public class CustCreditCardController {
 
 		if (custCreditCard.getPin() == null) {
 			ra.addFlashAttribute("msg", "Please set up your credit card pin before transferring to account.");
-			return "redirect:/customer/credit-card/transfer";
-		}
-
-		if (!pin.equals(custCreditCard.getPin())) {
+		} else if (!pin.equals(custCreditCard.getPin())) {
 			ra.addFlashAttribute("msg", "Invalid card pin number.");
-			return "redirect:/customer/credit-card/transfer";
-		}
-
-		if (amount <= custCreditCard.getBalance()) {
-			// Update amount spent for the creditCard
-			custCreditCard.setBalance(custCreditCard.getBalance() - amount);
-			custCreditCardDao.update(custCreditCard);
-			
-			// Encrypt the card and account numbers
-			String encryptedCardNum = String.join("", Collections.nCopies(3, "**** "))
-					+ custCreditCard.getCardNum().split(" ")[3];
-			String encryptedAccTo = accTo.substring(0, 6)
-					+ String.join("", Collections.nCopies(accTo.length() - 6, "*"));
-
-			// Add transaction for the credit Card
-			CreditCardTransaction creditCardTransaction = new CreditCardTransaction();
-			creditCardTransaction.setType("withdraw");
-			creditCardTransaction.setAmount(amount);
-			creditCardTransaction.setDescription(description);
-			creditCardTransaction.setReference("Credit Card Transfer to " + encryptedAccTo);
-			creditCardTransaction.setBalance(custCreditCard.getBalance());
-			creditCardTransaction.setStatus("posted");
-			creditCardTransaction.setCreditCard(custCreditCard);
-			cardTransactionDao.save(creditCardTransaction);
-
-			// Update balance for accTo
-			CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
-			custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
-			custAccTo.setCurBal(custAccTo.getCurBal() + amount);
-			custAccDao.update(custAccTo);
-
-			// Add transaction for accTo
-			AccountTransaction accToTransaction = new AccountTransaction();
-			accToTransaction.setType("deposit");
-			accToTransaction.setAccount(custAccTo);
-			accToTransaction.setAmount(amount);
-			accToTransaction.setDescription(description);
-			accToTransaction.setReference("Credit Card Transfer from " + encryptedCardNum);
-			accToTransaction.setBalance(custAccTo.getAvailBal());
-			accToTransaction.setStatus("posted");
-			accTransactionDao.save(accToTransaction);
-			
-
-			ra.addFlashAttribute("success", true);
-			ra.addFlashAttribute("transaction", creditCardTransaction);
-			ra.addFlashAttribute("creditCardFrom", encryptedCardNum);
-			ra.addFlashAttribute("accTo", encryptedAccTo);
+		} else if (custCreditCard.getStatus().toLowerCase().equals("inactive")) {
+			// Inactive credit card validation
+			ra.addFlashAttribute("msg", "Failed to transfer the money. Your credit card is inactive.");
 		} else {
-			ra.addFlashAttribute("msg", "Your credit card balance is not sufficient for this transaction.");
+			// Validate if credit card has sufficient balance to transfer
+			if (amount <= custCreditCard.getBalance()) {
+				// Update amount spent for the creditCard
+				custCreditCard.setBalance(custCreditCard.getBalance() - amount);
+				custCreditCardDao.update(custCreditCard);
+
+				// Encrypt the card and account numbers
+				String encryptedCardNum = String.join("", Collections.nCopies(3, "**** "))
+						+ custCreditCard.getCardNum().split(" ")[3];
+				String encryptedAccTo = accTo.substring(0, 6)
+						+ String.join("", Collections.nCopies(accTo.length() - 6, "*"));
+
+				// Add transaction for the credit Card
+				CreditCardTransaction creditCardTransaction = new CreditCardTransaction();
+				creditCardTransaction.setType("withdraw");
+				creditCardTransaction.setAmount(amount);
+				creditCardTransaction.setDescription(description);
+				creditCardTransaction.setReference("Credit Card Transfer to " + encryptedAccTo);
+				creditCardTransaction.setBalance(custCreditCard.getBalance());
+				creditCardTransaction.setStatus("posted");
+				creditCardTransaction.setCreditCard(custCreditCard);
+				cardTransactionDao.save(creditCardTransaction);
+
+				// Update balance for accTo
+				CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
+				custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
+				custAccTo.setCurBal(custAccTo.getCurBal() + amount);
+				custAccDao.update(custAccTo);
+
+				// Add transaction for accTo
+				AccountTransaction accToTransaction = new AccountTransaction();
+				accToTransaction.setType("deposit");
+				accToTransaction.setAccount(custAccTo);
+				accToTransaction.setAmount(amount);
+				accToTransaction.setDescription(description);
+				accToTransaction.setReference("Credit Card Transfer from " + encryptedCardNum);
+				accToTransaction.setBalance(custAccTo.getAvailBal());
+				accToTransaction.setStatus("posted");
+				accTransactionDao.save(accToTransaction);
+
+				ra.addFlashAttribute("success", true);
+				ra.addFlashAttribute("transaction", creditCardTransaction);
+				ra.addFlashAttribute("creditCardFrom", encryptedCardNum);
+				ra.addFlashAttribute("accTo", encryptedAccTo);
+			} else {
+				ra.addFlashAttribute("msg", "Your credit card balance is not sufficient for this transaction.");
+			}
 		}
 		return "redirect:/customer/credit-card/transfer";
 	}

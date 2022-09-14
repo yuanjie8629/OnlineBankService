@@ -21,7 +21,7 @@
 			<p style="font-size: 20px; text-align: justify;">OBS Bank Limited is a regional financial services company based in Singapore. The bank is technology-focused and emphasises the developement of
 				financial capabilities to services its clients in Singapore. Our presence in the country goes back to 1980, when we opened our first branch at Boat Quay, Singapore. Over the years, we have
 				remained firmly committed to the nation and its growth. On 15 May 1995, OBS Bank Limited was listed on the Singapore's top 10 banks list and since then has grown by leaps and bounds, organically
-				as well as through mergers and acquisitions. Today the Bank is Singapore's fifth largest banking group by assets with over SGD 237 as at 10 September 2021.</p>
+				as well as through mergers and acquisitions. Today the Bank is Singapore's fifth largest banking group by assets with over 237 million SGD as at 10 September 2021.</p>
 		</div>
 		<div class="col-md-5">
 			<img src="resources/images/basePortal/aboutUs/OurStory.jpg" alt="aboutUs" class="img-fluid">

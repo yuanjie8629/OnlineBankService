@@ -116,6 +116,7 @@ public class AdminAppMgmtController {
 		custAccDao.save(custAcc);
 
 		accApp.setStatus("Approved");
+		accApp.setComments(null);
 		accAppDao.update(accApp);
 		ra.addFlashAttribute("msg", "You have successfully approved the account application.");
 		return "redirect:/admin/application-management/account";
@@ -209,7 +210,7 @@ public class AdminAppMgmtController {
 			custCard.setCustomer(customer);
 			custCreditCardDao.save(custCard);
 			
-
+			creditCardApp.setComments(null);
 			creditCardApp.setStatus("Approved");
 			creditCardAppDao.update(creditCardApp);
 			ra.addFlashAttribute("msg", "You have successfully approved the credit card application.");
@@ -327,6 +328,7 @@ public class AdminAppMgmtController {
 			custLoan.setCustomer(customer);
 			custLoanDao.save(custLoan);
 			
+			loanApp.setComments(null);
 			loanApp.setStatus("Approved");
 			loanAppDao.update(loanApp);
 			ra.addFlashAttribute("msg", "You have successfully approved the loan application.");

@@ -16,7 +16,7 @@
 </div>
 <div class="container my-5">
 	<h3 class="mb-3">Our Headquarters</h3>
-	<iframe class="headquaters-map" src="https://maps.google.com/maps?q=singapore%20asia%20square%20tower&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+	<iframe class="headquaters-map" src="https://maps.google.com/maps?q=singapore%20raffles%20city%20tower&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
 </div>
 <div class="container my-5">
 	<h3>We Value Your Feedback</h3>

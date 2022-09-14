@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
@@ -25,7 +26,7 @@ public class CustFundTransferController {
 
 	@Autowired
 	CustAccDao custAccDao;
-	
+
 	@Autowired
 	AccountTransactionDao accTransactionDao;
 
@@ -36,9 +37,9 @@ public class CustFundTransferController {
 	public String fundTransfer() {
 		return "cust-fund-transfer";
 	}
-	
-	// Own Transfer 
-	
+
+	// Own Transfer
+
 	@RequestMapping(value = "/own")
 	public String showFundTransferToOwn(Model m) {
 		Customer cust = (Customer) session.getAttribute("user");
@@ -49,20 +50,28 @@ public class CustFundTransferController {
 	@RequestMapping(value = "/own/save", method = RequestMethod.POST)
 	@Transactional
 	public String fundTransferToOwn(@RequestParam String accFrom, @RequestParam String accTo,
-			@RequestParam double amount, @RequestParam(required = false) String description, Model m, RedirectAttributes ra) {
-		if (!accFrom.equals(accTo)) {
-			CustAccount custAccFrom = custAccDao.getCustAccountById(accFrom);
-			
+			@RequestParam double amount, @RequestParam(required = false) String description, Model m,
+			RedirectAttributes ra) {
+		CustAccount custAccFrom = custAccDao.getCustAccountById(accFrom);
+		CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
+		if (accFrom.equals(accTo)) {
+			// Transfer to same account validation
+			ra.addFlashAttribute("msg", "Failed to transfer the money. Account transfer from and to cannot be the same.");
+		} else if (custAccFrom.getStatus().toLowerCase().equals("inactive")) {
+			// Inactive account validation
+			ra.addFlashAttribute("msg", "Failed to transfer the money. Your account is inactive.");
+		} else {
+			// Validate if account has sufficient balance to transfer
 			if (amount <= custAccFrom.getAvailBal()) {
 				// Update balance for accFrom
 				custAccFrom.setAvailBal(custAccFrom.getAvailBal() - amount);
 				custAccFrom.setCurBal(custAccFrom.getCurBal() - amount);
 				custAccDao.update(custAccFrom);
-				
+
 				// Replace the accNum with * after the 6th accNum digit
 				String encryptedAccFrom = accFrom.substring(0, 6) + String.join("", Collections.nCopies(accFrom.length() - 6, "*"));
 				String encryptedAccTo = accTo.substring(0, 6) + String.join("", Collections.nCopies(accTo.length() - 6, "*"));
-				
+
 				// Add transaction for accFrom
 				AccountTransaction accFromTransaction = new AccountTransaction();
 				accFromTransaction.setType("withdraw");
@@ -73,14 +82,12 @@ public class CustFundTransferController {
 				accFromTransaction.setBalance(custAccFrom.getAvailBal());
 				accFromTransaction.setStatus("posted");
 				accTransactionDao.save(accFromTransaction);
-				
-				
+
 				// Update balance for accTo
-				CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
 				custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
 				custAccTo.setCurBal(custAccTo.getCurBal() + amount);
 				custAccDao.update(custAccTo);
-				
+
 				// Add transaction for accTo
 				AccountTransaction accToTransaction = new AccountTransaction();
 				accToTransaction.setType("deposit");
@@ -91,20 +98,18 @@ public class CustFundTransferController {
 				accToTransaction.setBalance(custAccTo.getAvailBal());
 				accToTransaction.setStatus("posted");
 				accTransactionDao.save(accToTransaction);
-				
+
 				ra.addFlashAttribute("success", true);
 				ra.addFlashAttribute("transaction", accFromTransaction);
 				ra.addFlashAttribute("accFrom", encryptedAccFrom);
 				ra.addFlashAttribute("accTo", encryptedAccTo);
 			} else {
-				ra.addFlashAttribute("msg","Your account available balance is not sufficient for this transaction.");
+				ra.addFlashAttribute("msg", "Your account available balance is not sufficient for this transaction.");
 			}
-		} else {
-			ra.addFlashAttribute("msg","Failed to transfer the money. Account transfer from and to cannot be the same.");
 		}
 		return "redirect:/customer/fund-transfer/own";
 	}
-	
+
 	// Transfer to Others
 
 	@RequestMapping(value = "/others")
@@ -113,33 +118,46 @@ public class CustFundTransferController {
 		m.addAttribute("custAccList", custAccDao.getCustAccountsByCust(cust));
 		return "cust-fund-transfer-others";
 	}
-	
+
 	@RequestMapping(value = "/others/save", method = RequestMethod.POST)
 	@Transactional
 	public String fundTransferToOthers(@RequestParam String accFrom, @RequestParam String accTo,
-			@RequestParam double amount, @RequestParam(required = false) String description, Model m, RedirectAttributes ra) {
+			@RequestParam double amount, @RequestParam(required = false) String description, Model m,
+			RedirectAttributes ra) {
+		CustAccount custAccFrom = custAccDao.getCustAccountById(accFrom);
 		CustAccount custAccTo = custAccDao.getCustAccountById(accTo);
 		if (accFrom.equals(accTo)) {
-			ra.addFlashAttribute("msg","Failed to transfer the money. Account transfer from and to cannot be the same.");
+			// Transfer to same account validation
+			ra.addFlashAttribute("msg",
+					"Failed to transfer the money. Account transfer from and to cannot be the same.");
 		} else if (custAccTo == null) {
-			ra.addFlashAttribute("msg","Failed to transfer the money. Account to transfer does not exist.");
+			// Transfer to invalid account validation
+			ra.addFlashAttribute("msg", "Failed to transfer the money. Account to transfer does not exist.");
+		} else if (custAccFrom.getStatus().toLowerCase().equals("inactive")) {
+			// Inactive account validation
+			ra.addFlashAttribute("msg", "Failed to transfer the money. Your account is inactive.");
 		} else {
 			Customer cust = (Customer) session.getAttribute("user");
-			
-			if (cust.getAccounts().contains(new CustAccount(accTo))) {
-				ra.addFlashAttribute("msg","Please proceed to own account transfer.");
+			// Validate account's daily fund transfer
+			if (accTransactionDao.getTotalTransferAmountByDate(custAccFrom, LocalDate.now()) > 20000) {
+				ra.addFlashAttribute("msg", "Failed to transfer the money. Your account has reached the daily fund transfer limit (SGD 20,000).");
+			} else if (cust.getAccounts().contains(new CustAccount(accTo))) {
+				// Own Account Transfer validation
+				ra.addFlashAttribute("msg", "Please proceed to own account transfer.");
 			} else {
-				CustAccount custAccFrom = custAccDao.getCustAccountById(accFrom);
+				// Validate if account has sufficient balance to transfer
 				if (amount <= custAccFrom.getAvailBal()) {
 					// Update balance for accFrom
 					custAccFrom.setAvailBal(custAccFrom.getAvailBal() - amount);
 					custAccFrom.setCurBal(custAccFrom.getCurBal() - amount);
 					custAccDao.update(custAccFrom);
-					
+
 					// Replace the accNum with * after the 6th accNum digit
-					String encryptedAccFrom = accFrom.substring(0, 6) + String.join("", Collections.nCopies(accFrom.length() - 6, "*"));
-					String encryptedAccTo = accTo.substring(0, 6) + String.join("", Collections.nCopies(accTo.length() - 6, "*"));
-					
+					String encryptedAccFrom = accFrom.substring(0, 6)
+							+ String.join("", Collections.nCopies(accFrom.length() - 6, "*"));
+					String encryptedAccTo = accTo.substring(0, 6)
+							+ String.join("", Collections.nCopies(accTo.length() - 6, "*"));
+
 					// Add transaction for accFrom
 					AccountTransaction accFromTransaction = new AccountTransaction();
 					accFromTransaction.setType("withdraw");
@@ -150,13 +168,12 @@ public class CustFundTransferController {
 					accFromTransaction.setBalance(custAccFrom.getAvailBal());
 					accFromTransaction.setStatus("posted");
 					accTransactionDao.save(accFromTransaction);
-					
-					
+
 					// Update balance for accTo
 					custAccTo.setAvailBal(custAccTo.getAvailBal() + amount);
 					custAccTo.setCurBal(custAccTo.getCurBal() + amount);
 					custAccDao.update(custAccTo);
-					
+
 					// Add transaction for accTo
 					AccountTransaction accToTransaction = new AccountTransaction();
 					accToTransaction.setType("deposit");
@@ -167,13 +184,13 @@ public class CustFundTransferController {
 					accToTransaction.setBalance(custAccTo.getAvailBal());
 					accToTransaction.setStatus("posted");
 					accTransactionDao.save(accToTransaction);
-					
+
 					ra.addFlashAttribute("success", true);
 					ra.addFlashAttribute("transaction", accFromTransaction);
 					ra.addFlashAttribute("accFrom", encryptedAccFrom);
 					ra.addFlashAttribute("accTo", encryptedAccTo);
 				} else {
-					ra.addFlashAttribute("msg","Your account available balance is not sufficient for this transaction.");
+					ra.addFlashAttribute("msg", "Your account available balance is not sufficient for this transaction.");
 				}
 			}
 		}

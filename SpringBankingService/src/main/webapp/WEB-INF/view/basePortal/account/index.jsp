@@ -15,9 +15,9 @@
 </div>
 <div class="container my-5">
 	<!-- Account Type Tabs -->
-	<nav id="account-type" class="nav nav-pills nav-tab-category fw-bold fs-5">
-		<a id="saving" class="nav-link px-5 py-4 mx-4 active" href="account?type=saving">Saving Account</a>
-		<a id="current" class="nav-link px-5 py-4 mx-3" href="account?type=current">Current Account</a>
+	<nav id="account-type" class="nav nav-pills nav-tab-category fw-bold fs-5"  style="gap:30px;">
+		<a id="saving" class="nav-link px-5 py-4 active" href="account?type=saving">Saving Account</a>
+		<a id="current" class="nav-link px-5 py-4" href="account?type=current">Current Account</a>
 	</nav>
 	<!-- List of Accounts Available -->
 	<c:choose>
@@ -25,7 +25,7 @@
 			<div class="my-5">
 				<div class="row g-4">
 					<c:forEach var="acc" items="${accList}">
-						<div class="col-3">
+						<div class="col-12 col-md-6 col-lg-3">
 							<div class="card card-hover h-100">
 								<div class="card-thumbnail-img">
 									<img src="data:image/png;base64,${acc.getBase64Thumbnail()}" alt="${acc.title}"
@@ -59,7 +59,7 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="p-3 m-auto" style="max-width: 400px;">
+			<div class="p-3 my-5 mx-auto" style="max-width: 400px;">
 				<img src="<c:url value="/resources/images/Empty.png" />" class="img-fluid">
 			</div>
 		</c:otherwise>

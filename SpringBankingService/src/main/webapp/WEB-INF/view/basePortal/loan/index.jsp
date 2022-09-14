@@ -15,11 +15,11 @@
 </div>
 <div class="container my-5">
 	<!-- Loan Type Tabs -->
-	<nav id="loan-type" class="nav nav-pills nav-tab-category fw-bold fs-5">
-		<a id="personal" class="nav-link px-5 py-4 mx-4 active" href="loan?type=personal">Personal Loan</a>
-		<a id="home" class="nav-link px-5 py-4 mx-3" href="loan?type=home">Home Loan</a>
-		<a id="car" class="nav-link px-5 py-4 mx-3" href="loan?type=car">Car Loan</a>
-		<a id="education" class="nav-link px-5 py-4 mx-3" href="loan?type=education">Education Loan</a>
+	<nav id="loan-type" class="nav nav-pills nav-tab-category fw-bold fs-5" style="gap:30px;">
+		<a id="personal" class="nav-link px-5 py-4 active" href="loan?type=personal">Personal Loan</a>
+		<a id="home" class="nav-link px-5 py-4" href="loan?type=home">Home Loan</a>
+		<a id="car" class="nav-link px-5 py-4" href="loan?type=car">Car Loan</a>
+		<a id="education" class="nav-link px-5 py-4" href="loan?type=education">Education Loan</a>
 	</nav>
 	<!-- List of Loans Available -->
 	<c:choose>
@@ -27,7 +27,7 @@
 			<div class="my-5">
 				<div class="row g-4">
 					<c:forEach var="loan" items="${loanList}">
-						<div class="col-3">
+						<div class="col-12 col-md-6 col-lg-3">
 							<div class="card card-hover h-100">
 								<div class="card-thumbnail-img">
 									<img src="data:image/png;base64,${loan.getBase64Thumbnail()}" class="card-img-top img-fluid" alt="${loan.title}">
@@ -64,7 +64,7 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="p-3 m-auto" style="max-width: 400px;">
+			<div class="p-3 my-5 mx-auto" style="max-width: 400px;">
 				<img src="<c:url value="/resources/images/Empty.png" />" class="img-fluid">
 			</div>
 		</c:otherwise>

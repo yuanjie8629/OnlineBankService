@@ -230,3 +230,21 @@ table.table-fit thead th, table.table-fit tfoot th {
 table.table-fit tbody td, table.table-fit tfoot td {
     width: auto !important;
 }
+
+/* International Phone Input */
+.iti {
+  width: 100%;
+  display: block;
+}
+.iti .selected-flag {
+  z-index: 4;
+}
+.iti .country-list {
+  z-index: 5;
+}
+.input-group .iti .form-control {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 0;
+}

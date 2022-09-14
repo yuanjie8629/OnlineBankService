@@ -110,9 +110,9 @@ public class AdminCustCreditCardMgmtController {
 		Calendar c = Calendar.getInstance();
 		String[] months = new String[6];
 		for (int i = 0; i < months.length; i++) {
-			months[i] = formatter.format(c.getTime());
 			// Subtract 1 month
 			c.add(Calendar.MONTH, -1);
+			months[i] = formatter.format(c.getTime());
 		}
 		m.addAttribute("months", months);
 		return "admin-cust-mgmt-credit-card-add-payment";
@@ -121,20 +121,18 @@ public class AdminCustCreditCardMgmtController {
 	@RequestMapping(value = "{id}/payment/add/select-month", method = RequestMethod.POST)
 	public String paymentSelectMonth(@PathVariable int id, @RequestParam String selectedMonth, RedirectAttributes ra) {
 		CustCreditCard custCreditCard = custCreditCardDao.getCustCreditCardById(id);
+		// Check if the payment statement already exists
 		if (creditCardPaymentDao.getPaymentsByMonth(custCreditCard, selectedMonth).size() <= 0) {
 			List<CreditCardTransaction> transactions = creditCardTransactionDao.getTransactionsByMonth(custCreditCard,
 					selectedMonth);
-
 			CreditCardPayment creditCardPayment = new CreditCardPayment();
-
 			// Set total amount for the month
 			creditCardPayment.setAmount(transactions.stream()
 					.mapToDouble(transaction -> transaction.getType().equals("withdraw") ? transaction.getAmount() : 0)
 					.sum());
 			// Set interest charged for the month
 			// Interest is based on annum basis, so it's divided by 12
-			creditCardPayment.setInterestCharged(
-					creditCardPayment.getAmount() * (custCreditCard.getCreditCard().getInterestRate() / 12));
+			creditCardPayment.setInterestCharged(creditCardPayment.getAmount() * (custCreditCard.getCreditCard().getInterestRate() / 12));
 			// Set description
 			creditCardPayment.setDescription("Credit Card payment for " + selectedMonth);
 			// Set default due date which is after 1 month

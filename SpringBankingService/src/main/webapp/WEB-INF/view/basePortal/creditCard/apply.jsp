@@ -112,14 +112,14 @@
 								<spring:bind path="contactNo">
 									<div class="col-12 col-md-6">
 										<label class="form-label" for="contactNum">Contact Number</label>
-										<form:input class="step-1 form-control${status.error ? ' is-invalid' : ''}" path="contactNo" required="required" pattern="[6|8|9]\d{7}"/>
-										<div class="invalid-feedback">
+										<form:input id="phone" class="step-1 form-control${status.error ? ' is-invalid' : ''}" type="tel" path="contactNo" required="required" />
+										<div id="phoneNumInvalid" class="invalid-feedback">
 											<c:choose>
 												<c:when test="${status.error}">
 													<form:errors path="contactNo" />
 												</c:when>
 												<c:otherwise>
-													Please enter valid Singapore phone number.
+													Please enter valid phone number.
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -574,6 +574,45 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		stepper = new Stepper(document.querySelector('.bs-stepper'))
 	})
+	
+	// Script to initialize international phone input
+	let phoneInput = document.getElementById("phone");
+	let phoneInputErr = document.getElementById("phoneNumInvalid");
+	let intlPhoneInput = intlTelInput(phoneInput, {
+		utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+		initialCountry: "auto",
+		geoIpLookup: function(success, failure) {
+		    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		      var countryCode = (resp && resp.country) ? resp.country : "sg";
+		      success(countryCode);
+		    });
+		},
+   	});
+	
+	// Phone Number Validation
+	function reset() {
+		phoneInput.classList.remove("is-invalid");
+		phoneInputErr.classList.remove("d-block");
+	};
+	
+	function validatePhoneNum() {
+		reset();
+		if (phoneInput.value.trim() && intlPhoneInput.isValidNumber()) {
+			phoneInput.classList.remove("is-invalid");
+			phoneInput.setCustomValidity("");
+			phoneInputErr.classList.remove("d-block");
+			phoneInput.value = intlPhoneInput.getNumber();
+			return true;
+		}
+		phoneInput.classList.add("is-invalid");
+    	phoneInput.setCustomValidity("invalidPhoneNum");
+    	phoneInputErr.classList.add("d-block");
+		return false;
+	}
+	
+	phoneInput.addEventListener('blur', validatePhoneNum);
+	phoneInput.addEventListener('change', reset);
+	phoneInput.addEventListener('keyup', reset);
 
 	// Script to trigger credit limit input
 	function triggerCreditLimit(checkbox) {
@@ -625,11 +664,12 @@
 				break;
 			}
 		}
-		if (!valid) {
+		if (!valid  || (stepper._currentIndex + 1) == 1 && !validatePhoneNum()) {
 			// Display Err Msg if invalid inputs
 			event.preventDefault();
 			event.stopPropagation();
 			form.classList.add('was-validated');
+			validatePhoneNum();
 		} else {
 			// Next step if valid inputs
 			stepper.next();

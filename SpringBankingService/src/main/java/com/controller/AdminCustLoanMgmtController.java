@@ -92,9 +92,9 @@ public class AdminCustLoanMgmtController {
 		Calendar c = Calendar.getInstance();
 		String[] months = new String[6];
 		for (int i = 0; i < months.length; i++) {
-			months[i] = formatter.format(c.getTime());
 			// Subtract 1 month
 			c.add(Calendar.MONTH, -1);
+			months[i] = formatter.format(c.getTime());
 		}
 		m.addAttribute("months", months);
 		return "admin-cust-mgmt-loan-add-payment";
@@ -103,6 +103,7 @@ public class AdminCustLoanMgmtController {
 	@RequestMapping(value = "{id}/payment/add/select-month", method = RequestMethod.POST)
 	public String paymentSelectMonth(@PathVariable String id, @RequestParam String selectedMonth, RedirectAttributes ra) {
 		CustLoan custLoan = custLoanDao.getCustLoanById(id);
+		// Check if the payment statement already exists
 		if (loanPaymentDao.getPaymentsByMonth(custLoan, selectedMonth).size() <= 0) {
 			LoanPayment loanPayment = new LoanPayment();
 

@@ -7,6 +7,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,18 @@ public class AccountTranscationDaoImpl implements AccountTransactionDao {
 	@Override
 	public AccountTransaction getTransactionById(int id) {
 		return template.get(AccountTransaction.class, id);
+	}
+	
+	@Override
+	public double getTotalTransferAmountByDate(CustAccount custAcc, LocalDate date) {
+		DetachedCriteria query = DetachedCriteria.forClass(AccountTransaction.class);
+		query.add(Restrictions.eq("account", custAcc));
+		query.add(Restrictions.between("date", date.atStartOfDay(), date.atTime(23, 59, 59)));
+		query.add(Restrictions.eq("type", "withdraw"));
+		query.add(Restrictions.ilike("reference", "%transfer to%"));
+		query.setProjection(Projections.sum("amount"));
+		List<?> list = template.findByCriteria(query);
+		return list.get(0) == null ? 0 : (double) list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")

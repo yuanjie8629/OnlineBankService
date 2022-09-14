@@ -31,7 +31,7 @@
 					<spring:bind path="title">
 						<div class="mb-3">
 							<label for="title" class="form-label">Title</label>
-							<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="title"
+							<form:input class="form-control${status.error ? ' is-invalid' : ''}" path="title"
 								placeholder="Enter Account Title" />
 						</div>
 						<div class="invalid-feedback">
@@ -41,7 +41,7 @@
 					<spring:bind path="description">
 						<div class="mb-3">
 							<label for="description" class="form-label">Description</label>
-							<form:textarea class="form-control ${status.error ? 'is-invalid' : ''}" path="description" rows="3"
+							<form:textarea class="form-control${status.error ? ' is-invalid' : ''}" path="description" rows="3"
 								placeholder="Enter Description" />
 							<div class="invalid-feedback">
 								<form:errors path="description" />
@@ -51,33 +51,33 @@
 					<spring:bind path="interestRate">
 						<div class="mb-3">
 							<label for="interestRate" class="form-label">Interest Rate</label>
-							<div class="input-group">
-								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="interestRate"
-									placeholder="Enter Interest Rate" min="0" max="100" step="0.01" />
+							<div class="input-group has-validation">
+								<form:input class="form-control${status.error ? ' is-invalid' : ''}" type="number" path="interestRate"
+									placeholder="Enter Interest Rate" step="0.01" />
 								<span class="input-group-text">%</span>
-							</div>
-							<div class="invalid-feedback">
-								<form:errors path="interestRate" />
+								<div class="invalid-feedback">
+									<form:errors path="interestRate" />
+								</div>
 							</div>
 						</div>
 					</spring:bind>
 					<spring:bind path="minAmount">
 						<div class="mb-3">
 							<label for="minAmount" class="form-label">Min Deposit Amount</label>
-							<div class="input-group">
-								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="minAmount"
-									placeholder="Enter Mininum Deposit Amount" min="0" step="0.01" />
+							<div class="input-group has-validation">
+								<form:input class="form-control${status.error ? ' is-invalid' : ''}" type="number" path="minAmount"
+									placeholder="Enter Mininum Deposit Amount" />
 								<span class="input-group-text">SGD</span>
-							</div>
-							<div class="invalid-feedback">
-								<form:errors path="minAmount" />
+								<div class="invalid-feedback">
+									<form:errors path="minAmount" />
+								</div>
 							</div>
 						</div>
 					</spring:bind>
 					<spring:bind path="thumbnail">
 						<div class="mb-3">
 							<label for="thumbnail" class="form-label">Thumbnail (Image)</label>
-							<form:input class="form-control ${status.error ? 'is-invalid' : ''}" path="thumbnail" type="file"
+							<form:input class="form-control${status.error ? ' is-invalid' : ''}" path="thumbnail" type="file"
 								accept="image/*" />
 							<div class="invalid-feedback">
 								<form:errors path="thumbnail" />

@@ -1,6 +1,8 @@
 package com.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,12 +134,22 @@ public class CustPaymentController {
 			accTrans.setStatus("posted");
 			accTransactionDao.save(accTrans);
 			
+			// Reset credit card's credit limit if the pay for is last month's payment
+			CustCreditCard custCreditCard = creditCardPayment.getCreditCard();
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
+			LocalDate paymentMonth = LocalDate.parse(creditCardPayment.getPaymentMonth() + "01", df);
+			LocalDate lastMonth = LocalDate.now().minusMonths(1);
+			if (lastMonth.getMonthValue() == paymentMonth.getMonthValue() && lastMonth.getYear() == paymentMonth.getYear()) {
+				custCreditCard.setBalance(custCreditCard.getCreditLimit());
+				custCreditCardDao.update(custCreditCard);
+			}
+			
 			// Update payment record
 			creditCardPayment.setStatus("Completed");
 			creditCardPayment.setPaidDate(LocalDateTime.now());
 			creditCardPaymentDao.update(creditCardPayment);
 			
-			ra.addFlashAttribute("msg", "You have successfully pay the credit card with ID " + creditCardPayment.getCreditCard().getId());
+			ra.addFlashAttribute("msg", "You have successfully pay the credit card with card number ending with " + custCreditCard.getCardNum().split(" ")[3]);
 		} else {
 			ra.addFlashAttribute("msg", "Not enough account balance to pay for the credit card...");
 		}

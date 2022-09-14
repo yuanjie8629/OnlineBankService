@@ -8,12 +8,13 @@
 	<div class="card card-shadow my-5">
 		<div class="card-body p-4">
 			<c:url var="url" value="/admin/profile-management/save" />
-			<form:form name="profile" modelAttribute="user" action="${url}" method="post">
+			<form:form name="profile" modelAttribute="user" action="${url}" method="post" class="needs-validation" novalidate="true">
 				<form:input type="hidden" path="id" />
 				<form:input type="hidden" path="password" />
 				<form:input type="hidden" path="status" />
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item px-4 py-3"><spring:bind path="username">
+					<li class="list-group-item px-4 py-3">
+						<spring:bind path="username">
 							<div class="row align-items-center">
 								<div class="col-3 text-secondary">
 									<i class="fa-solid fa-user fa-xl fa-fw"></i> <span class="fw-bold mx-2">Username</span>
@@ -61,9 +62,16 @@
 									<i class="fa-solid fa-phone fa-xl fa-fw"></i> <span class="fw-bold mx-2">Contact Number</span>
 								</div>
 								<div class="col-auto">
-									<form:input path="contactNo" class="form-control ${status.error ? 'is-invalid' : ''}" />
-									<div class="invalid-feedback">
-									<form:errors path="contactNo" />
+									<form:input id="phone" type="tel" path="contactNo" class="form-control ${status.error ? 'is-invalid' : ''}" />
+									<div id="phoneNumInvalid" class="invalid-feedback">
+										<c:choose>
+											<c:when test="${status.error}">
+												<form:errors path="contactNo" />
+											</c:when>
+											<c:otherwise>
+												Please enter valid phone number.
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</div>
@@ -142,3 +150,51 @@
 	</script>
 	<c:remove var="changePassMsg"/>
 </c:if>
+<script>
+	// Script to initialize international phone input
+	let phoneInput = document.getElementById("phone");
+	let phoneInputErr = document.getElementById("phoneNumInvalid");
+	let intlPhoneInput = intlTelInput(phoneInput, {
+		utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+		initialCountry: "auto",
+		geoIpLookup: function(success, failure) {
+		    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		      var countryCode = (resp && resp.country) ? resp.country : "sg";
+		      success(countryCode);
+		    });
+		},
+		});
+	
+	// Phone Number Validation
+	function reset() {
+		phoneInput.classList.remove("is-invalid");
+		phoneInputErr.classList.remove("d-block");
+	};
+	
+	function validatePhoneNum() {
+		reset();
+		if (phoneInput.value.trim() && intlPhoneInput.isValidNumber()) {
+			phoneInput.classList.remove("is-invalid");
+			phoneInput.setCustomValidity("");
+			phoneInputErr.classList.remove("d-block");
+			phoneInput.value = intlPhoneInput.getNumber();
+			return true;
+		}
+		phoneInput.classList.add("is-invalid");
+		phoneInput.setCustomValidity("invalidPhoneNum");
+		phoneInputErr.classList.add("d-block");
+		return false;
+	}
+	
+	phoneInput.addEventListener('blur', validatePhoneNum);
+	phoneInput.addEventListener('change', reset);
+	phoneInput.addEventListener('keyup', reset);
+	
+	let profileForm = document.forms['profile'];
+	function submitForm() {
+		event.preventDefault();
+		event.stopPropagation();
+		profileForm.classList.add('was-validated');
+		validatePhoneNum();
+	}
+</script>

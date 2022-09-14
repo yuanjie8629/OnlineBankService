@@ -30,7 +30,7 @@ public class User {
 	protected String email;
 	
 	@Column(name="contact_no")
-	@Pattern(regexp="^[689]\\d{7}$", message="Please enter valid Singapore phone number.")
+	@NotBlank(message="Please enter contact number.")
 	protected String contactNo;
 	
 	@NotNull(message="Please select gender.")

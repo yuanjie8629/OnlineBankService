@@ -19,11 +19,11 @@
 		<c:when test="${not empty cardList}">
 			<div class="my-5">
 				<div class="row g-4">
-					<div class="col-3">
-						<c:forEach var="card" items="${cardList}">
+					<c:forEach var="card" items="${cardList}">
+						<div class="col-12 col-md-6 col-lg-3">
 							<div class="card card-hover h-100">
 								<div class="card-thumbnail-img p-1">
-									<img id="thumbnailPrev" src="data:image/png;base64,${card.getBase64Thumbnail()}" class="card-img-top img-fluid"
+									<img src="data:image/png;base64,${card.getBase64Thumbnail()}" class="card-img-top img-fluid"
 										style="object-fit: contain;" alt="${card.title}">
 								</div>
 								<div class="card-body pb-0">
@@ -55,16 +55,17 @@
 									</table>
 								</div>
 								<div class="card-footer">
-								<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal" data-bs-id="${card.id}">Apply Now</button>
+									<button class="btn btn-danger stretched-link w-100 mb-2" data-bs-toggle="modal" data-bs-target="#applyModal"
+										data-bs-id="${card.id}">Apply Now</button>
+								</div>
 							</div>
-							</div>
-						</c:forEach>
-					</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="p-3 m-auto" style="max-width: 400px;">
+			<div class="p-3 my-5 mx-auto" style="max-width: 400px;">
 				<img src="<c:url value="/resources/images/Empty.png" />" class="img-fluid">
 			</div>
 		</c:otherwise>
@@ -88,7 +89,7 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
-	<c:remove var="msg"/>
+	<c:remove var="msg" />
 </c:if>
 <c:if test="${not empty refNum}">
 	<script>
@@ -96,5 +97,5 @@
 		let applySuccessModal = new bootstrap.Modal('#applySuccessModal');
 		applySuccessModal.show();
 	</script>
-	<c:remove var="refNum"/>
+	<c:remove var="refNum" />
 </c:if>

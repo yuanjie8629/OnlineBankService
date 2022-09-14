@@ -48,26 +48,26 @@
 					<spring:bind path="interestRate">
 						<div class="mb-3">
 							<label for="interestRate" class="form-label">Interest Rate</label>
-							<div class="input-group">
+							<div class="input-group has-validation">
 								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="interestRate"
-									placeholder="Enter Interest Rate" min="0" max="100" step="0.01" />
+									placeholder="Enter Interest Rate" step="0.01" />
 								<span class="input-group-text">%</span>
-							</div>
-							<div class="invalid-feedback">
+								<div class="invalid-feedback">
 								<form:errors path="interestRate" />
+								</div>
 							</div>
 						</div>
 					</spring:bind>
 					<spring:bind path="minAmount">
 						<div class="mb-3">
 							<label for="minAmount" class="form-label">Min Deposit Amount</label>
-							<div class="input-group">
+							<div class="input-group has-validation">
 								<form:input class="form-control ${status.error ? 'is-invalid' : ''}" type="number" path="minAmount"
-									placeholder="Enter Mininum Deposit Amount" min="0" step="0.01" />
+									placeholder="Enter Mininum Deposit Amount" step="0.01" />
 								<span class="input-group-text">SGD</span>
-							</div>
-							<div class="invalid-feedback">
+								<div class="invalid-feedback">
 								<form:errors path="minAmount" />
+							</div>
 							</div>
 						</div>
 					</spring:bind>
