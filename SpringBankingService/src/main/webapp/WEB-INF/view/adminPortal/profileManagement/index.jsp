@@ -8,7 +8,7 @@
 	<div class="card card-shadow my-5">
 		<div class="card-body p-4">
 			<c:url var="url" value="/admin/profile-management/save" />
-			<form:form name="profile" modelAttribute="user" action="${url}" method="post" class="needs-validation" novalidate="true">
+			<form:form name="profile" modelAttribute="user" action="${url}" method="post" class="needs-validation" novalidate="true" onsubmit="submitForm()">
 				<form:input type="hidden" path="id" />
 				<form:input type="hidden" path="password" />
 				<form:input type="hidden" path="status" />
@@ -157,8 +157,9 @@
 	let intlPhoneInput = intlTelInput(phoneInput, {
 		utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 		initialCountry: "auto",
+		// Check user's ip location
 		geoIpLookup: function(success, failure) {
-		    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		    $.get("https://ipinfo.io?token=e8f08eaac8b60c", function() {}, "jsonp").always(function(resp) {
 		      var countryCode = (resp && resp.country) ? resp.country : "sg";
 		      success(countryCode);
 		    });
@@ -177,7 +178,6 @@
 			phoneInput.classList.remove("is-invalid");
 			phoneInput.setCustomValidity("");
 			phoneInputErr.classList.remove("d-block");
-			phoneInput.value = intlPhoneInput.getNumber();
 			return true;
 		}
 		phoneInput.classList.add("is-invalid");
@@ -192,9 +192,7 @@
 	
 	let profileForm = document.forms['profile'];
 	function submitForm() {
-		event.preventDefault();
-		event.stopPropagation();
-		profileForm.classList.add('was-validated');
-		validatePhoneNum();
+		phoneInput.value = intlPhoneInput.getNumber();
+		return true;
 	}
 </script>

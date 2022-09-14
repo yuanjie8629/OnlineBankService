@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="bs-stepper-content p-0">
-			<form:form name="applyCard" modelAttribute="application" action="" method="post" enctype="multipart/form-data">
+			<form:form name="applyCard" modelAttribute="application" action="" method="post" enctype="multipart/form-data" onsubmit="submitForm()">
 				<div class="card card-shadow">
 					<div class="card-body p-4">
 						<!-- Contents -->
@@ -581,8 +581,9 @@
 	let intlPhoneInput = intlTelInput(phoneInput, {
 		utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 		initialCountry: "auto",
+		// Check user's ip location
 		geoIpLookup: function(success, failure) {
-		    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		    $.get("https://ipinfo.io?token=e8f08eaac8b60c", function() {}, "jsonp").always(function(resp) {
 		      var countryCode = (resp && resp.country) ? resp.country : "sg";
 		      success(countryCode);
 		    });
@@ -601,7 +602,6 @@
 			phoneInput.classList.remove("is-invalid");
 			phoneInput.setCustomValidity("");
 			phoneInputErr.classList.remove("d-block");
-			phoneInput.value = intlPhoneInput.getNumber();
 			return true;
 		}
 		phoneInput.classList.add("is-invalid");
@@ -681,5 +681,11 @@
 	function previousStep() {
 		form.classList.remove('was-validated');
 		stepper.previous();
+	}
+	
+	function submitForm() {
+		// Add country code before the phone number
+		phoneInput.value = intlPhoneInput.getNumber();
+		return true;
 	}
 </script>

@@ -129,18 +129,18 @@ public class CustFundTransferController {
 		if (accFrom.equals(accTo)) {
 			// Transfer to same account validation
 			ra.addFlashAttribute("msg",
-					"Failed to transfer the money. Account transfer from and to cannot be the same.");
+					"Account transfer from and to cannot be the same.");
 		} else if (custAccTo == null) {
 			// Transfer to invalid account validation
-			ra.addFlashAttribute("msg", "Failed to transfer the money. Account to transfer does not exist.");
+			ra.addFlashAttribute("msg", "Account to transfer does not exist.");
 		} else if (custAccFrom.getStatus().toLowerCase().equals("inactive")) {
 			// Inactive account validation
-			ra.addFlashAttribute("msg", "Failed to transfer the money. Your account is inactive.");
+			ra.addFlashAttribute("msg", "Your account is inactive.");
 		} else {
 			Customer cust = (Customer) session.getAttribute("user");
 			// Validate account's daily fund transfer
-			if (accTransactionDao.getTotalTransferAmountByDate(custAccFrom, LocalDate.now()) > 20000) {
-				ra.addFlashAttribute("msg", "Failed to transfer the money. Your account has reached the daily fund transfer limit (SGD 20,000).");
+			if (amount > 20000 || accTransactionDao.getTotalTransferAmountByDate(custAccFrom, LocalDate.now()) > 20000) {
+				ra.addFlashAttribute("msg", "Your account has reached the daily fund transfer limit (SGD 20,000).");
 			} else if (cust.getAccounts().contains(new CustAccount(accTo))) {
 				// Own Account Transfer validation
 				ra.addFlashAttribute("msg", "Please proceed to own account transfer.");
