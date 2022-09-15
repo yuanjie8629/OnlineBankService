@@ -1,15 +1,13 @@
 package com.bean;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import com.annotation.CardNum;
@@ -39,8 +37,7 @@ public class CustCard {
 	
 	@Column(name="create_date")
 	@CreationTimestamp
-	protected LocalDate createDate;
-	
+	protected LocalDateTime createDate;
 	
 	@Column(name="expiration_date")
 	@NotNull(message="Please enter the card expiration date.")
@@ -84,11 +81,11 @@ public class CustCard {
 		this.cvv = cvv;
 	}
 
-	public LocalDate getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDate createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 
@@ -124,7 +121,7 @@ public class CustCard {
 			@NotBlank(message = "Please enter the card number.") @Pattern(regexp = "[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}\\s[\\d]{4}", message = "Card Number should be 16 digits.") String cardNum,
 			@NotBlank(message = "Please enter the card brand.") String brand,
 			@NotBlank(message = "Please enter the card cvv.") @Pattern(regexp = "[\\d]{3}", message = "Card cvv must be 3 digits.") String cvv,
-			LocalDate createDate,
+			LocalDateTime createDate,
 			@NotNull(message = "Please enter the card expiration date.") @Pattern(regexp = "(0[1-9]|10|11|12)/[0-9]{2}", message = "Please enter valid date in 'mm/yy' format.") String expirationDate,
 			@Pattern(regexp = "[\\d]{6}", message = "Card pin must be 6 digits.") String pin, String status) {
 		this.id = id;

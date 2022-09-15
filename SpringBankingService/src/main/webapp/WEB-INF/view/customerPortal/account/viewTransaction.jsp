@@ -78,20 +78,47 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function() {
-		$('#accTransactionTable').DataTable({
-			order: [[0, 'desc']]
-		});
-	});
-	
-	
-	// Change the default value of the transaction month based on search query
+//Change the default value of the transaction month based on search query
 	let queryParams = new URLSearchParams(window.location.search);
 	let transactionMonth = queryParams.get("transactionMonth");
 	let form = document.forms['filterTransaction'];
 	if (transactionMonth != null) {
 		form['transactionMonth'].value = transactionMonth;
 	}
+
+	$(document).ready(function() {
+		$('#accTransactionTable').DataTable({
+			order: [[0, 'desc']],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + form['transactionMonth'].value
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + form['transactionMonth'].value
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + form['transactionMonth'].value
+	            }
+	        ],
+		});
+	});
 	
 	function submitForm() {
 		form.submit();

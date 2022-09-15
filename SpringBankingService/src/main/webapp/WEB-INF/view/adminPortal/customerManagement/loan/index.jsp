@@ -24,19 +24,20 @@
 			<table id="custLoanTable" class="table table-hover">
 				<thead>
 					<tr>
+						<th scope="col">Create Date</th>
 						<th scope="col">Loan ID</th>
 						<th scope="col">Loan Title</th>
 						<th scope="col">Customer Name</th>
-						<th scope="col">Customer Email</th>
 						<th scope="col">Total Amount</th>
 						<th scope="col">Interest Rate</th>
 						<th scope="col">Repayment Period</th>
 						<th scope="col">Status</th>
-						<th scope="col" style="width: 10%;"></th>
+						<th scope="col" style="width: 10%;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="custLoan" items="${custLoanList}">
+						<fmt:parseDate value="${custLoan.createDate}" var="createDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 						<c:choose>
 							<c:when test="${fn:toLowerCase(custLoan.status) == 'active'}">
 								<c:set var="status" value="success" />
@@ -49,10 +50,10 @@
 							</c:otherwise>
 						</c:choose>
 						<tr>
+							<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${createDate}" /></td>
 							<th scope="row"><c:out value="${custLoan.id}" /></th>
 							<td class="text-capitalize"><c:out value="${custLoan.loan.title}" /></td>
 							<td><c:out value="${custLoan.customer.name}" /></td>
-							<td><c:out value="${custLoan.customer.email}" /></td>
 							<td><c:out value="${custLoan.totalAmount}" /></td>
 							<td><fmt:formatNumber value="${custLoan.interestRate}" type="percent" maxFractionDigits="3" /> p.a.</td>
 							<td><c:out value="${custLoan.repaymentPeriod}" /> Year(s)</td>
@@ -104,7 +105,37 @@
 </c:if>
 <script>
 	$(document).ready(function() {
-		$('#custLoanTable').DataTable();
+		$('#custLoanTable').DataTable({
+			order: [[0, 'desc']],
+			columnDefs: [
+				{ orderable: false, targets: -1 }
+			],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                }
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            }
+	        ],
+		});
 	});
 
 	/* Script to make tab active based on url params */

@@ -50,7 +50,7 @@
 						<th scope="col">Birth Date</th>
 						<th scope="col">Occupation</th>
 						<th scope="col">Status</th>
-						<th scope="col" style="width: 10%;"></th>
+						<th scope="col" style="width: 10%;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -129,7 +129,37 @@
 </c:if>
 <script>
 	$(document).ready(function() {
-		$('#custTable').DataTable();
+		$('#custTable').DataTable({
+			order: [[0, 'desc']],
+			columnDefs: [
+				{ orderable: false, targets: -1 }
+			],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                }
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            }
+	        ],
+		});
 	});
 
 	/* Script to make tab active based on url params */

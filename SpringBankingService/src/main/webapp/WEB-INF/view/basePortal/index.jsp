@@ -26,7 +26,7 @@
 							</a>
 						</div>
 					</div>
-					<img src="resources/images/basePortal/carousel/AccountBackground.jpg" alt="carouselBackground3">
+					<img src="resources/images/basePortal/carousel/AccountBackground.jpg" alt="carouselBackground2">
 				</div>
 				<div class="carousel-item">
 					<div class="container">
@@ -37,7 +37,7 @@
 							</a>
 						</div>
 					</div>
-					<img src="resources/images/basePortal/carousel/HomeLoanBackground.jpg" alt="carouselBackground2">
+					<img src="resources/images/basePortal/carousel/HomeLoanBackground.jpg" alt="carouselBackground3">
 				</div>
 				<div class="carousel-item">
 					<div class="container">
@@ -48,12 +48,11 @@
 							</a>
 						</div>
 					</div>
-					<img src="resources/images/basePortal/carousel/CreditCardBackground.jpg" alt="carouselBackground3">
+					<img src="resources/images/basePortal/carousel/CreditCardBackground.jpg" alt="carouselBackground4">
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<!-- Button Navigation -->
 	<div class="row mx-0 my-4">
 		<div class="row g-4 m-auto text-center" style="width: 80%;">
@@ -76,7 +75,8 @@
 							<img src="resources/images/basePortal/ApplyAccount.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
 						<div class="my-2">
-							<a href="account?type=saving" class="stretched-link text-dark text-decoration-none fw-bold">Open a New Account</a>
+							<a href="account?type=saving" class="stretched-link text-dark text-decoration-none fw-bold">Open a New
+								Account</a>
 						</div>
 					</div>
 				</div>
@@ -85,7 +85,8 @@
 				<div class="card card-btn h-100">
 					<div class="card-body">
 						<div class="text-center p-2">
-							<img src="resources/images/basePortal/ApplyCreditCard.png" alt="applyCreditCard" class="img-fluid rounded img-btn" />
+							<img src="resources/images/basePortal/ApplyCreditCard.png" alt="applyCreditCard"
+								class="img-fluid rounded img-btn" />
 						</div>
 						<div class="my-2">
 							<a href="credit-card" class="stretched-link text-dark text-decoration-none fw-bold">Get a Credit Card</a>
@@ -100,7 +101,8 @@
 							<img src="resources/images/basePortal/ApplyLoan.png" alt="applyLoan" class="img-fluid rounded img-btn" />
 						</div>
 						<div class="my-2">
-							<a href="loan?type=personal" class="stretched-link text-dark text-decoration-none fw-bold">Get a Personal Loan</a>
+							<a href="loan?type=personal" class="stretched-link text-dark text-decoration-none fw-bold">Get a Personal
+								Loan</a>
 						</div>
 					</div>
 				</div>
@@ -144,3 +146,12 @@
 		</div>
 	</div>
 </div>
+<script>
+	// Prevent users back to previous portal after logout
+	setTimeout(function preventBack() {
+		window.history.forward();
+	}, 0);
+	window.onunload = function() {
+		null
+	};
+</script>

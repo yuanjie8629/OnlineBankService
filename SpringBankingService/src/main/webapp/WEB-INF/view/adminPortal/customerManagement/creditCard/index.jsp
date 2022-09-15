@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container my-4">
 	<div class="row justify-content-between align-items-center my-auto">
 		<div class="col-auto">
@@ -23,6 +24,7 @@
 			<table id="custCreditCardTable" class="table table-hover">
 				<thead>
 					<tr>
+						<th scope="col">Create Date</th>
 						<th scope="col">Card Number</th>
 						<th scope="col">Card Title</th>
 						<th scope="col">Card Brand</th>
@@ -30,11 +32,12 @@
 						<th scope="col">Customer Email</th>
 						<th scope="col">Expiration Date</th>
 						<th scope="col">Status</th>
-						<th scope="col" style="width: 10%;"></th>
+						<th scope="col" style="width: 10%;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="custCreditCard" items="${custCreditCardList}">
+						<fmt:parseDate value="${custCreditCard.createDate}" var="createDate" type="both" pattern="yyyy-MM-dd'T'HH:mm" />
 						<c:choose>
 							<c:when test="${fn:toLowerCase(custCreditCard.status) == 'active'}">
 								<c:set var="status" value="success" />
@@ -47,6 +50,7 @@
 							</c:otherwise>
 						</c:choose>
 						<tr>
+							<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${createDate}" /></td>
 							<th scope="row"><c:out value="${custCreditCard.id}" /></th>
 							<td class="text-capitalize"><c:out value="${custCreditCard.creditCard.title}" /></td>
 							<td><c:out value="${custCreditCard.brand}" /></td>
@@ -109,7 +113,37 @@
 </c:if>
 <script>
 	$(document).ready(function() {
-		$('#custCreditCardTable').DataTable();
+		$('#custCreditCardTable').DataTable({
+			order: [[0, 'desc']],
+			columnDefs: [
+				{ orderable: false, targets: -1 }
+			],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                }
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	            }
+	        ],
+		});
 	});
 
 	/* Script to make tab active based on url params */

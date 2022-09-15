@@ -1,5 +1,6 @@
 package com.bean;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -59,6 +61,10 @@ public class CustLoan {
 	@Column(name="disbursement_acc_num")
 	@NotBlank(message="Please select the disbursement account number for the loan.")
 	private String disbursementAccNum;
+	
+	@Column(name="create_date")
+	@CreationTimestamp
+	protected LocalDateTime createDate;
 	
 	private String status;
 	
@@ -145,6 +151,14 @@ public class CustLoan {
 		this.disbursementAccNum = disbursementAccNum;
 	}
 
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -189,7 +203,8 @@ public class CustLoan {
 			@NotBlank(message = "Please enter the disbursement bank for the loan.") String disbursementBank,
 			@NotBlank(message = "Please select the disbursement account type for the loan.") String disbursementAccType,
 			@NotBlank(message = "Please select the disbursement account number for the loan.") String disbursementAccNum,
-			String status, List<LoanPayment> payments, Loan loan, Customer customer) {
+			LocalDateTime createDate, String status, List<LoanPayment> payments, Loan loan, Customer customer) {
+		super();
 		this.id = id;
 		this.interestRate = interestRate;
 		this.repaymentPeriod = repaymentPeriod;
@@ -199,6 +214,7 @@ public class CustLoan {
 		this.disbursementBank = disbursementBank;
 		this.disbursementAccType = disbursementAccType;
 		this.disbursementAccNum = disbursementAccNum;
+		this.createDate = createDate;
 		this.status = status;
 		this.payments = payments;
 		this.loan = loan;
@@ -207,11 +223,10 @@ public class CustLoan {
 
 	@Override
 	public String toString() {
-		final int maxLen = 10;
 		return "CustLoan [id=" + id + ", interestRate=" + interestRate + ", repaymentPeriod=" + repaymentPeriod
 				+ ", principalBal=" + principalBal + ", totalAmount=" + totalAmount + ", downpayment=" + downpayment
 				+ ", disbursementBank=" + disbursementBank + ", disbursementAccType=" + disbursementAccType
-				+ ", disbursementAccNum=" + disbursementAccNum + ", status=" + status  + ", loan=" + loan
+				+ ", disbursementAccNum=" + disbursementAccNum + ", createDate=" + createDate + ", status=" + status
 				+ ", customer=" + customer + "]";
 	}
 }

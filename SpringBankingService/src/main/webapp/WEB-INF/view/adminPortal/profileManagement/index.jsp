@@ -192,6 +192,7 @@
 	
 	let profileForm = document.forms['profile'];
 	function submitForm() {
+		validatePhoneNum();
 		phoneInput.value = intlPhoneInput.getNumber();
 		return true;
 	}

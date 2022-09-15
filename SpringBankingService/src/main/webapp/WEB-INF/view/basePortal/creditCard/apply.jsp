@@ -613,14 +613,17 @@
 	phoneInput.addEventListener('blur', validatePhoneNum);
 	phoneInput.addEventListener('change', reset);
 	phoneInput.addEventListener('keyup', reset);
-
+	
+	let form = document.forms['applyCard'];
+	
 	// Script to trigger credit limit input
 	function triggerCreditLimit(checkbox) {
 		let creditLimitInput = document.getElementById("creditLimitInput");
 		if (checkbox.checked) {
 			creditLimitInput.classList.remove("d-none");
 		} else {
-			creditLimitInput.classList.add("d-none")
+			creditLimitInput.classList.add("d-none");
+			form['creditLimit'].value = 0;
 		}
 	}
 	
@@ -630,7 +633,8 @@
 		if (checkbox.checked) {
 			totalInstallmentInput.classList.remove("d-none");
 		} else {
-			totalInstallmentInput.classList.add("d-none")
+			totalInstallmentInput.classList.add("d-none");
+			form['totalInstallment'].value = 0;
 		}
 	}
 	
@@ -652,7 +656,6 @@
 		payslipDocLink.innerHTML = file.name;
 	}
 	
-	let form = document.forms['applyCard'];
 	function nextStep() {
 		// Get all inputs by step (specified with class step-{currentIndex})
 		let inputsByStep = document.querySelectorAll(".step-" + (stepper._currentIndex + 1));

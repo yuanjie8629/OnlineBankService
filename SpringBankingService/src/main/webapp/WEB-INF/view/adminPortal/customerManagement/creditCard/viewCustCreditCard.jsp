@@ -190,7 +190,7 @@
 										<th scope="col">Add. Charges</th>
 										<th scope="col">Total</th>
 										<th scope="col">Status</th>
-										<th scope="col" style="width: 10%"></th>
+										<th scope="col" style="width: 10%">Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -258,26 +258,85 @@
 	<c:remove var="msg" />
 </c:if>
 <script>
+	
+	//Update input value based on search query params
+	let queryParams = new URLSearchParams(window.location.search);
+	let transactionMonth = queryParams.get("transactionMonth");
+	let transactionForm = document.forms['filterTransaction'];
+	if (transactionMonth != null) {
+		transactionForm['transactionMonth'].value = transactionMonth;
+	}
+
 	$(document).ready(function() {
 		$('#creditCardTransactionTable').DataTable({
-			order : [ [ 0, 'desc' ] ]
+			order: [[0, 'desc']],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]} Transactions - " + transactionForm['transactionMonth'].value
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]} Transactions - " + transactionForm['transactionMonth'].value
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]} Transactions - " + transactionForm['transactionMonth'].value
+	            }
+	        ],
 		});
 	});
 
 	$(document).ready(function() {
 		$('#creditCardPaymentTable').DataTable({
-			order : [ [ 0, 'desc' ] ]
+			order: [[0, 'desc']],
+			columnDefs: [
+				{ orderable: false, targets: -1 }
+			],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]}"
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]}"
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Credit Card ${fn:split(custCreditCard.cardNum,' ')[3]}"
+	            }
+	        ],
 		});
 	});
-
-	let transactionForm = document.forms['filterTransaction'];
-
-	// Update input value based on search query params
-	let queryParams = new URLSearchParams(window.location.search);
-	let transactionMonth = queryParams.get("transactionMonth");
-	if (transactionMonth != null) {
-		transactionForm['transactionMonth'].value = transactionMonth;
-	}
 
 	document.addEventListener('DOMContentLoaded', function() {
 		stepper = new Stepper(document.querySelector('.bs-stepper'), {

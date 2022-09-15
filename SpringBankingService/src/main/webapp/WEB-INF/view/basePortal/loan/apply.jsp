@@ -709,7 +709,8 @@
 	phoneInput.addEventListener('blur', validatePhoneNum);
 	phoneInput.addEventListener('change', reset);
 	phoneInput.addEventListener('keyup', reset);
-
+	
+	let form = document.forms['applyLoan'];
 	// Script to trigger total installment input
 	function triggerTotalInstallment(checkbox) {
 		let totalInstallmentInput = document
@@ -717,7 +718,8 @@
 		if (checkbox.checked) {
 			totalInstallmentInput.classList.remove("d-none");
 		} else {
-			totalInstallmentInput.classList.add("d-none")
+			totalInstallmentInput.classList.add("d-none");
+			form['totalInstallment'].value = 0;
 		}
 	}
 
@@ -748,7 +750,6 @@
 		supportDocLink.innerHTML = file.name;
 	}
 	
-	let form = document.forms['applyLoan'];
 	function nextStep() {
 		// Get all inputs by step (specified with class step-{currentIndex})
 		let inputsByStep = document.querySelectorAll(".step-" + (stepper._currentIndex + 1));

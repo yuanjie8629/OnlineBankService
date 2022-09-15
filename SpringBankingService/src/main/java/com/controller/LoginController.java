@@ -144,7 +144,7 @@ public class LoginController {
 			Customer cust = custDao.getCustomerByIdentityNum(identityNumber);
 			if (cust != null) {
 				cust.setPassword(password);
-				custDao.save(cust);
+				custDao.update(cust);
 				ra.addFlashAttribute("msg", "You have successfully changed your password.");
 				return "redirect:/login";
 			}

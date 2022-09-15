@@ -94,8 +94,8 @@
 												<form:errors path="additionalCharge" />
 											</c:when>
 											<c:otherwise>
-													Please select payment due date.
-												</c:otherwise>
+													Please enter valid additional charges.
+											</c:otherwise>
 										</c:choose>
 									</div>
 								</div>

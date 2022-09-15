@@ -21,6 +21,7 @@ public class Feedback {
 	private String name;
 	
 	@Column(name="contact_no")
+	@NotBlank(message="Please enter valid phone number.")
 	private String contactNo;
 	
 	@NotBlank(message="Please select the type of feedback.")

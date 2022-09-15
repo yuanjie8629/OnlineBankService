@@ -3,11 +3,10 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<fmt:formatNumber var="principal" value="${loanPayment.principal}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="interest" value="${loanPayment.interestCharged}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="amount" value="${loanPayment.amount}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="endBal" value="${loanPayment.balance}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="formattedBal" value="${loanPayment.balance}"  maxFractionDigits="2" pattern="#"/>
+<fmt:formatNumber var="principal" value="${loanPayment.principal}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="interest" value="${loanPayment.interestCharged}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="amount" value="${loanPayment.amount}" minFractionDigits="2" maxFractionDigits="2" pattern="#"/>
+<fmt:formatNumber var="bal" value="${loanPayment.balance}"  minFractionDigits="2" maxFractionDigits="2" pattern="#" />
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto">
@@ -54,8 +53,6 @@
 							<c:url var="url" value="/admin/customer-management/loan/payment/save" />
 							<form:form name="addPayment" modelAttribute="loanPayment" action="${url}" method="post" class="needs-validation" novalidate="true">
 								<input type="hidden" name="loanId" value="${loanPayment.loan.id}"/>
-								<c:out value="${formattedBal}" />
-								<form:input type="hidden" path="balance" value="${formattedBal}" />
 								<div class="mb-3">
 									<label for="amount" class="form-label">Loan ID</label>
 									<input class="form-control" value="${loanPayment.loan.id}" readonly />
@@ -88,7 +85,7 @@
 								<div class="mb-3">
 									<label for="amount" class="form-label">Ending Balance</label>
 									<div class="input-group">
-										<input class="form-control" value="${endBal}" readonly/>
+										<form:input class="form-control" path="balance" value="${bal}"  type="number" min="0" step="0.01" readonly="true" />
 										<span class="input-group-text">SGD</span>
 									</div>
 								</div>
@@ -137,7 +134,7 @@
 													<form:errors path="additionalCharge" />
 												</c:when>
 												<c:otherwise>
-													Please select payment due date.
+													Please enter valid additional charges.
 												</c:otherwise>
 											</c:choose>
 										</div>

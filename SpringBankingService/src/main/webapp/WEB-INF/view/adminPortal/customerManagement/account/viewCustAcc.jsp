@@ -196,21 +196,47 @@
 <jsp:include page="./deactivateCustAcc.jsp" />
 <jsp:include page="./activateCustAcc.jsp" />
 <script>
-	$(document).ready(function() {
-		$('#custAccTransactionTable').DataTable({
-			order : [ [ 0, 'desc' ] ]
-		});
-	});
-
-
-	let transactionForm = document.forms['filterTransaction'];
-
-	// Update input value based on search query params
+	//Update input value based on search query params
 	let queryParams = new URLSearchParams(window.location.search);
 	let transactionMonth = queryParams.get("transactionMonth");
+	let transactionForm = document.forms['filterTransaction'];
 	if (transactionMonth != null) {
 		transactionForm['transactionMonth'].value = transactionMonth;
 	}
+
+	$(document).ready(function() {
+		$('#custAccTransactionTable').DataTable({
+			order: [[0, 'desc']],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + transactionForm['transactionMonth'].value
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + transactionForm['transactionMonth'].value
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Account ${custAcc.accNum} Transactions - " + transactionForm['transactionMonth'].value
+	            }
+	        ],
+		});
+	});
 
 	document.addEventListener('DOMContentLoaded', function() {
 		stepper = new Stepper(document.querySelector('.bs-stepper'), {

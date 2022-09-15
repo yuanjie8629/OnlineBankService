@@ -24,7 +24,7 @@
 						</div>
 						<div>
 							<input class="d-none" type="radio" name="type" value="">
-							<div class="invalid-feedback" style="margin-left: 1em">Please select application type.</div>
+							<div class="invalid-feedback">Please select application type.</div>
 						</div>
 					</div>
 				</fieldset>

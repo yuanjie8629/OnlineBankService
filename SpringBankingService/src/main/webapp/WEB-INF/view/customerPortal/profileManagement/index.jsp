@@ -179,6 +179,7 @@
 	phoneInput.addEventListener('keyup', reset);
 	
 	function submitForm() {
+		validatePhoneNum();
 		// Add country code before the phone number
 		phoneInput.value = intlPhoneInput.getNumber();
 		return true;

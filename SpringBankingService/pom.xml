@@ -42,7 +42,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
-        </dependency>
+    </dependency>
 	
 	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->  
 	<dependency>  

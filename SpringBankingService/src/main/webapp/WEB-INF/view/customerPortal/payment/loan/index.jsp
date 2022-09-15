@@ -64,7 +64,7 @@
 							<th scope="col">Total Amount</th>
 							<th scope="col">Due Date</th>
 							<th scope="col">Status</th>
-							<th scope="col" style="width: 10%"></th>
+							<th scope="col" style="width: 10%">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -109,6 +109,7 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+<jsp:include page="./noAccModal.jsp" />
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
 	<div id="msgToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
 		<div class="d-flex align-items-center p-2">
@@ -137,7 +138,38 @@
 <script>
 	$(document).ready(function() {
 		$('#loanPaymentTable').DataTable({
-			order : [ [ 0, 'desc' ] ]
+			order: [[0, 'desc']],
+			columnDefs: [
+				{ orderable: false, targets: -1 }
+			],
+			dom: '<"container-fluid"<"row mb-3"<"col-auto"B>><"row"<"col-auto"l><"col"f>>>rtip',
+			lengthMenu: [10,25,50,100],
+			buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                text: 'Export Excel',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Loan ${selectedLoan.id}"
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                text: 'Export PDF',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Loan ${selectedLoan.id}"
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                exportOptions: {
+	                	columns: [ ':not(:last-child)' ]
+	                },
+	                title:"Payments for Loan ${selectedLoan.id}"
+	            }
+	        ],
 		});
 	});
 
