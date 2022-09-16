@@ -29,15 +29,16 @@ import com.dao.AccountDao;
 public class AdminAccMgmtController {
 	@Autowired
 	AccountDao accDao;
-	
+
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws ServletException {
 		// Convert multipart object to byte[]
 		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
-	
+
 	@RequestMapping(value = "")
-	public String accountManagement(@RequestParam(required = false) String type, @RequestParam(required = false, defaultValue = "false") boolean showDeleted, Model m) {
+	public String accountManagement(@RequestParam(required = false) String type,
+			@RequestParam(required = false, defaultValue = "false") boolean showDeleted, Model m) {
 		List<Account> list = accDao.getAccounts(type, showDeleted);
 		m.addAttribute("accList", list);
 		return "admin-acc-mgmt";
@@ -68,17 +69,19 @@ public class AdminAccMgmtController {
 		m.addAttribute("account", acc);
 		return "admin-acc-mgmt-update";
 	}
-	
-	@RequestMapping(value = "/update/save", method=RequestMethod.POST)
-	public String updateAccount(@Valid @ModelAttribute("account") Account account, BindingResult br, RedirectAttributes ra) {
-		//	Bypass the thumbnail image validation if no new thumbnail image being uploaded
+
+	@RequestMapping(value = "/update/save", method = RequestMethod.POST)
+	public String updateAccount(@Valid @ModelAttribute("account") Account account, BindingResult br,
+			RedirectAttributes ra) {
+		// Bypass the thumbnail image validation if no new thumbnail image being
+		// uploaded
 		boolean noUploadThumbnail = false;
 		if (account.getThumbnail() == null || account.getThumbnail().length <= 0) {
 			Account sameAccObj = accDao.getAccountById(account.getId());
 			account.setThumbnail(sameAccObj.getThumbnail());
 			noUploadThumbnail = true;
 		}
-		
+
 		if (!br.hasErrors() || (br.hasFieldErrors("thumbnail") && noUploadThumbnail)) {
 			account.setInterestRate(account.getInterestRate() / 100);
 			accDao.update(account);
@@ -88,14 +91,14 @@ public class AdminAccMgmtController {
 		return "admin-acc-mgmt-update";
 	}
 
-	@RequestMapping(value="/delete/{id}")
+	@RequestMapping(value = "/delete/{id}")
 	public String deleteAccount(@PathVariable int id, RedirectAttributes ra) {
 		accDao.delete(id);
 		ra.addFlashAttribute("msg", "You have successfully deleted the account with ID " + id + ".");
 		return "redirect:/admin/account-management/";
 	}
-	
-	@RequestMapping(value="/restore/{id}")
+
+	@RequestMapping(value = "/restore/{id}")
 	public String restoreAccount(@PathVariable int id, RedirectAttributes ra) {
 		accDao.restore(id);
 		ra.addFlashAttribute("msg", "You have successfully restored the account with ID " + id + ".");

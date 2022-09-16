@@ -31,9 +31,16 @@
 									<i class="fa-solid fa-signature fa-xl fa-fw"></i> <span class="fw-bold mx-2">Name</span>
 								</div>
 								<div class="col-auto">
-									<form:input path="name" class="form-control ${status.error ? 'is-invalid' : ''}" />
+									<form:input path="name" class="form-control ${status.error ? 'is-invalid' : ''}"  required="required"/>
 									<div class="invalid-feedback">
-										<form:errors path="name" />
+										<c:choose>
+											<c:when test="${status.error}">
+												<form:errors path="name" />
+											</c:when>
+											<c:otherwise>
+												Please enter name.
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</div>
@@ -46,9 +53,17 @@
 									<i class="fa-solid fa-envelope fa-xl fa-fw"></i> <span class="fw-bold mx-2">Email</span>
 								</div>
 								<div class="col-auto">
-									<form:input type="email" path="email" class="form-control ${status.error ? 'is-invalid' : ''}" />
+									<form:input type="email" path="email" class="form-control ${status.error ? 'is-invalid' : ''}" required="required" />
 									<div class="invalid-feedback">
-										<form:errors path="email" />
+										<c:choose>
+											<c:when test="${status.error}">
+												<form:errors path="email" />
+											</c:when>
+											<c:otherwise>
+												Please enter email.
+											</c:otherwise>
+										</c:choose>
+										
 									</div>
 								</div>
 							</div>
@@ -83,12 +98,19 @@
 									<i class="fa-solid fa-venus-mars fa-xl fa-fw"></i> <span class="fw-bold mx-2">Gender</span>
 								</div>
 								<div class="col-auto">
-									<form:select path="gender" class="form-select ${status.error ? 'is-invalid' : ''}">
+									<form:select path="gender" class="form-select ${status.error ? 'is-invalid' : ''}" required="required">
 										<form:option value="m">Male</form:option>
 										<form:option value="f">Female</form:option>
 									</form:select>
 									<div class="invalid-feedback">
-										<form:errors path="gender" />
+										<c:choose>
+											<c:when test="${status.error}">
+												<form:errors path="gender" />
+											</c:when>
+											<c:otherwise>
+												Please select gender.
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</div>

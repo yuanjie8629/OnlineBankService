@@ -6,7 +6,7 @@
 			<h3>Loan Summary</h3>
 		</div>
 		<div class="col-auto">
-			<a href="<c:url value="/customer/loan/payment/${loanAcc.id}" />" role="button" class="btn btn-danger">View Payment History</a>
+			<a href="<c:url value="/customer/payment/loan//${loanAcc.id}" />" role="button" class="btn btn-danger">View Payment History</a>
 		</div>
 	</div>
 	<div>

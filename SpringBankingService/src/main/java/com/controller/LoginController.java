@@ -128,6 +128,10 @@ public class LoginController {
 			@RequestParam String email, RedirectAttributes ra) {
 		Customer cust = custDao.getCustomerForRegister(identityNumber, name, email);
 		if (cust != null) {
+			if (cust.getUsername() == null || cust.getUsername().isEmpty()) {
+				ra.addFlashAttribute("msg", "Please register your account first.");
+				return "redirect:/login";
+			}
 			ra.addFlashAttribute("identityNumber", identityNumber);
 			ra.addFlashAttribute("verification", true);
 		} else {
