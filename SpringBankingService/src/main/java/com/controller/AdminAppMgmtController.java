@@ -36,6 +36,7 @@ import com.dao.CustCreditCardDao;
 import com.dao.CustLoanDao;
 import com.dao.CustomerDao;
 import com.dao.LoanAppDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/admin/application-management")
@@ -60,6 +61,9 @@ public class AdminAppMgmtController {
 	
 	@Autowired
 	CustLoanDao custLoanDao;
+	
+	@Autowired
+	MailService mailService;
 
 	@RequestMapping(value = "")
 	public String applicationManagement() {
@@ -118,6 +122,16 @@ public class AdminAppMgmtController {
 		accApp.setStatus("Approved");
 		accApp.setComments(null);
 		accAppDao.update(accApp);
+		
+		// Send Email
+		String subject = "OBS Account Application";
+		String msg = "Dear " + accApp.getName() + ",\n"
+				+"Congratulations, Your account application for " + accApp.getAccount().getTitle() + " (Ref No. " + accApp.getId() + ") has been approved!\n"
+				+ "You may register for OBS Connect to enjoy our online banking services if you are first time using our services.\n"
+				+ "\nThank you for choosing OBS Bank. We wish you a great day!"
+				+ "\n\nCheers,\nOBS Team";
+		mailService.sendMail(accApp.getEmail(), subject, msg);
+		
 		ra.addFlashAttribute("msg", "You have successfully approved the account application.");
 		return "redirect:/admin/application-management/account";
 	}
@@ -129,6 +143,18 @@ public class AdminAppMgmtController {
 		accApp.setStatus("Rejected");
 		accApp.setComments(comments);
 		accAppDao.update(accApp);
+		
+		// Send Email
+		String subject = "OBS Account Application";
+		String msg = "Dear " + accApp.getName() + ",\n"
+				+"Sorry, Your account application for " + accApp.getAccount().getTitle() + " (Ref No. " + accApp.getId() + ") has been rejected.\n";
+		if (!comments.isEmpty()) {
+			msg += "Comments: " + comments + "\n";
+		}
+		msg += "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(accApp.getEmail(), subject, msg);
+
 		ra.addFlashAttribute("msg", "You have successfully rejected the account application.");
 		return "redirect:/admin/application-management/account";
 	}
@@ -140,6 +166,16 @@ public class AdminAppMgmtController {
 		accApp.setStatus("Further Action");
 		accApp.setComments(comments);
 		accAppDao.update(accApp);
+		
+		// Send Email
+		String subject = "OBS Account Application";
+		String msg = "Dear " + accApp.getName() + ",\n"
+				+ "Your account application for " + accApp.getAccount().getTitle() + " (Ref No. " + accApp.getId() + ") requires further action.\n"
+				+ "Comments: " + comments + "\n\n"
+				+ "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(accApp.getEmail(), subject, msg);
+		
 		ra.addFlashAttribute("msg", "You have successfully update the status on the account application.");
 		return "redirect:/admin/application-management/account";
 	}
@@ -213,6 +249,16 @@ public class AdminAppMgmtController {
 			creditCardApp.setComments(null);
 			creditCardApp.setStatus("Approved");
 			creditCardAppDao.update(creditCardApp);
+			
+			// Send Email
+			String subject = "OBS Credit Card Application";
+			String msg = "Dear " + creditCardApp.getName() + ",\n"
+					+"Congratulations, Your credit card application for " + creditCardApp.getCreditCard().getTitle() + " (Ref No. " + creditCardApp.getId() + ") has been approved!\n"
+					+ "You may register for OBS Connect to enjoy our online banking services if you are first time using our services.\n"
+					+ "\nThank you for choosing OBS Bank. We wish you a great day!"
+					+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(creditCardApp.getEmail(), subject, msg);
+			
 			ra.addFlashAttribute("msg", "You have successfully approved the credit card application.");
 			return "redirect:/admin/application-management/card/";
 		} else {
@@ -230,6 +276,18 @@ public class AdminAppMgmtController {
 		creditCardApp.setStatus("Rejected");
 		creditCardApp.setComments(comments);
 		creditCardAppDao.update(creditCardApp);
+		
+		// Send Email
+		String subject = "OBS Credit Card Application";
+		String msg = "Dear " + creditCardApp.getName() + ",\n"
+				+"Sorry, Your credit card application for " + creditCardApp.getCreditCard().getTitle() + " (Ref No. " + creditCardApp.getId() + ") has been rejected.\n";
+		if (!comments.isEmpty()) {
+			msg += "Comments: " + comments + "\n\n";
+		}
+		msg += "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(creditCardApp.getEmail(), subject, msg);
+				
 		ra.addFlashAttribute("msg", "You have successfully rejected the credit card application.");
 		return "redirect:/admin/application-management/card";
 	}
@@ -241,6 +299,16 @@ public class AdminAppMgmtController {
 		creditCardApp.setStatus("Further Action");
 		creditCardApp.setComments(comments);
 		creditCardAppDao.update(creditCardApp);
+		
+		// Send Email
+		String subject = "OBS Credit Card Application";
+		String msg = "Dear " + creditCardApp.getName() + ",\n"
+				+ "Your credit card application for " + creditCardApp.getCreditCard().getTitle() + " (Ref No. " + creditCardApp.getId() + ") requires further action.\n"
+				+ "Comments: " + comments + "\n\n"
+				+ "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(creditCardApp.getEmail(), subject, msg);
+				
 		ra.addFlashAttribute("msg", "You have successfully update the status on the credit card application.");
 		return "redirect:/admin/application-management/card";
 	}
@@ -331,6 +399,16 @@ public class AdminAppMgmtController {
 			loanApp.setComments(null);
 			loanApp.setStatus("Approved");
 			loanAppDao.update(loanApp);
+			
+			// Send Email
+			String subject = "OBS Loan Application";
+			String msg = "Dear " + loanApp.getName() + ",\n"
+					+"Congratulations, Your loan application for " + loanApp.getLoan().getTitle() + " (Ref No. " + loanApp.getId() + ") has been approved!\n"
+					+ "You may register for OBS Connect to enjoy our online banking services if you are first time using our services.\n"
+					+ "\nThank you for choosing OBS Bank. We wish you a great day!"
+					+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(loanApp.getEmail(), subject, msg);
+			
 			ra.addFlashAttribute("msg", "You have successfully approved the loan application.");
 			return "redirect:/admin/application-management/loan/";
 		} else {
@@ -348,6 +426,18 @@ public class AdminAppMgmtController {
 		loanApp.setStatus("Rejected");
 		loanApp.setComments(comments);
 		loanAppDao.update(loanApp);
+		
+		// Send Email
+		String subject = "OBS Loan Application";
+		String msg = "Dear " + loanApp.getName() + ",\n"
+				+"Sorry, Your loan application for " + loanApp.getLoan().getTitle() + " (Ref No. " + loanApp.getId() + ") has been rejected.\n";
+		if (!comments.isEmpty()) {
+			msg += "Comments: " + comments + "\n\n";
+		}
+		msg += "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(loanApp.getEmail(), subject, msg);
+		
 		ra.addFlashAttribute("msg", "You have successfully rejected the loan application.");
 		return "redirect:/admin/application-management/loan";
 	}
@@ -359,6 +449,16 @@ public class AdminAppMgmtController {
 		loanApp.setStatus("Further Action");
 		loanApp.setComments(comments);
 		loanAppDao.update(loanApp);
+		
+		// Send Email
+		String subject = "OBS Loan Application";
+		String msg = "Dear " + loanApp.getName() + ",\n"
+				+ "Your loan application for " + loanApp.getLoan().getTitle() + " (Ref No. " + loanApp.getId() + ") requires further action.\n"
+				+ "Comments: " + comments + "\n\n"
+				+ "Please feel free to contact us if you requires further clarification."
+				+ "\n\nBest Regards,\nOBS Team";
+		mailService.sendMail(loanApp.getEmail(), subject, msg);
+		
 		ra.addFlashAttribute("msg", "You have successfully update the status on the loan application.");
 		return "redirect:/admin/application-management/loan";
 	}

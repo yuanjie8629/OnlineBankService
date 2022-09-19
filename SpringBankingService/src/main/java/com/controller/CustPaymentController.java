@@ -32,6 +32,7 @@ import com.dao.CustAccDao;
 import com.dao.CustCreditCardDao;
 import com.dao.CustLoanDao;
 import com.dao.LoanPaymentDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/customer/payment")
@@ -54,6 +55,9 @@ public class CustPaymentController {
 	
 	@Autowired
 	AccountTransactionDao accTransactionDao;
+	
+	@Autowired
+	MailService mailService;
 	
 	@Autowired
 	HttpSession session;
@@ -149,6 +153,20 @@ public class CustPaymentController {
 			creditCardPayment.setPaidDate(LocalDateTime.now());
 			creditCardPaymentDao.update(creditCardPayment);
 			
+			// Send Email
+			DateTimeFormatter emailDf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String subject = "OBS Credit Card Payment";
+			String msg = "Dear " + custCreditCard.getCustomer().getName() + ",\n"
+							+ "You have successfully paid your " + custCreditCard.getCreditCard().getTitle() + " (Card No. " + encryptedCardNum + ").\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + creditCardPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + creditCardPayment.getDescription() + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Paid Date: " + creditCardPayment.getPaidDate().format(emailDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custCreditCard.getCustomer().getEmail(), subject, msg);
+			
 			ra.addFlashAttribute("msg", "You have successfully pay the credit card with card number ending with " + custCreditCard.getCardNum().split(" ")[3]);
 		} else {
 			ra.addFlashAttribute("msg", "Not enough account balance to pay for the credit card...");
@@ -200,7 +218,8 @@ public class CustPaymentController {
 	public String payForLoan(@RequestParam int id, @RequestParam String accNum, Model m, RedirectAttributes ra) {
 		CustAccount custAcc = custAccDao.getCustAccountById(accNum);
 		LoanPayment loanPayment = loanPaymentDao.getPaymentById(id);
-		if (custAcc.getAvailBal() > loanPayment.getAmount()) {			
+		double totalAmount = loanPayment.getAmount() + loanPayment.getAdditionalCharge();
+		if (custAcc.getAvailBal() > totalAmount) {			
 			// Update new account balance
 			custAcc.setAvailBal(custAcc.getAvailBal() - loanPayment.getAmount());
 			custAcc.setCurBal(custAcc.getCurBal() - loanPayment.getAmount());
@@ -214,7 +233,7 @@ public class CustPaymentController {
 			AccountTransaction accTrans = new AccountTransaction();
 			accTrans.setType("deposit");
 			accTrans.setAccount(custAcc);
-			accTrans.setAmount(loanPayment.getAmount());
+			accTrans.setAmount(totalAmount);
 			accTrans.setDescription(loanPayment.getDescription());
 			accTrans.setReference("Loan Payment to " + encryptedLoanID);
 			accTrans.setBalance(custAcc.getAvailBal());
@@ -225,6 +244,20 @@ public class CustPaymentController {
 			loanPayment.setStatus("Completed");
 			loanPayment.setPaidDate(LocalDateTime.now());
 			loanPaymentDao.update(loanPayment);
+			
+			// Send Email
+			DateTimeFormatter emailDf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String subject = "OBS Loan Payment";
+			String msg = "Dear " + custLoan.getCustomer().getName() + ",\n"
+							+ "You have successfully paid your " + custLoan.getLoan().getTitle() + " (ID " + custLoan.getId() + ").\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + loanPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + loanPayment.getDescription() + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Paid Date: " + loanPayment.getPaidDate().format(emailDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custLoan.getCustomer().getEmail(), subject, msg);
 			
 			ra.addFlashAttribute("msg", "You have successfully pay the loan with ID " + custLoan.getId());
 		} else {

@@ -34,6 +34,7 @@ import com.dao.CreditCardDao;
 import com.dao.CustomerDao;
 import com.dao.LoanAppDao;
 import com.dao.LoanDao;
+import com.service.MailService;
 import com.utils.SelectionUtils;
 
 @Controller
@@ -60,6 +61,9 @@ public class ProductApplicationController {
 
 	@Autowired
 	CustomerDao custDao;
+	
+	@Autowired
+	MailService mailService;
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws ServletException {
@@ -111,6 +115,14 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("appType", "Account");
 			ra.addFlashAttribute("title", acc.getTitle());
 			ra.addFlashAttribute("refNum", refNum);
+			// Send Email
+			String subject = "OBS Account Application";
+			String msg = "You have successfully submitted your account application " + acc.getTitle() + ".\n\n"
+					+ "Please refer to the following reference number for your account application:\n"
+					+ refNum
+					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+					+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(application.getEmail(), subject, msg);
 			return "redirect:/account";
 		} else {
 			m.addAttribute("account", acc);
@@ -169,6 +181,14 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("appType", "Credit Card");
 			ra.addFlashAttribute("title", creditCard.getTitle());
 			ra.addFlashAttribute("refNum", refNum);
+			// Send Email
+			String subject = "OBS Credit Card Application";
+			String msg = "You have successfully submitted your credit card application for " + creditCard.getTitle() + ".\n\n"
+					+ "Please refer to the following reference number for your credit card application:\n"
+					+ refNum
+					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+					+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(application.getEmail(), subject, msg);
 			return "redirect:/credit-card";
 		} else {
 			m.addAttribute("card", creditCard);
@@ -227,6 +247,14 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("appType", "Loan");
 			ra.addFlashAttribute("title", loan.getTitle());
 			ra.addFlashAttribute("refNum", refNum);
+			// Send Email
+			String subject = "OBS Loan Application";
+			String msg = "You have successfully submitted your loan application for " + loan.getTitle() + ".\n\n"
+					+ "Please refer to the following reference number for your loan application:\n"
+					+ refNum
+					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+					+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(application.getEmail(), subject, msg);
 			return "redirect:/loan";
 		} else {
 			m.addAttribute("loan", loan);

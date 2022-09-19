@@ -2,6 +2,7 @@ package com.controller;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.bean.AccountTransaction;
 import com.bean.CustAccount;
 import com.dao.AccountTransactionDao;
 import com.dao.CustAccDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/admin/customer-management/account")
@@ -30,6 +32,9 @@ public class AdminCustAccMgmtController {
 	
 	@Autowired
 	AccountTransactionDao accTransactionDao;
+	
+	@Autowired
+	MailService mailService;
 	
 	@RequestMapping(value="")
 	public String custAccManagement(@RequestParam(required=false) String status, Model m) {
@@ -88,6 +93,21 @@ public class AdminCustAccMgmtController {
 			// Add transaction to the custAcc's transaction list
 			custAcc.getTransactions().add(accTransaction);
 			custAccDao.save(custAcc);
+			
+			// Send Email for Deposit
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String subject = "OBS Fund Deposit";
+			String msg = "Dear " + custAcc.getCustomer().getName() + ",\n"
+							+ "You have successfully deposited your funds.\n"
+							+ "Below is the transaction details:\n\n"
+							+ "Transaction ID: " + accTransaction.getId() + "\n"
+							+ "Transaction Date: " + accTransaction.getDate().format(df) + "\n"
+							+ "Transaction Reference: " + accTransaction.getReference() + "\n"
+							+ "Transaction Description: " + accTransaction.getDescription() == null || accTransaction.getDescription().isEmpty() ? "NIL" : accTransaction.getDescription() + "\n"
+							+ "Amount: " + accTransaction.getAmount() + " SGD"
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custAcc.getCustomer().getEmail(), subject, msg);
 		
 			ra.addFlashAttribute("msg", "You have successfully deposited money to the account " + accNum);
 		} else {
@@ -120,6 +140,21 @@ public class AdminCustAccMgmtController {
 			// Add transaction to the custAcc's transaction list
 			custAcc.getTransactions().add(accTransaction);
 			custAccDao.save(custAcc);
+			
+			// Send Email for Withdrawal
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String subject = "OBS Fund Withdrawal";
+			String msg = "Dear " + custAcc.getCustomer().getName() + ",\n"
+							+ "You have successfully withdrawn your funds.\n"
+							+ "Below is the transaction details:\n\n"
+							+ "Transaction ID: " + accTransaction.getId() + "\n"
+							+ "Transaction Date: " + accTransaction.getDate().format(df) + "\n"
+							+ "Transaction Reference: " + accTransaction.getReference() + "\n"
+							+ "Transaction Description: " + accTransaction.getDescription() == null || accTransaction.getDescription().isEmpty() ? "NIL" : accTransaction.getDescription() + "\n"
+							+ "Amount: " + accTransaction.getAmount() + " SGD"
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custAcc.getCustomer().getEmail(), subject, msg);
 		
 			ra.addFlashAttribute("msg", "You have successfully withdrawn money to the account " + accNum);
 		} else {

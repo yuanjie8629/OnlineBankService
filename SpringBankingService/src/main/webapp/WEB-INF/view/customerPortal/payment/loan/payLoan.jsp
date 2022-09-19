@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<fmt:formatNumber var="amount" value="${loanPayment.amount}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="principal" value="${loanPayment.principal}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="interest" value="${loanPayment.interestCharged}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="additionalCharge" value="${loanPayment.additionalCharge}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="total" value="${loanPayment.amount + loanPayment.additionalCharge}" type="currency" currencySymbol="" />
+<fmt:formatNumber var="amount" value="${loanPayment.amount}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="principal" value="${loanPayment.principal}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="interest" value="${loanPayment.interestCharged}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="additionalCharge" value="${loanPayment.additionalCharge}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="total" value="${loanPayment.amount + loanPayment.additionalCharge}"  minFractionDigits="2" maxFractionDigits="2" pattern="#" />
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto mb-3">
@@ -111,9 +111,9 @@
 									</div>
 								</div>
 								<div class="row mb-3">
-									<label for="amount" class="col-5 col-lg-4 col-form-label">Amount (SGD)</label>
+									<label for="amount" class="col-5 col-lg-4 col-form-label">Principal Amount (SGD)</label>
 									<div class="col-12 col-lg-8 col-form-label">
-										<c:out value="${amount}" />
+										<c:out value="${principal}" />
 									</div>
 								</div>
 								<div class="row mb-3">

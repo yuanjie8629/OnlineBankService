@@ -2,6 +2,7 @@ package com.controller;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.dao.AccountTransactionDao;
 import com.dao.CreditCardTransactionDao;
 import com.dao.CustAccDao;
 import com.dao.CustCreditCardDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/customer/credit-card")
@@ -42,9 +44,13 @@ public class CustCreditCardController {
 
 	@Autowired
 	CustAccDao custAccDao;
+	
+	@Autowired
+	MailService mailService;
 
 	@Autowired
 	HttpSession session;
+	
 
 	@RequestMapping(value = "")
 	public String creditCard() {
@@ -216,7 +222,21 @@ public class CustCreditCardController {
 				accToTransaction.setBalance(custAccTo.getAvailBal());
 				accToTransaction.setStatus("posted");
 				accTransactionDao.save(accToTransaction);
-
+				
+				// Send Email
+				DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				String subject = "OBS Fund Transfer";
+				String msg = "Dear " + custAccTo.getCustomer().getName() + ",\n"
+								+ "You have successfully transferred your funds from your credit card (Card No. " + encryptedCardNum + ") to account (No. " + encryptedAccTo + ").\n"
+								+ "Below is the transaction details:\n\n"
+								+ "Transaction Date: " + creditCardTransaction.getDate().format(df) + "\n"
+								+ "Transaction Reference: " + creditCardTransaction.getReference() + "\n"
+								+ "Transaction Description: " + (creditCardTransaction.getDescription() == null || creditCardTransaction.getDescription().isEmpty() ? "NIL" : creditCardTransaction.getDescription()) + "\n"
+								+ "Amount: " + creditCardTransaction.getAmount() + " SGD"
+								+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+								+ "\n\nCheers,\nOBS Team";
+				mailService.sendMail(custCreditCard.getCustomer().getEmail(), subject, msg);
+				
 				ra.addFlashAttribute("success", true);
 				ra.addFlashAttribute("transaction", creditCardTransaction);
 				ra.addFlashAttribute("creditCardFrom", encryptedCardNum);

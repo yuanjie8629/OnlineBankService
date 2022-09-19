@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Calendar;
 import java.util.Collections;
@@ -30,6 +31,7 @@ import com.bean.CustCreditCard;
 import com.dao.CreditCardPaymentDao;
 import com.dao.CreditCardTransactionDao;
 import com.dao.CustCreditCardDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/admin/customer-management/credit-card")
@@ -42,6 +44,9 @@ public class AdminCustCreditCardMgmtController {
 
 	@Autowired
 	CreditCardPaymentDao creditCardPaymentDao;
+	
+	@Autowired
+	MailService mailService;
 
 	@RequestMapping(value = "")
 	public String customerCreditCardManagement(@RequestParam(required = false) String status, Model m) {
@@ -157,8 +162,24 @@ public class AdminCustCreditCardMgmtController {
 			creditCardPayment.setStatus("Pending");
 			creditCardPaymentDao.save(creditCardPayment);
 			String last4CardDigit = creditCardPayment.getCreditCard().getCardNum().split(" ")[3];
-			ra.addFlashAttribute("msg",
-					"You have successfully add the payment statement to the credit card ending with " + last4CardDigit);
+			String encryptedCardNum = String.join("", Collections.nCopies(3, "**** ")) + last4CardDigit;
+
+			// Send Email
+			double totalAmount = creditCardPayment.getAmount() + creditCardPayment.getInterestCharged() + creditCardPayment.getAdditionalCharge();
+			DateTimeFormatter dueDateDf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String subject = "OBS New Credit Card Payment";
+			String msg = "Dear " + custCreditCard.getCustomer().getName() + ",\n"
+							+ "You have received a new payment statement for your " + custCreditCard.getCreditCard().getTitle() + " (Card No. " + encryptedCardNum + ").\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + creditCardPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + (creditCardPayment.getDescription() == null || creditCardPayment.getDescription().isEmpty() ? "NIL" : creditCardPayment.getDescription()) + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Due Date: " + creditCardPayment.getDueDate().format(dueDateDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custCreditCard.getCustomer().getEmail(), subject, msg);
+			
+			ra.addFlashAttribute("msg", "You have successfully add the payment statement to the credit card ending with " + last4CardDigit);
 			return "redirect:/admin/customer-management/credit-card/view/" + custCreditCard.getId();
 		} else {
 			ra.addFlashAttribute("msg", "Failed to add the payment..");

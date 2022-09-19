@@ -54,7 +54,7 @@
 							<th scope="row"><c:out value="${custLoan.id}" /></th>
 							<td class="text-capitalize"><c:out value="${custLoan.loan.title}" /></td>
 							<td><c:out value="${custLoan.customer.name}" /></td>
-							<td><c:out value="${custLoan.totalAmount}" /></td>
+							<td><fmt:formatNumber value="${custLoan.totalAmount}" type="currency" currencyCode="SGD" /></td>
 							<td><fmt:formatNumber value="${custLoan.interestRate}" type="percent" maxFractionDigits="3" /> p.a.</td>
 							<td><c:out value="${custLoan.repaymentPeriod}" /> Year(s)</td>
 							<td><span class="badge text-bg-${status} text-white text-capitalize w-100"><c:out value="${custLoan.status}" /></span></td>

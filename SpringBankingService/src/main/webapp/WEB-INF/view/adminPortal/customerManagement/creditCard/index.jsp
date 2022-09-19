@@ -51,7 +51,7 @@
 						</c:choose>
 						<tr>
 							<td><fmt:formatDate type="both" pattern="dd-MMM-yyyy HH:mm" value="${createDate}" /></td>
-							<th scope="row"><c:out value="${custCreditCard.id}" /></th>
+							<td><c:out value="${custCreditCard.cardNum}" /></td>
 							<td class="text-capitalize"><c:out value="${custCreditCard.creditCard.title}" /></td>
 							<td><c:out value="${custCreditCard.brand}" /></td>
 							<td><c:out value="${custCreditCard.customer.name}" /></td>

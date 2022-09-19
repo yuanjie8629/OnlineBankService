@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<fmt:formatNumber var="amount" value="${creditCardPayment.amount}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="interest" value="${creditCardPayment.interestCharged}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="additionalCharge" value="${creditCardPayment.additionalCharge}" type="currency" currencySymbol="" />
-<fmt:formatNumber var="total" value="${creditCardPayment.amount + creditCardPayment.interestCharged + creditCardPayment.additionalCharge}" type="currency" currencySymbol="" />
+<fmt:formatNumber var="amount" value="${creditCardPayment.amount}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="interest" value="${creditCardPayment.interestCharged}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="additionalCharge" value="${creditCardPayment.additionalCharge}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
+<fmt:formatNumber var="total" value="${creditCardPayment.amount + creditCardPayment.interestCharged + creditCardPayment.additionalCharge}" minFractionDigits="2" maxFractionDigits="2" pattern="#" />
 <div class="container my-4">
 	<div class="row justify-content-between">
 		<div class="col-auto mb-3">

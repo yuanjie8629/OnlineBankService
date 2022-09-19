@@ -8,7 +8,7 @@
 				<h5 class="modal-title">Change Password</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<c:url var="url" value="/admin/profile-management/changePass" />
+			<c:url var="url" value="/admin/profile-management/change-pass" />
 			<form name="changePass" class="needs-validation" action="${url}" method="post" novalidate>
 				<input type="hidden" name="id" value="${user.id}">
 				<div class="modal-body">

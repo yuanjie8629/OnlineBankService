@@ -3,6 +3,7 @@ package com.controller;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import com.bean.CustLoan;
 import com.bean.LoanPayment;
 import com.dao.CustLoanDao;
 import com.dao.LoanPaymentDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping(value = "/admin/customer-management/loan")
@@ -38,6 +40,9 @@ public class AdminCustLoanMgmtController {
 	
 	@Autowired
 	LoanPaymentDao loanPaymentDao;
+	
+	@Autowired
+	MailService mailService;
 	
 	
 	@RequestMapping(value = "")
@@ -115,7 +120,7 @@ public class AdminCustLoanMgmtController {
 			loanPayment.setInterestCharged(custLoan.getPrincipalBal() * monthlyInterest);
 			loanPayment.setPrincipal(loanPayment.getAmount() - loanPayment.getInterestCharged());
 			loanPayment.setBalance(custLoan.getPrincipalBal() - loanPayment.getPrincipal());
-			System.out.println(loanPayment.getBalance());
+
 			// Set description
 			loanPayment.setDescription("Loan payment for " + selectedMonth);
 			// Set default due date which is after 1 month
@@ -139,6 +144,22 @@ public class AdminCustLoanMgmtController {
 			loanPayment.setLoan(custLoan);
 			loanPayment.setStatus("Pending");
 			loanPaymentDao.save(loanPayment);
+			
+			// Send Email
+			double totalAmount = loanPayment.getAmount() + loanPayment.getAdditionalCharge();
+			DateTimeFormatter emailDf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String subject = "OBS Loan Payment";
+			String msg = "Dear " + custLoan.getCustomer().getName() + ",\n"
+							+ "You have successfully paid your " + custLoan.getLoan().getTitle() + " (ID " + custLoan.getId() + ").\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + loanPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + (loanPayment.getDescription() == null || loanPayment.getDescription().isEmpty() ? "NIL" : loanPayment.getDescription()) + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Paid Date: " + loanPayment.getPaidDate().format(emailDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custLoan.getCustomer().getEmail(), subject, msg);
+						
 			ra.addFlashAttribute("msg", "You have successfully add the payment statement to the loan with ID " + custLoan.getId());
 			return "redirect:/admin/customer-management/loan/view/" + custLoan.getId();
 		} else {

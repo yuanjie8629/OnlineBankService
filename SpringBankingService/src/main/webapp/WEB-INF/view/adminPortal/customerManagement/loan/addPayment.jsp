@@ -37,7 +37,7 @@
 							<div class="row justify-content-center align-items-center mb-4">
 								<label class="col-auto col-form-label">Select Payment Month</label>
 								<div class="col-auto">
-									<select class="form-select" name="selectedMonth" onchange="submitSelectMonthForm()">
+									<select class="form-select" name="selectedMonth">
 										<c:forEach var="month" items="${months}">
 											<fmt:parseDate value="${month}" var="parsedMonth" pattern="yyyyMM" />
 											<option value="${month}"><fmt:formatDate pattern="MMMM, yyyy" value="${parsedMonth}" /></option>
@@ -200,10 +200,12 @@
 			</c:otherwise>
 		</c:choose>
 	})
-
-	let selectMonthForm = document.forms['selectMonth'];
-
-	function submitSelectMonthForm() {
-		selecteMonthForm.submit();
+	
+	let paymentForm = document.forms['addPayment'];
+	console.log(paymentForm);
+	if (paymentForm !== undefined) {
+		paymentForm['additionalCharge'].onchange = function() {
+			paymentForm['amount'].value  = (parseFloat(paymentForm['amount'].value) + parseFloat(paymentForm['additionalCharge'].value)).toFixed(2);
+		}
 	}
 </script>

@@ -57,6 +57,14 @@
         <artifactId>spring-data-jpa</artifactId>
         <version>2.1.0.RELEASE</version>
     </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context-support</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+
 	<!-- Spring Dependencies End -->
 	
 	<!-- Javax Dependencies Start -->
@@ -168,6 +176,24 @@
 	    <version>2.11.0</version>
 	</dependency>
 	<!-- File Upload End -->
+	
+	<!-- Mail Start -->
+	
+	<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>mail</artifactId>
+	    <version>1.4.7</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>javax.mail-api</artifactId>
+	    <version>1.5.5</version>
+	</dependency>
+
+  	<!-- Mail End -->
   </dependencies>
 
   <build>

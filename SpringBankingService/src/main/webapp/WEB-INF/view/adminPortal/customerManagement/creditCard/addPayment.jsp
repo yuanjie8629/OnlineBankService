@@ -33,7 +33,7 @@
 							<div class="row justify-content-center align-items-center mb-4">
 								<label class="col-auto col-form-label">Select Payment Month</label>
 								<div class="col-auto">
-									<select class="form-select" name="selectedMonth" onchange="submitSelectMonthForm()">
+									<select class="form-select" name="selectedMonth">
 										<c:forEach var="month" items="${months}">
 											<fmt:parseDate value="${month}" var="parsedMonth" pattern="yyyyMM" />
 											<option value="${month}"><fmt:formatDate pattern="MMMM, yyyy" value="${parsedMonth}" /></option>
@@ -108,20 +108,31 @@
 								<spring:bind path="additionalCharge">
 									<div class="mb-3">
 										<label for="additionalCharge" class="form-label">Additional Charges</label>
-										<form:input class="form-control${status.error ? 'is-invalid' : ''}" path="additionalCharge" type="number"
-											min="0" step="0.01" />
-										<div class="invalid-feedback">
-											<c:choose>
-												<c:when test="${status.error}">
-													<form:errors path="additionalCharge" />
-												</c:when>
-												<c:otherwise>
-													Please select payment due date.
-												</c:otherwise>
-											</c:choose>
+										<div class="input-group has-validation">
+											<form:input class="form-control${status.error ? 'is-invalid' : ''}" path="additionalCharge" type="number"
+												min="0" step="0.01" />
+											<span class="input-group-text">SGD</span>
+											<div class="invalid-feedback">
+												<c:choose>
+													<c:when test="${status.error}">
+														<form:errors path="additionalCharge" />
+													</c:when>
+													<c:otherwise>
+														Please select payment due date.
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</spring:bind>
+								<div class="mb-3">
+										<label for="totalAmount" class="form-label">Total Amount</label>
+										<div class="input-group">
+											<input id="totalAmount" class="form-control${status.error ? 'is-invalid' : ''}" type="number"
+												min="0" step="0.01" readonly/>
+											<span class="input-group-text">SGD</span>
+										</div>
+								</div>
 								<button class="btn btn-danger px-4 float-end" type="submit">Add Payment</button>
 							</form:form>
 						</c:if>
@@ -182,10 +193,15 @@
 			</c:otherwise>
 		</c:choose>
 	})
-
-	let selectMonthForm = document.forms['selectMonth'];
-
-	function submitSelectMonthForm() {
-		selecteMonthForm.submit();
+	
+	let paymentForm = document.forms['addPayment'];
+	console.log(paymentForm);
+	if (paymentForm !== undefined) {
+		let totalAmount = document.getElementById("totalAmount");
+		
+		totalAmount.value = (parseFloat(paymentForm['amount'].value) + parseFloat(paymentForm['interestCharged'].value)).toFixed(2);
+		paymentForm['additionalCharge'].onchange = function() {
+			totalAmount.value  = (parseFloat(paymentForm['amount'].value) + parseFloat(paymentForm['interestCharged'].value) + parseFloat(paymentForm['additionalCharge'].value)).toFixed(2);
+		}
 	}
 </script>

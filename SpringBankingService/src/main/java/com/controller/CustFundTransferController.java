@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import com.bean.CustAccount;
 import com.bean.Customer;
 import com.dao.AccountTransactionDao;
 import com.dao.CustAccDao;
+import com.service.MailService;
 
 @Controller
 @RequestMapping("/customer/fund-transfer")
@@ -29,6 +31,9 @@ public class CustFundTransferController {
 
 	@Autowired
 	AccountTransactionDao accTransactionDao;
+	
+	@Autowired
+	MailService mailService;
 
 	@Autowired
 	HttpSession session;
@@ -98,6 +103,20 @@ public class CustFundTransferController {
 				accToTransaction.setBalance(custAccTo.getAvailBal());
 				accToTransaction.setStatus("posted");
 				accTransactionDao.save(accToTransaction);
+				
+				// Send Email
+				DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				String subject = "OBS Fund Transfer";
+				String msg = "Dear " + custAccTo.getCustomer().getName() + ",\n"
+								+ "You have successfully transferred funds from " + encryptedAccFrom + " to " + encryptedAccTo + ".\n"
+								+ "Below is the transaction details:\n\n"
+								+ "Transaction Date: " + accFromTransaction.getDate().format(df) + "\n"
+								+ "Transaction Reference: " + accFromTransaction.getReference() + "\n"
+								+ "Transaction Description: " + (accFromTransaction.getDescription() == null || accFromTransaction.getDescription().isEmpty() ? "NIL" : accFromTransaction.getDescription()) + "\n"
+								+ "Amount: " + accFromTransaction.getAmount() + " SGD"
+								+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+								+ "\n\nCheers,\nOBS Team";
+				mailService.sendMail(custAccFrom.getCustomer().getEmail(), subject, msg);
 
 				ra.addFlashAttribute("success", true);
 				ra.addFlashAttribute("transaction", accFromTransaction);
@@ -184,7 +203,36 @@ public class CustFundTransferController {
 					accToTransaction.setBalance(custAccTo.getAvailBal());
 					accToTransaction.setStatus("posted");
 					accTransactionDao.save(accToTransaction);
-
+					
+					// Send Email for AccFrom
+					DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+					String accFromSubject = "OBS Fund Transfer";
+					String accFromMsg = "Dear " + custAccFrom.getCustomer().getName() + ",\n"
+									+ "You have successfully transfer your money to " + encryptedAccTo + ".\n"
+									+ "Below is the transaction details:\n\n"
+									+ "Transaction ID: " + accFromTransaction.getId() + "\n"
+									+ "Transaction Date: " + accFromTransaction.getDate().format(df) + "\n"
+									+ "Transaction Reference: " + accFromTransaction.getReference() + "\n"
+									+ "Transaction Description: " + (accFromTransaction.getDescription() == null || accFromTransaction.getDescription().isEmpty() ? "NIL" : accFromTransaction.getDescription()) + "\n"
+									+ "Amount: " + accFromTransaction.getAmount() + " SGD"
+									+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+									+ "\n\nCheers,\nOBS Team";
+					mailService.sendMail(custAccFrom.getCustomer().getEmail(), accFromSubject, accFromMsg);
+					
+					// Send Email for AccTo
+					String accToSubject = "OBS Fund Transfer";
+					String accToMsg = "Dear " + custAccTo.getCustomer().getName() + ",\n"
+									+ "You have successfully received fund transfered from " + encryptedAccFrom + ".\n"
+									+ "Below is the transaction details:\n\n"
+									+ "Transaction ID: " + accToTransaction.getId() + "\n"
+									+ "Transaction Date: " + accToTransaction.getDate().format(df) + "\n"
+									+ "Transaction Reference: " + accToTransaction.getReference() + "\n"
+									+ "Transaction Description: " + (accFromTransaction.getDescription() == null || accFromTransaction.getDescription().isEmpty() ? "NIL" : accFromTransaction.getDescription()) + "\n"
+									+ "Amount: " + accToTransaction.getAmount() + " SGD"
+									+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+									+ "\n\nCheers,\nOBS Team";
+					mailService.sendMail(custAccTo.getCustomer().getEmail(), accToSubject, accToMsg);
+					
 					ra.addFlashAttribute("success", true);
 					ra.addFlashAttribute("transaction", accFromTransaction);
 					ra.addFlashAttribute("accFrom", encryptedAccFrom);
