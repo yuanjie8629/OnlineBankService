@@ -82,3 +82,12 @@
 		</div>
 	</div>
 </div>
+<script>
+	// Prevent users back to portal after logout
+	setTimeout(function preventBack() {
+		window.history.forward();
+	}, 0);
+	window.onunload = function() {
+		null
+	};
+</script>

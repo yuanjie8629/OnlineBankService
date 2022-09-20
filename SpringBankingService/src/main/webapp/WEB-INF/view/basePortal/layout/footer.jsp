@@ -41,7 +41,7 @@
 								<i class="fas fa-envelope me-3"></i>
 							</td>
 							<td>
-								customerservice@obs.com
+								onlinebankservice8629@gmail.com
 							<td>
 						</tr>
 						<tr>
