@@ -7,7 +7,8 @@
 	<h3 class="mb-4">Update Customer</h3>
 	<div class="card card-shadow">
 		<div class="card-body p-4">
-			<form:form name="viewCustomer" modelAttribute="cust" action="" method="post">
+			<form:form name="updateCustomer" modelAttribute="cust" action="" method="post">
+				<form:input type="hidden" path="password" />
 				<div class="row">
 					<div class="col-lg-7 py-4 px-5 cust-info">
 						<h4 class="mb-4">Customer Information</h4>
@@ -15,6 +16,7 @@
 							<div class="col-12 col-md-6">
 								<label class="form-label" for="username">Username</label>
 								<form:input class="form-control" path="username" disabled="true" />
+								<form:input type="hidden" path="username" />
 							</div>
 							<spring:bind path="identityNumber">
 								<div class="form-group col-12 col-md-6">

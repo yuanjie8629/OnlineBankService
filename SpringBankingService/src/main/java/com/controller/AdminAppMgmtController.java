@@ -147,9 +147,9 @@ public class AdminAppMgmtController {
 		// Send Email
 		String subject = "OBS Account Application";
 		String msg = "Dear " + accApp.getName() + ",\n"
-				+"Sorry, Your account application for " + accApp.getAccount().getTitle() + " (Ref No. " + accApp.getId() + ") has been rejected.\n";
+				+"Sorry, your account application for " + accApp.getAccount().getTitle() + " (Ref No. " + accApp.getId() + ") has been rejected.\n";
 		if (!comments.isEmpty()) {
-			msg += "Comments: " + comments + "\n";
+			msg += "Comments: " + comments + "\n\n";
 		}
 		msg += "Please feel free to contact us if you requires further clarification."
 				+ "\n\nBest Regards,\nOBS Team";
@@ -280,7 +280,7 @@ public class AdminAppMgmtController {
 		// Send Email
 		String subject = "OBS Credit Card Application";
 		String msg = "Dear " + creditCardApp.getName() + ",\n"
-				+"Sorry, Your credit card application for " + creditCardApp.getCreditCard().getTitle() + " (Ref No. " + creditCardApp.getId() + ") has been rejected.\n";
+				+"Sorry, your credit card application for " + creditCardApp.getCreditCard().getTitle() + " (Ref No. " + creditCardApp.getId() + ") has been rejected.\n";
 		if (!comments.isEmpty()) {
 			msg += "Comments: " + comments + "\n\n";
 		}
@@ -430,7 +430,7 @@ public class AdminAppMgmtController {
 		// Send Email
 		String subject = "OBS Loan Application";
 		String msg = "Dear " + loanApp.getName() + ",\n"
-				+"Sorry, Your loan application for " + loanApp.getLoan().getTitle() + " (Ref No. " + loanApp.getId() + ") has been rejected.\n";
+				+"Sorry, your loan application for " + loanApp.getLoan().getTitle() + " (Ref No. " + loanApp.getId() + ") has been rejected.\n";
 		if (!comments.isEmpty()) {
 			msg += "Comments: " + comments + "\n\n";
 		}

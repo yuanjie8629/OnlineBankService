@@ -208,6 +208,22 @@ public class AdminCustCreditCardMgmtController {
 			creditCardPayment.setStatus("Pending");
 			creditCardPaymentDao.update(creditCardPayment);
 			ra.addFlashAttribute("msg", "You have successfully updated the credit card payment with ID " + creditCardPayment.getId());
+
+			// Send Email
+			String encryptedCardNum = String.join("", Collections.nCopies(3, "**** ")) + creditCardPayment.getCreditCard().getCardNum().split(" ")[3];
+			double totalAmount = creditCardPayment.getAmount() + creditCardPayment.getInterestCharged() + creditCardPayment.getAdditionalCharge();
+			DateTimeFormatter dueDateDf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String subject = "OBS Updated Credit Card Payment";
+			String msg = "Dear " + custCreditCard.getCustomer().getName() + ",\n"
+							+ "Your payment statement for your " + custCreditCard.getCreditCard().getTitle() + " (Card No. " + encryptedCardNum + ") has been updated.\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + creditCardPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + (creditCardPayment.getDescription() == null || creditCardPayment.getDescription().isEmpty() ? "NIL" : creditCardPayment.getDescription()) + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Due Date: " + creditCardPayment.getDueDate().format(dueDateDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custCreditCard.getCustomer().getEmail(), subject, msg);
 			return "redirect:/admin/customer-management/credit-card/view/" + creditCardPayment.getCreditCard().getId();
 		} else {
 			m.addAttribute("msg", "Failed to update the payment, please ensure all information are valid.");

@@ -567,7 +567,7 @@
 								</spring:bind>
 								<spring:bind path="supportDoc">
 									<div class="col-12">
-										<label class="form-label" for="supportDoc">Please upload any other support documents (in pdf format)</label>
+										<label class="form-label" for="supportDoc">Please upload your support document in pdf format (if any)</label>
 										<form:input class="step-4 form-control ${status.error ? 'is-invalid' : ''}" type="file" path="supportDoc" accept="application/pdf" onchange="getSupportDocLink(this)" />
 										<a id="supportDocLink" target="_blank"></a>
 										<div class="invalid-feedback">
@@ -662,7 +662,7 @@
 		let msgBsToast = new bootstrap.Toast(msgToast);
 		msgBsToast.show();
 	</script>
-	<c:remove var="msg"/>
+	<c:remove scope="session" var="msg"/>
 </c:if>
 <script>
 	// Script to initialize the stepper

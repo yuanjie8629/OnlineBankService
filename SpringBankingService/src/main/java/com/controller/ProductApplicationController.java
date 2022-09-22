@@ -117,7 +117,8 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("refNum", refNum);
 			// Send Email
 			String subject = "OBS Account Application";
-			String msg = "You have successfully submitted your account application " + acc.getTitle() + ".\n\n"
+			String msg = "Dear " + application.getName() + ",\n"
+					+ "You have successfully submitted your account application for " + acc.getTitle() + ".\n\n"
 					+ "Please refer to the following reference number for your account application:\n"
 					+ refNum
 					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
@@ -183,7 +184,8 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("refNum", refNum);
 			// Send Email
 			String subject = "OBS Credit Card Application";
-			String msg = "You have successfully submitted your credit card application for " + creditCard.getTitle() + ".\n\n"
+			String msg = "Dear " + application.getName() + ",\n"
+					+ "You have successfully submitted your credit card application for " + creditCard.getTitle() + ".\n\n"
 					+ "Please refer to the following reference number for your credit card application:\n"
 					+ refNum
 					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
@@ -249,7 +251,8 @@ public class ProductApplicationController {
 			ra.addFlashAttribute("refNum", refNum);
 			// Send Email
 			String subject = "OBS Loan Application";
-			String msg = "You have successfully submitted your loan application for " + loan.getTitle() + ".\n\n"
+			String msg = "Dear " + application.getName() + ",\n"
+					+"You have successfully submitted your loan application for " + loan.getTitle() + ".\n\n"
 					+ "Please refer to the following reference number for your loan application:\n"
 					+ refNum
 					+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"

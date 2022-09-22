@@ -129,7 +129,7 @@ public class CustPaymentController {
 			
 			// Add new account transaction
 			AccountTransaction accTrans = new AccountTransaction();
-			accTrans.setType("deposit");
+			accTrans.setType("withdraw");
 			accTrans.setAccount(custAcc);
 			accTrans.setAmount(totalAmount);
 			accTrans.setDescription(creditCardPayment.getDescription());
@@ -231,7 +231,7 @@ public class CustPaymentController {
 			String encryptedLoanID = custLoan.getId().substring(0, 5) + String.join("", Collections.nCopies(custLoan.getId().length() - 5, "*"));
 			// Add new account transaction
 			AccountTransaction accTrans = new AccountTransaction();
-			accTrans.setType("deposit");
+			accTrans.setType("withdraw");
 			accTrans.setAccount(custAcc);
 			accTrans.setAmount(totalAmount);
 			accTrans.setDescription(loanPayment.getDescription());

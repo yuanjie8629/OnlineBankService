@@ -11,7 +11,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,10 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bean.LoanPayment;
 import com.bean.CustLoan;
-import com.bean.CustCreditCard;
-import com.bean.CustLoan;
-import com.bean.CustLoan;
-import com.bean.LoanPayment;
 import com.dao.CustLoanDao;
 import com.dao.LoanPaymentDao;
 import com.service.MailService;
@@ -147,15 +142,15 @@ public class AdminCustLoanMgmtController {
 			
 			// Send Email
 			double totalAmount = loanPayment.getAmount() + loanPayment.getAdditionalCharge();
-			DateTimeFormatter emailDf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			String subject = "OBS Loan Payment";
+			DateTimeFormatter dueDateDf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String subject = "OBS New Loan Payment";
 			String msg = "Dear " + custLoan.getCustomer().getName() + ",\n"
-							+ "You have successfully paid your " + custLoan.getLoan().getTitle() + " (ID " + custLoan.getId() + ").\n"
+					+ "You have received a new payment statement for your " + custLoan.getLoan().getTitle() + " (Loan ID. " + custLoan.getId() + ").\n"
 							+ "Below is the payment details:\n\n"
 							+ "Payment Month: " + loanPayment.getPaymentMonth() + "\n"
 							+ "Payment Description: " + (loanPayment.getDescription() == null || loanPayment.getDescription().isEmpty() ? "NIL" : loanPayment.getDescription()) + "\n"
 							+ "Total Amount: " + totalAmount + " SGD\n"
-							+ "Paid Date: " + loanPayment.getPaidDate().format(emailDf)
+							+ "Due Date: " + loanPayment.getDueDate().format(dueDateDf)
 							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
 							+ "\n\nCheers,\nOBS Team";
 			mailService.sendMail(custLoan.getCustomer().getEmail(), subject, msg);
@@ -186,6 +181,21 @@ public class AdminCustLoanMgmtController {
 			loanPayment.setStatus("Pending");
 			loanPaymentDao.update(loanPayment);
 			ra.addFlashAttribute("msg", "You have successfully updated the loan payment with ID " + loanPayment.getId());
+			
+			// Send Email
+			double totalAmount = loanPayment.getAmount() + loanPayment.getAdditionalCharge();
+			DateTimeFormatter dueDateDf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String subject = "OBS Updated Loan Payment";
+			String msg = "Dear " + custLoan.getCustomer().getName() + ",\n"
+							+ "Your payment statement for your " + custLoan.getLoan().getTitle() + " (Loan ID. " + custLoan.getId() + ") has been updated.\n"
+							+ "Below is the payment details:\n\n"
+							+ "Payment Month: " + loanPayment.getPaymentMonth() + "\n"
+							+ "Payment Description: " + (loanPayment.getDescription() == null || loanPayment.getDescription().isEmpty() ? "NIL" : loanPayment.getDescription()) + "\n"
+							+ "Total Amount: " + totalAmount + " SGD\n"
+							+ "Due Date: " + loanPayment.getDueDate().format(dueDateDf)
+							+ "\n\nThank you for choosing OBS Bank. We wish you a great day!"
+							+ "\n\nCheers,\nOBS Team";
+			mailService.sendMail(custLoan.getCustomer().getEmail(), subject, msg);
 			return "redirect:/admin/customer-management/loan/view/" + loanPayment.getLoan().getId();
 		} else {
 			m.addAttribute("msg", "Failed to update the payment, please ensure all information are valid.");
