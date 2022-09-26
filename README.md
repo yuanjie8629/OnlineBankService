@@ -153,6 +153,12 @@ The features can be divided by 3 modules, which are the user, admin and customer
 13. Credit Card Payment <br> <img src="previews/CustCreditCardPayment.jpeg"><br><br>
 14. Loan Payment <br> <img src="previews/CustLoanPayment.jpeg"><br><br>
 
+## Documentation
+
+### Report
+
+https://tinyurl.com/onlineBankServiceDoc
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
