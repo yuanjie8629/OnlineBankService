@@ -157,7 +157,7 @@ The features can be divided by 3 modules, which are the user, admin and customer
 
 ### Report
 
-https://tinyurl.com/onlineBankServiceDoc
+https://tinyurl.com/OnlineBankServiceReport
 
 ## Contributors ✨
 
